@@ -1,0 +1,24 @@
+{
+    "name": "words-admin",
+    "version": "1.0.0",
+    "description": "this is init",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/adminDavin/words-admin.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/adminDavin/words-admin/issues"
+    },
+    "homepage": "https://github.com/adminDavin/words-admin#readme",
+    "devDependencies": {
+        "react": "^16.1.1",
+        "webpack": "^3.8.1"
+    }
+}
