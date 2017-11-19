@@ -1,48 +1,45 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); //css样式从js文件中分离出来,需要通过命令行安装 extract-text-webpack-plugin依赖包
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+// var pathMap = require('./src/wordsAdmin/main.json');
+// var srcDir = path.resolve(process.cwd(), 'src/wordsAdmin');
+// var nodeModPath = path.resolve(__dirname, './src/bower_components');
 
 module.exports = {
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    historyApiFallback: false,
+    inline: true,
+    noInfo: true
+  },
   entry: {
     app: './src/wordsAdmin/script/index.js',
-    print: './src/wordsAdmin/script/utils/utils.js',
-    another: './src/wordsAdmin/script/components/infoComponent/another-module.js',
-    demo: './src/wordsAdmin/script/components/infoComponent/async-demo.js'
+    print: './src/wordsAdmin/script/utils/utils.js'
   },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({
-      title: 'wordsAdmin'
-    }),
-    // new webpack.ProvidePlugin({
-    //   _: 'lodash'
-    // }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common'
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    })
-  ],
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
-  externals: {
-    lodash: {
-      commonjs: 'lodash',
-      commonjs2: 'lodash',
-      amd: 'lodash',
-      root: '_'
-    }
+    filename: 'script/[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/'
   },
   module: {
     rules: [{
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: path.resolve(__dirname, 'src/wordsAdmin')
+      }, {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
+        use: [{
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
         ]
       },
       {
@@ -50,25 +47,26 @@ module.exports = {
         use: [
           'file-loader'
         ]
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          'file-loader'
-        ]
-      },
-      {
-        test: /\.(csv|tsv)$/,
-        use: [
-          'csv-loader'
-        ]
-      },
-      {
-        test: /\.xml$/,
-        use: [
-          'xml-loader'
-        ]
       }
     ]
+  },
+  plugins: [
+    new CleanWebpackPlugin(['dist']),
+    new HtmlWebpackPlugin(),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    })
+  ],
+  resolve: {
+    modules: [path.resolve(__dirname, 'src/bower_components')]
+  },
+  resolve: {
+    alias: {
+      'moment': 'moment/moment.min.js'
+    }
   }
 };

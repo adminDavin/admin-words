@@ -1,6 +1,6 @@
 # project words-admin
 ## author davin
-
+https://www.cnblogs.com/skylor/p/7008756.html
 ###install develop model
 
     npm install

@@ -1,0 +1,21 @@
+{
+  "name": "words-admin",
+  "description": "this is init",
+  "main": "",
+  "authors": [
+    "davin <davinzhang@outlook.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/adminDavin/words-admin",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "common": "^0.2.5",
+    "jquery": "^3.2.1"
+  }
+}
