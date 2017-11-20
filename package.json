@@ -24,6 +24,7 @@
     "css-loader": "^0.28.7",
     "csv-loader": "^2.1.1",
     "express": "^4.16.2",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.30.1",
     "lodash": "^4.17.4",
