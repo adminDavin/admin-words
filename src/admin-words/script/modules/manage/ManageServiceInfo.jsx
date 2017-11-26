@@ -3,12 +3,10 @@ const th = (
   <thead>
     <tr>
       <th scope="col">序号</th>
-      <th scope="col">处理状态</th>
-      <th scope="col">任务类型</th>
-      <th scope="col">用户ID</th>
-      <th scope="col">用户邮箱</th>
-      <th scope="col">任务生成时间</th>
-      <th scope="col">当前处理人</th>
+      <th scope="col">服务名称</th>
+      <th scope="col">服务描述</th>
+      <th scope="col">创建时间</th>
+      <th scope="col">维护人</th>
     </tr>
   </thead>
 );
@@ -47,4 +45,4 @@ class ManageServiceInfo extends React.Component {
   }
 }
 
-export default ManageTask;
+export default ManageServiceInfo;

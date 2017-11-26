@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ManageTask from "./manage/ManageTask.jsx";
+import ManageServiceInfo from "./manage/ManageServiceInfo.jsx";
+import ManageUserInfo from "./manage/ManageUserInfo.jsx";
+import ManageRoleInfo from "./manage/ManageRoleInfo.jsx";
+
+const commonNavCol = "col-6 nav-item nav-link ";
 
 class Manage extends React.Component {
   constructor(props) {
@@ -12,25 +17,45 @@ class Manage extends React.Component {
       col4: { serverList: "系统服务" }
     };
   }
+  state = { index: 1 };
   componentDidMount() {
     this.doNavClick(this.nav.col1);
   }
 
   doNavClick = function(item) {
-    console.log("click....", item);
-    console.log(this);
     if (item) {
       if (item.task) {
+        this.setState({
+          index: 1
+        });
         ReactDOM.render(
           <ManageTask />,
           document.getElementById("manageContent")
         );
       } else if (item.userList) {
-        ReactDOM.render(<div />, document.getElementById("manageContent"));
+        this.setState({
+          index: 2
+        });
+        ReactDOM.render(
+          <ManageUserInfo />,
+          document.getElementById("manageContent")
+        );
       } else if (item.roleList) {
-        ReactDOM.render(<div />, document.getElementById("manageContent"));
+        this.setState({
+          index: 3
+        });
+        ReactDOM.render(
+          <ManageRoleInfo />,
+          document.getElementById("manageContent")
+        );
       } else {
-        ReactDOM.render(<div />, document.getElementById("manageContent"));
+        this.setState({
+          index: 4
+        });
+        ReactDOM.render(
+          <ManageServiceInfo />,
+          document.getElementById("manageContent")
+        );
       }
     }
   };
@@ -43,26 +68,34 @@ class Manage extends React.Component {
             <div className="navbar-nav">
               <a
                 className={
-                  "col-6 nav-item nav-link offset-md-7" + " " + "active"
+                  commonNavCol +
+                  "offset-md-7 " +
+                  (this.state.index == 1 ? "active" : "")
                 }
                 onClick={this.doNavClick.bind(this, this.nav.col1)}
               >
                 {this.nav.col1.task}
               </a>
               <a
-                className="col-6 nav-item nav-link"
+                className={
+                  commonNavCol + (this.state.index == 2 ? "active" : "")
+                }
                 onClick={this.doNavClick.bind(this, this.nav.col2)}
               >
                 {this.nav.col2.userList}
               </a>
               <a
-                className="col-6 nav-item nav-link"
+                className={
+                  commonNavCol + (this.state.index == 3 ? "active" : "")
+                }
                 onClick={this.doNavClick.bind(this, this.nav.col3)}
               >
                 {this.nav.col3.roleList}
               </a>
               <a
-                className="col-6 nav-item nav-link"
+                className={
+                  commonNavCol + (this.state.index == 4 ? "active" : "")
+                }
                 onClick={this.doNavClick.bind(this, this.nav.col4)}
               >
                 {this.nav.col4.serverList}

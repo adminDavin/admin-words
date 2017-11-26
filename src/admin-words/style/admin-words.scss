@@ -43,3 +43,22 @@ body {
   height: 800px;
   width: 100%;
 }
+
+.dv-user-login{
+  background-color: #dddbdb;
+  height: 600px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  padding-right: 50px;
+  div{ 
+    margin-top: 50px; 
+    background: cornflowerblue;
+
+    form{   
+      margin-left: 10px;
+      margin-right: 10px;
+      border-style: hidden;
+  
+    }
+    }
+}
