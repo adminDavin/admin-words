@@ -1,24 +1,59 @@
 {
-    "name": "words-admin",
-    "version": "1.0.0",
-    "description": "this is init",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "webpack"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/adminDavin/words-admin.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/adminDavin/words-admin/issues"
-    },
-    "homepage": "https://github.com/adminDavin/words-admin#readme",
-    "devDependencies": {
-        "react": "^16.1.1",
-        "webpack": "^3.8.1"
-    }
+  "name": "admin-words",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "html-webpack-plugin": "^2.30.1",
+    "node-sass": "^4.7.2",
+    "purify-css": "^1.2.5",
+    "purifycss-webpack": "^0.7.0",
+    "react-native": "^0.50.4",
+    "react-router": "^4.2.0",
+    "react-starter-es6-webpack": "0.0.2",
+    "redux-devtools": "^3.4.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "transform-runtime": "0.0.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-beta.2",
+    "immutable": "^3.8.2",
+    "jquery": "^3.2.1",
+    "pdfjs": "^2.0.0-alpha.3",
+    "popper.js": "^1.12.9",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-native": "^0.50.4",
+    "react-navigation": "^1.0.0-beta.21",
+    "react-pdf": "^2.4.1",
+    "react-pdf-js": "^3.0.0",
+    "react-pdfjs": "^1.0.7",
+    "react-redux": "^5.0.6",
+    "react-tabs": "^2.1.1",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "saiku-react-pdfjs": "^1.0.2"
+  }
 }
