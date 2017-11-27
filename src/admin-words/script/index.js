@@ -24,9 +24,9 @@ ReactDOM.render(<HeadLayer />, document.getElementById("header"));
 // ReactDOM.render(<PDFViewer />, document.getElementById("content"));
 ReactDOM.render(<UserLogin />, document.getElementById("content"));
 
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <Manage />
-//   </Provider>,
-//   document.getElementById("content")
-// );
+ReactDOM.render(
+  <Provider store={store}>
+    <Manage />
+  </Provider>,
+  document.getElementById("content")
+);

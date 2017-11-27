@@ -26,6 +26,7 @@
     "node-sass": "^4.7.2",
     "purify-css": "^1.2.5",
     "purifycss-webpack": "^0.7.0",
+    "react-bootstrap-table": "^4.1.5",
     "react-native": "^0.50.4",
     "react-router": "^4.2.0",
     "react-starter-es6-webpack": "0.0.2",
