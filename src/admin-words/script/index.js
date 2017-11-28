@@ -17,12 +17,14 @@ import HeadLayer from "./modules/HeadLayer.jsx";
 import PDFViewer from "./modules/PDFViewer.jsx";
 import Manage from "./modules/Manage.jsx";
 import UserLogin from "./modules/UserLogin.jsx";
+import ReactPdfView from "./modules/ReactPdfView.jsx";
 
 import store from "./redux/Store";
 
 ReactDOM.render(<HeadLayer />, document.getElementById("header"));
-// ReactDOM.render(<PDFViewer />, document.getElementById("content"));
-ReactDOM.render(<UserLogin />, document.getElementById("content"));
+ReactDOM.render(<PDFViewer />, document.getElementById("content"));
+ReactDOM.render(<ReactPdfView />, document.getElementById("content"));
+// ReactDOM.render( < UserLogin / > , document.getElementById("content"));
 
 ReactDOM.render(
   <Provider store={store}>

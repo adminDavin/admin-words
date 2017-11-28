@@ -1,5 +1,6 @@
 import PDF from "react-pdf-js";
 import React from "react";
+import { Document, Page, setOptions } from "react-pdf/build/entry.webpack";
 
 export default class PDFViewer extends React.Component {
   state = {};

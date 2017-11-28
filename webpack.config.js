@@ -20,7 +20,7 @@ module.exports = {
     modules: ["node_modules"]
   },
   plugins: [
-    new CleanWebpackPlugin("./dist"),
+    // new CleanWebpackPlugin("./dist"),
     new HtmlWebpackPlugin({
       title: "Custom template",
       template: "./src/admin-words/index.html"
