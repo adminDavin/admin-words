@@ -19,6 +19,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.2.3",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
@@ -41,20 +42,16 @@
     "bootstrap": "^4.0.0-beta.2",
     "immutable": "^3.8.2",
     "jquery": "^3.2.1",
-    "pdfjs": "^2.0.0-alpha.3",
     "popper.js": "^1.12.9",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "react-modal": "^3.1.5",
     "react-native": "^0.50.4",
     "react-navigation": "^1.0.0-beta.21",
-    "react-pdf": "^2.4.1",
-    "react-pdf-js": "^3.0.0",
-    "react-pdfjs": "^1.0.7",
     "react-redux": "^5.0.6",
     "react-tabs": "^2.1.1",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
-    "saiku-react-pdfjs": "^1.0.2"
+    "redux-thunk": "^2.2.0" 
   }
 }

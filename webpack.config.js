@@ -6,12 +6,15 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const moduleRulesLoader = require("./config/moduleRules.js");
 const purifyCSSPlugin = require("purifycss-webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
-  entry: "./src/admin-words/script/index.js",
+  entry: {
+    common: "./src/admin-words/script/index.js",
+    viewer: "./src/admin-words/script/viewer.js"
+  },
   output: {
     path: __dirname + "/dist",
-    filename: "bundle.js"
+    filename: "[name].bundle.js"
   },
   module: moduleRulesLoader,
   resolve: {
@@ -23,11 +26,22 @@ module.exports = {
     // new CleanWebpackPlugin("./dist"),
     new HtmlWebpackPlugin({
       title: "Custom template",
-      template: "./src/admin-words/index.html"
+      filename: "index.html",
+      template: "./src/admin-words/index.html",
+      chunks: ["common"]
     }),
-    new purifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
+    new HtmlWebpackPlugin({
+      title: "Custom ddsds",
+      filename: "viewer.html",
+      template: "./src/admin-words/viewer.html",
+      common: "./src/admin-words/script/index.js",
+      chunks: ["common", "viewer"]
     }),
+    // new purifyCSSPlugin({
+    //   paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
+    // }),
+    new webpack.optimize.CommonsChunkPlugin({ names: ["common"] }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
+    new ExtractTextPlugin("[name].css"),
     new ExtractTextPlugin({
       filename: "[name].css"
     }),
