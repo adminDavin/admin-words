@@ -40,6 +40,9 @@ module.exports = {
     // new purifyCSSPlugin({
     //   paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
     // }),
+    new CopyWebpackPlugin([
+    { from: __dirname + '/src/admin-words/pdf-viewer',to:__dirname +"/dist/pdf-viewer"}
+    ]),
     new webpack.optimize.CommonsChunkPlugin({ names: ["common"] }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
     new ExtractTextPlugin("[name].css"),
     new ExtractTextPlugin({
@@ -64,7 +67,7 @@ module.exports = {
   watchOptions: {
     // 实时打包更新
     poll: 1000, // 每1s时间就检测文件是否修改，修改了就自动帮我们打包
-    aggregeateTimeout: 500, // 设置的是我们连续按Ctrl+S保存时，500毫秒内只执行打包一次
+    // aggregeateTimeout: 500, // 设置的是我们连续按Ctrl+S保存时，500毫秒内只执行打包一次
     ignored: /node_modules/ // 这个文件夹不监视
   }
 };

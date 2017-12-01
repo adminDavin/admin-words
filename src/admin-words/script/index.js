@@ -1,5 +1,4 @@
-import "../style/admin-words.scss";
-import $ from "jquery";
+import "../style/admin-words.scss"; 
 
 import React from "react";
 import ReactDOM from "react-dom";
