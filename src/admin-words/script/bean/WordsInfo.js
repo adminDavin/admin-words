@@ -1,5 +1,3 @@
- 
-
 class WordsInfo {
     constructor(id,wordsName,documentId,count,findPage,findTime,remark) {
         this._id= id ;

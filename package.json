@@ -50,8 +50,9 @@
     "react-navigation": "^1.0.0-beta.21",
     "react-redux": "^5.0.6",
     "react-tabs": "^2.1.1",
+    "react-tooltip": "^3.4.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0" 
+    "redux-thunk": "^2.2.0"
   }
 }

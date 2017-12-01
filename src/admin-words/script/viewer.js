@@ -1,29 +1,25 @@
 import WordsInfo from './bean/WordsInfo' 
-
+import React from "react";
+import ReactDOM from "react-dom";
+import {
+    Router,
+    Route,
+    Redirect,
+    IndexRoute,
+    browserHistory,
+    hashHistory
+  } from "react-router";
+  import { Provider } from "react-redux";
+  
+  import ViewTitile from "./modules/ViewTitile.jsx";  
+  import ViewWordsTable from "./modules/ViewWordsTable.jsx";  
+  import store from "./redux/Store";
+  
 let words=new WordsInfo(); 
 
-console.log(words.getJson()); 
-const tplTable = (item)=>{
-    var s = templateData[0];
-    for (var i = 1; i < arguments.length; i++) {
-        var arg = String(arguments[i]);
-        // Escape special characters in the substitution.
-        s += arg.replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;");
-        // Don't escape special characters in the template.
-        s += templateData[i];
-      }
-      return s;
-    return 
-}
+console.log(words.getJson());  
 
-class MainInfo{
-    init(){
-        console.log('this is init string;');
-        $('#words-table').append("<div>ddddd</div>");
-    }
-}
 
-let mainInfo=new MainInfo();
-mainInfo.init();
+ReactDOM.render(<ViewTitile />, document.getElementById("viewTitle"));
+
+ReactDOM.render(<ViewWordsTable />, document.getElementById("words-table"));
