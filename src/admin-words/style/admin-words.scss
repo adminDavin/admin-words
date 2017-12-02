@@ -73,7 +73,27 @@ body {
  
 
 .dv-td-text-longer{
-  overflow:hidden;
-  white-space:nowrap;
+  overflow: hidden;
   text-overflow:ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+  display: block;
+}
+
+.dv-modal-dialog{
+  position: absolute;
+  top: 100px;
+  width:400px; 
+  left: 30%; 
+  border-radius: 5px; 
+}
+
+.table th,.table td{
+  padding-top: 0.3rem;
+  padding-bottom: 0.1rem;
+  padding-left: 0.05rem; 
+}
+
+.dv-words-table{
+  height:800px;background-color: snow;padding-left: 0;padding-right: 0;padding-top: 0px;
 }

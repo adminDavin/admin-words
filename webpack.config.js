@@ -41,7 +41,13 @@ module.exports = {
     //   paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
     // }),
     new CopyWebpackPlugin([
-    { from: __dirname + '/src/admin-words/pdf-viewer',to:__dirname +"/dist/pdf-viewer"}
+      {
+        from: __dirname + "/src/admin-words/pdf-viewer",
+        to: __dirname + "/dist/pdf-viewer"
+      },
+      {
+        from: __dirname + "/node_modules/jquery/dist/jquery.min.js"
+      }
     ]),
     new webpack.optimize.CommonsChunkPlugin({ names: ["common"] }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
     new ExtractTextPlugin("[name].css"),
