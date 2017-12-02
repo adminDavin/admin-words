@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import Iframe from "react-iframe";
+import axios from 'axios';
 import ViewWordsTable from "./ViewWordsTable.jsx";
 const customStyles = {
   content: {
@@ -12,46 +13,71 @@ const customStyles = {
     transform: "translate(-50%, -50%)"
   }
 };
+
+const fileValid=function(file){
+  if (file == "") {  
+      alert("请选择要上传的文件");  
+      return false  
+  } else {  
+      //检验文件类型是否正确  
+      var exec = (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';  
+      if (exec != "pdf") {  
+          alert("文件格式不对，请上传Pdf文件!");  
+          return false;  
+      }  
+  }  
+  return true; 
+}
+
 export default class ViewTitile extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: true
     };
 
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this); 
+    this.closeModal = this.closeModal.bind(this); 
   }
 
   openModal() {
     this.setState({ modalIsOpen: true });
   }
+ 
 
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.subtitle.style.color = "#f00";
-  }
-
-  closeModal(event, flag) {
-    console.log(event, flag);
+  closeModal(flag) {    
+    var file = $("#wordsFileInput").val();
+    let formdata = new FormData(); 
+    formdata.append('file',file);
+    formdata.append('action','test');
+    if(fileValid(file)){
+      axios.post('http://localhost:8080/admin/loadFile',{test:"test"})
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      }); 
+    }
+     // axios.post('admin/loadFile',{});
+    if(flag){
+      console.log("ddddd");
+    }else{
+      console.log("fdsfasdf");
+    }
     this.setState({ modalIsOpen: false });
-  }
-  checkFile() {
-    console.log(this);
-    console.log(this.refs.modelinstance);
-  }
+  } 
 
   render() {
+    Modal.setAppElement('#viewTitle');
     const modalIns = (
       <div>
         <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
+          isOpen={this.state.modalIsOpen} 
           className="dv-modal-dialog"
           shouldCloseOnOverlayClick={false}
-          contentLabel="Minimal Modal Example"
+          contentLabel="Minimal Modal Example" 
         >
           <div className="modal-content">
             <div className="modal-header">
@@ -61,28 +87,28 @@ export default class ViewTitile extends React.Component {
                 className="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                onClick={this.closeModal.bind(false)}
+                onClick={this.closeModal.bind(this,false)}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              <form>
+              <form  >
                 <div className="form-group">
-                  <label htmlFor="formGroupExampleInput">文档名称</label>
+                  <label  >文档名称</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="formGroupExampleInput"
+                    id="wordsFileNameInput"
                     placeholder="文档名称"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlFile1">选择文档</label>
+                  <label  >选择文档</label>
                   <input
                     type="file"
                     className="form-control"
-                    id="exampleFormControlFile1"
+                    id="wordsFileInput"
                   />
                 </div>
               </form>
@@ -91,7 +117,7 @@ export default class ViewTitile extends React.Component {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={this.closeModal.bind(true)}
+                onClick={this.closeModal.bind(this,true)}
               >
                 {"确定"}
               </button>
@@ -99,7 +125,7 @@ export default class ViewTitile extends React.Component {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
-                onClick={this.closeModal.bind(false)}
+                onClick={this.closeModal.bind(this,false)}
               >
                 {"取消"}
               </button>
@@ -119,8 +145,7 @@ export default class ViewTitile extends React.Component {
               className="btn btn-outline-secondary btn-sm"
               data-toggle="modal"
               data-target="#myModal"
-              onClick={this.openModal}
-              // onClick={this.checkFile.bind(this)}
+              onClick={this.openModal} 
             >
               {"切换文档"}
             </button>

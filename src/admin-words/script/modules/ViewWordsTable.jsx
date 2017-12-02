@@ -6,8 +6,7 @@ const charFilter = function(str) {
   return str;
 };
 
-const trContent = function(me, item, key) {
-  console.log(me);
+const trContent = function(me, item, key) { 
   return (
     <tr key={"words_" + key} onDoubleClick={me.onDoubleClick}>
       <td>{key + 1}</td>
