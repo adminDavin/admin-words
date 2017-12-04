@@ -6,6 +6,8 @@ import Modal from "react-modal";
 import InputNumber from "rc-input-number";
 import "rc-input-number/assets/index.css";
 import TableExport from "tableexport/dist/js/tableexport";
+import utils from "../utils.js"; 
+
 // console.log(Tableexport);
 const charFilter = function(str) {
   str = str.replace(/[\n]/gi, "");
@@ -80,47 +82,52 @@ class ViewWordsTable extends React.Component {
     let me = this;
   }
 
+
+  
+ 
   // componentDidUpdate() {
-  //   let me = this;
-  //   // 选词录入功能
+  //   console.log("******************************************************");
+  //   let item = document.getElementById("myIframe");
+  //   if (item) {
+  //     console.log(item, item.contentWindow);
+  //     item.onload = function() {
+  //       item.contentWindow.onmouseup = function() {
+  //         console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  //       };
+  //     };
+  //   }
+  // } 
 
-  //   console.log("sdsdasddssssssssssssssssssssssssssss");
-  //   document.getElementById("myIframe").contentWindow.onmouseup = function() {
-  //     // $("#myIframe").conte/nts().mouseup = function() {
-  //     console.log("sfsdfddfdddddddddddddddddd");
 
-  //     let myDocument = document.getElementById("myIframe").document;
-  //     var text = "";
-  //     let container = document.getElementById("myIframe").contentWindow;
-  //     if (container.getSelection) {
-  //       text = container.getSelection().toString();
-  //     } else if (
-  //       myDocument.selection &&
-  //       myDocument.selection.type != "Control"
-  //     ) {
-  //       text = myDocument.selection.createRange().text;
-  //     }
-  //     text = charFilter(text);
-  //     if ("" != text) {
-  //       if (text.length > 100) {
-  //         alert("选取的词超过了100个字符，请重新选取！");
-  //         container.getSelection().removeAllRanges();
-  //         return;
-  //       } else {
-  //         let content = $("#myIframe").contents();
-  //         let page = content.find("#pageNumber").val();
-  //         let item = {
-  //           id: 1,
-  //           words: text,
-  //           pageInfo: parseInt(page) + me.state.value - 1
-  //         };
-  //         let data = me.state.data;
-  //         data.push(item);
-  //         me.setState({ data: data });
-  //       }
-  //     }
-  //   };
-  // }
+
+  componentDidUpdate() {
+    let me = this; 
+    let item = document.getElementById("myIframe");
+    // 选词录入功能 
+    if (item) {
+      item.onload=function(){
+        item.contentWindow.onmouseup=function(){
+          let myDocument= item.document;
+          let container = item.contentWindow;
+          var text = ""; 
+          if (container.getSelection) {
+            text = container.getSelection().toString();
+          } else if (
+            myDocument.selection &&
+            myDocument.selection.type != "Control"
+          ) {
+            text = myDocument.selection.createRange().text;
+            if(utils.addWordsPre(text)){
+              let data = me.state.data;
+              data.push(item);
+              me.setState({ data: data });
+              container.getSelection().removeAllRanges(); 
+            } 
+          }  
+        }
+      }     
+    }
+  }
   componentDidMount() {
     TableExport(document.getElementById("words-table"), {
       headers: false, // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
@@ -137,43 +144,35 @@ class ViewWordsTable extends React.Component {
     // window.addEventListener("message", event => {
     //   console.log("previewPage receives message", event, false);
     // });
-    let me = this;
+    // let me = this;
     // 选词录入功能
 
-    document.getElementById("myIframe").contentWindow.onmouseup = function() {
-      // $("#myIframe").conte/nts().mouseup = function() {
-      console.log("sfsdfddfdddddddddddddddddd");
-      let myDocument = document.getElementById("myIframe").document;
-      var text = "";
-      let container = document.getElementById("myIframe").contentWindow;
-      if (container.getSelection) {
-        text = container.getSelection().toString();
-      } else if (
-        myDocument.selection &&
-        myDocument.selection.type != "Control"
-      ) {
-        text = myDocument.selection.createRange().text;
-      }
-      text = charFilter(text);
-      if ("" != text) {
-        if (text.length > 100) {
-          alert("选取的词超过了100个字符，请重新选取！");
-          container.getSelection().removeAllRanges();
-          return;
-        } else {
-          let content = $("#myIframe").contents();
-          let page = content.find("#pageNumber").val();
-          let item = {
-            id: 1,
-            words: text,
-            pageInfo: parseInt(page) + me.state.value - 1
-          };
-          let data = me.state.data;
-          data.push(item);
-          me.setState({ data: data });
+    let me = this; 
+    let item = document.getElementById("myIframe");
+    // 选词录入功能 
+    if (item) {
+      item.onload=function(){
+        item.contentWindow.onmouseup=function(){
+          let myDocument= item.document;
+          let container = item.contentWindow;
+          var text = ""; 
+          if (container.getSelection) {
+            text = container.getSelection().toString();
+          } else if (
+            myDocument.selection &&
+            myDocument.selection.type != "Control"
+          ) {
+            text = myDocument.selection.createRange().text;
+            if(utils.addWordsPre(text)){
+              let data = me.state.data;
+              data.push(item);
+              me.setState({ data: data });
+              container.getSelection().removeAllRanges(); 
+            } 
+          }  
         }
-      }
-    };
+      }     
+    }
   }
 
   onDoubleClick(item, event) {

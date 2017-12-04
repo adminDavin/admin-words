@@ -84,8 +84,8 @@ body {
 .dv-modal-dialog{
   position: absolute;
   top: 100px;
-  width:400px; 
-  left: 30%; 
+  width:700px; 
+  left: 20%; 
   border-radius: 5px; 
 }
 
@@ -106,4 +106,32 @@ body {
 .btn-toolbar{
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.modal-header{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.modal-footer{
+  padding-top: 5px;
+  padding-bottom: 5px; 
+}
+
+.modal-body{
+  padding-top:0px;
+}
+
+.nav-link{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+label{
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+.dv-table-hist{  
+  max-height:350px; 
+  overflow-y:auto
 }

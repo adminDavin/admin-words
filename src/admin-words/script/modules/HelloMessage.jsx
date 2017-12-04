@@ -1,6 +1,4 @@
-import React from "react";
-import { Document, Page, setOptions } from "react-pdf/build/entry.webpack";
-
+import React from "react"; 
 export default class HelloMessage extends React.Component {
   render() {
     return (

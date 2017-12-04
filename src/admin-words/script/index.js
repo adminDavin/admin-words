@@ -15,10 +15,13 @@ import { Provider } from "react-redux";
 import HeadLayer from "./modules/HeadLayer.jsx";
 import Manage from "./modules/Manage.jsx";
 import UserLogin from "./modules/UserLogin.jsx";
+import ModalTest from "./modules/ModalTest.jsx";
 
 import store from "./redux/Store";
 
 ReactDOM.render(<HeadLayer />, document.getElementById("header"));
+// ReactDOM.render(<ModalTest />, document.getElementById("content"));
+
 // ReactDOM.render(<UserLogin />, document.getElementById("content"));
 
 // ReactDOM.render(
