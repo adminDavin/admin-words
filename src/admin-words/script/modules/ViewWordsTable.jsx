@@ -3,37 +3,9 @@ import ReactTooltip from "react-tooltip";
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
-import InputNumber from "rc-input-number";
-import "rc-input-number/assets/index.css";
+import PropTypes from "prop-types";
 import TableExport from "tableexport/dist/js/tableexport";
-import utils from "../utils.js"; 
-
-// console.log(Tableexport);
-const charFilter = function(str) {
-  str = str.replace(/[\n]/gi, "");
-  str = str.replace(/\"/g, "");
-  return str;
-};
-const removeElement = function(arr, ele) {
-  var result = [];
-  if (arr instanceof Array) {
-    if (ele instanceof Array) {
-      result = arr.filter(function(item) {
-        var isInEle = ele.some(function(eleItem) {
-          return item === eleItem;
-        });
-        return !isInEle;
-      });
-    } else {
-      result = arr.filter(function(item) {
-        return item !== ele;
-      });
-    }
-  } else {
-    console.log("parameter error of function removeElement");
-  }
-  return result;
-};
+import utils from "../utils.js";
 
 const trContent = function(me, item, key) {
   return (
@@ -50,84 +22,45 @@ const trContent = function(me, item, key) {
   );
 };
 
-class ViewWordsTable extends React.Component {
+class ViewWordsTable extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       uuId: props.uuId,
-      disabled: false,
-      readOnly: false,
-      value: 1,
-      modalIsOpen: true,
-      data: [
-        { id: 1, words: "this is test!", pageInfo: 5 },
-        {
-          id: 2,
-          words: "this is dddddddddddddddddddddddddddddddddddddddddddddddddd !",
-          pageInfo: 5
-        },
-        { id: 3, words: "this is testdsdffffffffffff!", pageInfo: 5 },
-        { id: 4, words: "this is test!", pageInfo: 5 }
-      ]
+      incre: 0,
+      data: [],
+      initPage: props.initPage
     };
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      uuId: nextProps.uuId,
-      data: []
-    });
-    let me = this;
-  }
-
-
-  
- 
-  // componentDidUpdate() {
-  //   console.log("******************************************************");
-  //   let item = document.getElementById("myIframe");
-  //   if (item) {
-  //     console.log(item, item.contentWindow);
-  //     item.onload = function() {
-  //       item.contentWindow.onmouseup = function() {
-  //         console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  //       };
-  //     };
-  //   }
-  // } 
-
-
-
-  componentDidUpdate() {
-    let me = this; 
-    let item = document.getElementById("myIframe");
-    // 选词录入功能 
-    if (item) {
-      item.onload=function(){
-        item.contentWindow.onmouseup=function(){
-          let myDocument= item.document;
-          let container = item.contentWindow;
-          var text = ""; 
-          if (container.getSelection) {
-            text = container.getSelection().toString();
-          } else if (
-            myDocument.selection &&
-            myDocument.selection.type != "Control"
-          ) {
-            text = myDocument.selection.createRange().text;
-            if(utils.addWordsPre(text)){
-              let data = me.state.data;
-              data.push(item);
-              me.setState({ data: data });
-              container.getSelection().removeAllRanges(); 
-            } 
-          }  
-        }
-      }     
+  componentWillUpdate(item, item1) {
+    if (item.uuId != item1.uuId) {
+      item1.uuId = item.uuId;
+      this.setState({ data: [] });
     }
   }
+
+  componentDidUpdate() {
+    let me = this;
+    let myframe = document.getElementById("myIframe");
+    // 选词录入功能
+    if (myframe) {
+      myframe.contentWindow.onmouseup = function() {
+        let container = myframe.contentWindow;
+        if (container.getSelection) {
+          let text = utils.addWordsPre(container.getSelection().toString());
+          if (text != null) {
+            let data = me.state.data;
+            text.pageInfo = text.pageInfo + me.state.initPage;
+            data.push(text);
+            me.setState({ data: data, incre: me.state.incre + 1 });
+            container.getSelection().removeAllRanges();
+          }
+        }
+      };
+    }
+  }
+
   componentDidMount() {
     TableExport(document.getElementById("words-table"), {
       headers: false, // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
@@ -141,89 +74,21 @@ class ViewWordsTable extends React.Component {
       ignoreCols: null // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
       // trimWhitespace: true // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
     });
-    // window.addEventListener("message", event => {
-    //   console.log("previewPage receives message", event, false);
-    // });
-    // let me = this;
-    // 选词录入功能
-
-    let me = this; 
-    let item = document.getElementById("myIframe");
-    // 选词录入功能 
-    if (item) {
-      item.onload=function(){
-        item.contentWindow.onmouseup=function(){
-          let myDocument= item.document;
-          let container = item.contentWindow;
-          var text = ""; 
-          if (container.getSelection) {
-            text = container.getSelection().toString();
-          } else if (
-            myDocument.selection &&
-            myDocument.selection.type != "Control"
-          ) {
-            text = myDocument.selection.createRange().text;
-            if(utils.addWordsPre(text)){
-              let data = me.state.data;
-              data.push(item);
-              me.setState({ data: data });
-              container.getSelection().removeAllRanges(); 
-            } 
-          }  
-        }
-      }     
-    }
+    document.oncontextmenu = function() {
+      return false;
+    };
   }
 
   onDoubleClick(item, event) {
     let data = this.state.data;
-    this.setState({ data: removeElement(data, item) });
+    this.setState({ data: utils.removeElement(data, item) });
     return false;
   }
 
-  onChange = value => {
-    console.log("onChange:", value);
-    this.setState({ value });
-  };
-  toggleDisabled = () => {
-    this.setState({
-      disabled: !this.state.disabled
-    });
-  };
-
-  openModal() {
-    this.setState({ modalIsOpen: true });
-  }
-
-  closeModal(flag) {
-    // axios.post('admin/loadFile',{});
-    if (flag) {
-      // console.log($("#words-table").tableExport({ type: "excel" }));
-      console.log("ddddd");
-    } else {
-      console.log("fdsfasdf");
-    }
-    this.setState({ modalIsOpen: false });
-  }
   render() {
     let data = this.state.data;
-
     return (
       <div className="container-fluid">
-        <div className="container dv-words-table-up">
-          <div style={{ marginBottom: 5 }}>
-            <span className="badge badge-light">起始页码</span>
-            <InputNumber
-              min={1}
-              value={this.state.value}
-              style={{ width: 50 }}
-              readOnly={this.state.readOnly}
-              onChange={this.onChange}
-              disabled={this.state.disabled}
-              useTouch
-            />
-          </div>
-        </div>
         <div className="row ">
           <table className="table thead-light table-bordered" id="words-table">
             <thead className="thead-dark">
@@ -248,4 +113,10 @@ class ViewWordsTable extends React.Component {
     );
   }
 }
+
+ViewWordsTable.propTypes = {
+  uuId: PropTypes.string,
+  initPage: PropTypes.number
+};
+
 export default ViewWordsTable;
