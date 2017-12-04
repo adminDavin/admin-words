@@ -44,9 +44,6 @@ module.exports = {
       {
         from: __dirname + "/src/admin-words/pdf-viewer",
         to: __dirname + "/dist/pdf-viewer"
-      },
-      {
-        from: __dirname + "/node_modules/jquery/dist/jquery.min.js"
       }
     ]),
     new webpack.optimize.CommonsChunkPlugin({ names: ["common"] }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
@@ -68,8 +65,21 @@ module.exports = {
     contentBase: path.resolve(__dirname, "dist"), // 监听哪个目录下启动热更新
     host: "localhost", // 服务地址 192.168.0.106本地
     compress: true, // 服务器端的压缩，开启
-    port: "3000" // 端口号
+    port: "3000", // 端口号
+    proxy: {
+      "/admin": {
+        target: "http://localhost:8080/words-admin/",
+        secure: false
+        // pathRewrite: { "^/api": "" }
+      },
+      "/pdf-store": {
+        target: "http://localhost:8080/words-admin/pdf-directory",
+        secure: false,
+        pathRewrite: { "^/pdf-store": "" }
+      }
+    }
   },
+
   watchOptions: {
     // 实时打包更新
     poll: 1000, // 每1s时间就检测文件是否修改，修改了就自动帮我们打包
