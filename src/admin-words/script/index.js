@@ -1,23 +1,11 @@
 import "../style/admin-words.scss"; 
 
 import React from "react";
-import ReactDOM from "react-dom";
-import {
-  Router,
-  Route,
-  Redirect,
-  IndexRoute,
-  browserHistory,
-  hashHistory
-} from "react-router";
-import { Provider } from "react-redux";
-
+import ReactDOM from "react-dom";  
 import HeadLayer from "./modules/HeadLayer.jsx";
 import Manage from "./modules/Manage.jsx";
 import UserLogin from "./modules/UserLogin.jsx";
-import ModalTest from "./modules/ModalTest.jsx";
-
-import store from "./redux/Store";
+import ModalTest from "./modules/ModalTest.jsx"; 
 
 ReactDOM.render(<HeadLayer />, document.getElementById("header"));
 // ReactDOM.render(<ModalTest />, document.getElementById("content"));

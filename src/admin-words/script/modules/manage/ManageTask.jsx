@@ -1,5 +1,5 @@
 import React from "react";
-import CommonTable from "./CommonTable";
+// import CommonTable from "./CommonTable";
 const th = (
   <thead>
     <tr>
@@ -79,11 +79,11 @@ class ManageTask extends React.Component {
     return (
       <div className="row">
         <div className="container-fluid">
-          <CommonTable
+          {/* <CommonTable
             data={this.state.data}
             columns={columns}
             onRowDoubleClick={this.onRowDoubleClick}
-          />
+          /> */}
         </div>
       </div>
     );

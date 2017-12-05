@@ -14,7 +14,7 @@ module.exports = {
   },
   output: {
     path: __dirname + "/dist",
-    filename: "[name].bundle.js"
+    filename: "[name]-[chunkhash:6].js"
   },
   module: moduleRulesLoader,
   resolve: {
@@ -23,7 +23,7 @@ module.exports = {
     modules: ["node_modules"]
   },
   plugins: [
-    // new CleanWebpackPlugin("./dist"),
+    new CleanWebpackPlugin("./dist"),
     new HtmlWebpackPlugin({
       title: "Custom template",
       filename: "index.html",
@@ -37,9 +37,14 @@ module.exports = {
       common: "./src/admin-words/script/index.js",
       chunks: ["common", "viewer"]
     }),
-    // new purifyCSSPlugin({
-    //   paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new purifyCSSPlugin({
+      paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
+    }), 
     new CopyWebpackPlugin([
       {
         from: __dirname + "/src/admin-words/pdf-viewer",
