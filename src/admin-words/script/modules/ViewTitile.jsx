@@ -41,6 +41,7 @@ export default class ViewTitile extends React.Component {
       pdfName: "测试文档",
       isOpen: false,
       hisData: [],
+      docId: 0,
       initPage: 0
     };
   }
@@ -62,6 +63,7 @@ export default class ViewTitile extends React.Component {
           me.setState({
             pdfUrl: result.uuID,
             pdfName: result.name,
+            docId: result.docId,
             initPage: 0
           });
           $("[data-toggle='tooltip']").tooltip("show");
@@ -224,6 +226,8 @@ export default class ViewTitile extends React.Component {
             <ViewWordsTable
               uuId={this.state.pdfUrl}
               initPage={this.state.initPage}
+              docId={this.state.docId}
+              userId={this.state.userId}
             />
           </div>
           <Iframe

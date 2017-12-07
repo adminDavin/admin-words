@@ -44,7 +44,7 @@ module.exports = {
     }),
     new purifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
-    }), 
+    }),
     new CopyWebpackPlugin([
       {
         from: __dirname + "/src/admin-words/pdf-viewer",
@@ -78,7 +78,7 @@ module.exports = {
         // pathRewrite: { "^/api": "" }
       },
       "/pdf-store": {
-        target: "http://localhost:8080/words-admin/pdf-directory",
+        target: "http://localhost:8080/words-admin/pdf-store",
         secure: false,
         pathRewrite: { "^/pdf-store": "" }
       }

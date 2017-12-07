@@ -3,6 +3,7 @@ import ReactTooltip from "react-tooltip";
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
+import request from "../sevice/request.js";
 import PropTypes from "prop-types";
 import TableExport from "tableexport/dist/js/tableexport";
 import utils from "../utils.js";
@@ -27,9 +28,9 @@ class ViewWordsTable extends React.PureComponent {
     super(props);
     this.state = {
       uuId: props.uuId,
-      incre: 0,
       data: [],
-      initPage: props.initPage
+      initPage: props.initPage,
+      docId: props.docId
     };
   }
 
@@ -50,10 +51,19 @@ class ViewWordsTable extends React.PureComponent {
         if (container.getSelection) {
           let text = utils.addWordsPre(container.getSelection().toString());
           if (text != null) {
-            let data = me.state.data;
-            text.pageInfo = text.pageInfo + me.state.initPage;
-            data.push(text);
-            me.setState({ data: data, incre: me.state.incre + 1 });
+            let params = new FormData();
+            params.append("docId", me.props.docId);
+            params.append("initPage", me.props.initPage);
+            params.append("pageNum", text.pageInfo);
+            params.append("textContent", text.words);
+            params.append("userId", me.props.userId);
+            console.log(params);
+            request.sendRequst("/admin/addWords", params, function(resp) {
+              let data = me.state.data;
+              text.pageInfo = text.pageInfo + me.props.initPage;
+              data.push(text);
+              me.setState({ data: data });
+            });
             container.getSelection().removeAllRanges();
           }
         }
@@ -116,7 +126,9 @@ class ViewWordsTable extends React.PureComponent {
 
 ViewWordsTable.propTypes = {
   uuId: PropTypes.string,
-  initPage: PropTypes.number
+  initPage: PropTypes.number,
+  docId: PropTypes.number,
+  userId: PropTypes.number
 };
 
 export default ViewWordsTable;
