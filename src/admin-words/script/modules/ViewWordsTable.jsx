@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
 import request from "../sevice/request.js";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 import utils from "../utils.js";
 import ModalCommonv1 from "./ModalCommonv1.jsx";
 
@@ -31,107 +31,134 @@ class ViewWordsTable extends React.Component {
       data: [],
       initPage: 0,
       docId: props.docId,
-      showModal: true
+      showModal: true,
+      modalData: null
     };
   }
 
   componentWillUpdate(item, item1) {
     if (item.uuId != item1.uuId) {
-      item1.uuId = item.uuId; 
-      item1.initPage= 0; 
-      $('#InitPageInputTarget')[0].value=this.state.initPage;
+      item1.uuId = item.uuId;
+      item1.initPage = 0;
+      $("#InitPageInputTarget")[0].value = this.state.initPage;
     }
   }
 
-  componentDidUpdate() { 
-    let me = this;  
-    let myframe = document.getElementById("myIframe"); 
-    // 选词录入功能 
+  exportTolocal() {
+    console.log(this);
+  }
+
+  changeInitPage() {
+    let oldValue = this.state.initPage;
+    let newValue = parseInt($("#InitPageInputTarget").val());
+    if (oldValue != newValue) {
+      this.setState({
+        initPage: newValue
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    let me = this;
+    let myframe = document.getElementById("myIframe");
+    // 选词录入功能
     if (myframe) {
       myframe.contentWindow.onmouseup = function() {
-        let container = myframe.contentWindow; 
+        let container = myframe.contentWindow;
         if (container.getSelection) {
           let wordsInfo = utils.addWordsPre(container);
           if (wordsInfo != null) {
-            let params = new FormData(); 
-            let initPage=parseInt($('#InitPageInputTarget').val());
+            let params = new FormData();
+            let initPage = parseInt($("#InitPageInputTarget").val());
             params.append("docId", me.props.docId);
             params.append("initPage", initPage);
-            params.append("pageNum", text.pageInfo);
-            params.append("textContent", text.words);
-            params.append("userId", me.props.userId); 
+            params.append("pageNum", wordsInfo.pageInfo);
+            params.append("textContent", wordsInfo.words);
+            params.append("userId", me.props.userId);
             request.sendRequst("/admin/addWords", params, function(resp) {
               let data = me.state.data;
-              wordsInfo.pageInfo = text.pageInfo + initPage;
-              wordsInfo.append("wordsId",1);
-              data.push(wordsInfo); 
-              me.setState({ data: data }); 
+              wordsInfo.pageInfo = wordsInfo.pageInfo + initPage;
+              wordsInfo["wordsId"] = 1;
+              data.push(wordsInfo);
+              me.setState({ data: data });
             });
           }
         }
       };
     }
-  } 
-  onDoubleClick(item, event) { 
-    // this.setState({ data: utils.removeElement(data, item) });
-    this.setState({  showModal: true });
-   
-    return false;
   }
-  exportTolocal(){
-    console.log(this);
-  }
-  changeInitPage(){ 
-    let oldValue=this.state.initPage;
-    let newValue=parseInt($('#InitPageInputTarget').val());
-    if(oldValue != newValue){
-      this.setState({
-        initPage:newValue
-      });
-    }
-  }
-  modalAction(flag, child){
-    console.log(flag, child);
-    if (flag == "True") {
-      request.sendRequst("/admin/deleteWords", {}, function(resp) {
-        let data = me.state.data;
-        wordsInfo.pageInfo = text.pageInfo + initPage;
-        wordsInfo.append("wordsId",1);
-        data.push(wordsInfo); 
 
-        let data = this.state.data;    
-        this.setState({ data: utils.removeElement(data, item) });
-      });
-     
-    }
+  onDoubleClick(item, event) {
+    this.setState({ showModal: true, modalData: item });
   }
+
+  modalAction(flag, child) {
+    let me = this;
+    let item = this.state.modalData;
+    if (flag == "True") {
+      request.sendRequst(
+        "/admin/deleteWords",
+        { wordsId: item.wordsId },
+        function(resp) {
+          if (resp.code === 200) {
+            let data = me.state.data;
+            me.setState({ data: utils.removeElement(data, item) });
+          } else {
+            alert(resp.result);
+          }
+        }
+      );
+    }
+    this.setState({ showModal: false });
+  }
+
   render() {
     let data = this.state.data;
-    let tableTools= <div className="row dv-words-table-title">
-                      <div className="col-4">
-                        <button type="button" className="btn btn-outline-info btn-sm" onClick={this.exportTolocal.bind(this)}>保存至本地</button>
-                      </div>
-                      <div className="col-8"> 
-                        <div className="input-group  input-group-sm">
-                          <div className="input-group-addon">初始页码</div> 
-                          <input type="number" className="form-control" style={{"zIndex": "auto"}} id="InitPageInputTarget" min="0" placeholder={this.state.initPage} onChange={this.changeInitPage.bind(this)}/>
-                        </div>
-                      </div>
-                    </div>;
-    
-    let modal=<ModalCommonv1 onClose={this.modalAction.bind(this)}  show={this.state.showModal} pe={"#viewTitle"} title="请确认">
-                <p>确定是否删除？</p>
-              </ModalCommonv1>;
-    
-    
-    
-    
-    
+    let tableTools = (
+      <div className="row dv-words-table-title">
+        <div className="col-4">
+          <button
+            type="button"
+            className="btn btn-outline-info btn-sm"
+            onClick={this.exportTolocal.bind(this)}
+          >
+            保存至本地
+          </button>
+        </div>
+        <div className="col-8">
+          <div className="input-group  input-group-sm">
+            <div className="input-group-addon">初始页码</div>
+            <input
+              type="number"
+              className="form-control"
+              style={{ zIndex: "auto" }}
+              id="InitPageInputTarget"
+              min="0"
+              placeholder={this.state.initPage}
+              onChange={this.changeInitPage.bind(this)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+
+    let modal = (
+      <ModalCommonv1
+        modalData={this.state.modalData}
+        onClose={this.modalAction.bind(this)}
+        show={this.state.showModal}
+        pe={"#viewTitle"}
+        title="请确认"
+      >
+        <p>确定是否删除？</p>
+      </ModalCommonv1>
+    );
+
     return (
       <div className="container-fluid">
-        {tableTools}  
-        {modal}  
-        <div className="row" id="scroll_wrap"> 
+        {tableTools}
+        {modal}
+        <div className="row" id="scroll_wrap">
           <table className="table thead-light table-bordered" id="words-table">
             <thead className="thead-dark">
               <tr>
@@ -157,7 +184,7 @@ class ViewWordsTable extends React.Component {
 }
 
 ViewWordsTable.propTypes = {
-  uuId: PropTypes.string, 
+  uuId: PropTypes.string,
   docId: PropTypes.number,
   userId: PropTypes.number
 };
