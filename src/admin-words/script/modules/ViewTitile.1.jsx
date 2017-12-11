@@ -42,11 +42,14 @@ export default class ViewTitile extends React.Component {
       isOpen: false,
       hisData: [],
       docId: 0,
-      initPage: 0,
-      userId: 1
+      initPage: 0
     };
   }
- 
+
+  inputNumOnChange = function(value) {
+    this.setState({ initPage: value });
+    $("[data-toggle='tooltip']").tooltip("hide");
+  };
   toggleModal = (flag, child) => {
     let me = this;
     if (flag == "True") {
@@ -56,10 +59,16 @@ export default class ViewTitile extends React.Component {
         let formdata = new FormData();
         formdata.append("file", files[0]);
         formdata.append("name", name);
-        // $('#loading').modal('show');
+        $('#loading').modal('show');
         request.apiLoadFile(function(result) {
-          $('#loading').modal('hide');           
-          me.setState({  pdfUrl: result.uuID, pdfName: result.name,  docId: parseInt(result.docId) }); 
+          me.setState({
+            pdfUrl: result.uuID,
+            pdfName: result.name,
+            docId: result.docId,
+            initPage: 0
+          });
+          $("[data-toggle='tooltip']").tooltip("show");
+          $('#loading').modal('hide');
         }, formdata);
       }
     }
@@ -191,7 +200,25 @@ export default class ViewTitile extends React.Component {
           <div className="col-4 align-self-center">
             {"文档ID:"}
             {this.state.pdfUrl}
-          </div> 
+          </div>
+          <div className="col-2 align-self-center input-group">
+            <span
+              className="input-group-addon"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="请使用使用上翻键使初始页码调整至自己所需的初始页码。如果不这样操作，不可进行选词操作！"
+            >
+              {"初始页码"}{" "}
+            </span>
+            <InputNumber
+              className="input"
+              min={0}
+              step={1}
+              value={this.state.initPage}
+              style={{ width: 70 }}
+              onChange={value => this.inputNumOnChange(value)}
+            />
+          </div>
         </div>
         <div className="row justify-content-md-center">
           <div
@@ -199,7 +226,8 @@ export default class ViewTitile extends React.Component {
             className="col-3 alert alert-primary dv-words-table"
           >
             <ViewWordsTable
-              uuId={this.state.pdfUrl} 
+              uuId={this.state.pdfUrl}
+              initPage={this.state.initPage}
               docId={this.state.docId}
               userId={this.state.userId}
             />

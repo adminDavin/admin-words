@@ -78,7 +78,7 @@ module.exports = {
         // pathRewrite: { "^/api": "" }
       },
       "/pdf-store": {
-        target: "http://localhost:8080/words-admin/pdf-store",
+        target: "http://localhost:8080/words-admin/admin/downloadFile",
         secure: false,
         pathRewrite: { "^/pdf-store": "" }
       }

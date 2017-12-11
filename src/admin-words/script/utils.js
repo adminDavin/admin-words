@@ -39,8 +39,10 @@ const getUtils = {
     }
     return true;
   },
-  addWordsPre: function(words) {
+  addWordsPre: function(container) {
+    let words=container.getSelection().toString();
     let text = charFilter(words);
+    container.getSelection().removeAllRanges();
     if ("" != text) {
       if (text.length > 100) {
         alert("选取的词超过了100个字符，请重新选取！");

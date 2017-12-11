@@ -136,3 +136,24 @@ label{
   max-height:350px; 
   overflow-y:auto
 }
+
+
+.dv-words-table-title{
+  margin-top: 10px;
+  margin-bottom: 5px;
+  div{
+    div{
+    .form-control{
+      width: 20px;
+    }
+  }
+  }
+} 
+
+
+
+.scroll_table_content{
+  width:100%; 
+  height:600px;
+  overflow:auto;
+}

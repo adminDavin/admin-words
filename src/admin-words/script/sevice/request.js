@@ -30,8 +30,8 @@ const request = {
           }
         }
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch(function(error) { 
+        alert(error);
       });
   }
 };
