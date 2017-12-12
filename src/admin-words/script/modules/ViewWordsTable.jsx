@@ -7,7 +7,6 @@ import request from "../sevice/request.js";
 import PropTypes from "prop-types";
 import utils from "../utils.js";
 import ModalCommonv1 from "./ModalCommonv1.jsx";
-
 const trContent = function(me, item, key) {
   return (
     <tr key={"words_" + key} onContextMenu={me.onDoubleClick.bind(me, item)}>
@@ -31,15 +30,17 @@ class ViewWordsTable extends React.Component {
       data: [],
       initPage: 0,
       docId: props.docId,
-      showModal: true,
+      showModal: false,
       modalData: null
     };
   }
 
   componentWillUpdate(item, item1) {
     if (item.uuId != item1.uuId) {
+      item1.data=this.props.wordsInfo;
       item1.uuId = item.uuId;
       item1.initPage = 0;
+      item1.data=[];
       $("#InitPageInputTarget")[0].value = this.state.initPage;
     }
   }
@@ -91,19 +92,21 @@ class ViewWordsTable extends React.Component {
   onDoubleClick(item, event) {
     this.setState({ showModal: true, modalData: item });
   }
-
+  componentDidMount(){
+    document.oncontextmenu=new Function("event.returnValue=false;");
+  }
   modalAction(flag, child) {
     let me = this;
     let item = this.state.modalData;
     if (flag == "True") {
-      request.sendRequst(
+      request.sendRequstNew(
         "/admin/deleteWords",
         { wordsId: item.wordsId },
-        function(resp) {
-          if (resp.code === 200) {
+        function(resp) { 
+          if (resp.code === "200") {
             let data = me.state.data;
             me.setState({ data: utils.removeElement(data, item) });
-          } else {
+          } else { 
             alert(resp.result);
           }
         }
@@ -186,7 +189,8 @@ class ViewWordsTable extends React.Component {
 ViewWordsTable.propTypes = {
   uuId: PropTypes.string,
   docId: PropTypes.number,
-  userId: PropTypes.number
+  userId: PropTypes.number,
+  wordsInfo:PropTypes.any
 };
 
 export default ViewWordsTable;

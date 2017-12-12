@@ -77,7 +77,7 @@ body {
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
-  max-width: 150px;
+  max-width: 120px;
   display: block;
 }
 
@@ -133,8 +133,9 @@ label{
   margin-bottom: 0px;
 }
 .dv-table-hist{  
-  max-height:350px; 
-  overflow-y:auto
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 12px;
 }
 
 

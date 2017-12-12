@@ -1,8 +1,21 @@
 import axios from "axios";
 
+const qs = require('qs');
 const request = {
   getModel: function() {
     console.log("fdfd");
+  },
+  sendRequstNew:function(url, params, resp) {
+    let option = {
+      method: "post",
+      url: url,
+      data: qs.stringify(params)
+    };
+    axios(option).then(function(response) {
+      if (response.status == 200) {
+        resp(response.data);
+      }
+    });
   },
   sendRequst: function(url, params, resp) {
     let option = {
@@ -23,14 +36,12 @@ const request = {
       data: data
     })
       .then(function(response) {
-        if (response.status == 200) {
-          if (response.data.code == 200) {
-            let result = response.data.result;
-            resp(result);
-          }
+        if (response.status == 200) {  
+            resp(response.data); 
         }
       })
       .catch(function(error) { 
+        console.log(error);
         alert(error);
       });
   }
