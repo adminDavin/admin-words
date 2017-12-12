@@ -37,16 +37,26 @@ class ViewWordsTable extends React.Component {
 
   componentWillUpdate(item, item1) {
     if (item.uuId != item1.uuId) {
-      item1.data=this.props.wordsInfo;
+      item1.data = this.props.wordsInfo;
       item1.uuId = item.uuId;
       item1.initPage = 0;
-      item1.data=[];
+      item1.data = [];
       $("#InitPageInputTarget")[0].value = this.state.initPage;
     }
   }
 
   exportTolocal() {
     console.log(this);
+    request.sendRequstNew(
+      "/admin/exportWords",
+      {
+        docId: hisInfo.docId,
+        userId: me.state.userId,
+        fileName: me.state.pdfName,
+        type: "doc"
+      },
+      function(resp) {}
+    );
   }
 
   changeInitPage() {
@@ -92,8 +102,8 @@ class ViewWordsTable extends React.Component {
   onDoubleClick(item, event) {
     this.setState({ showModal: true, modalData: item });
   }
-  componentDidMount(){
-    document.oncontextmenu=new Function("event.returnValue=false;");
+  componentDidMount() {
+    document.oncontextmenu = new Function("event.returnValue=false;");
   }
   modalAction(flag, child) {
     let me = this;
@@ -102,11 +112,11 @@ class ViewWordsTable extends React.Component {
       request.sendRequstNew(
         "/admin/deleteWords",
         { wordsId: item.wordsId },
-        function(resp) { 
+        function(resp) {
           if (resp.code === "200") {
             let data = me.state.data;
             me.setState({ data: utils.removeElement(data, item) });
-          } else { 
+          } else {
             alert(resp.result);
           }
         }
@@ -117,6 +127,62 @@ class ViewWordsTable extends React.Component {
 
   render() {
     let data = this.state.data;
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
+    data.push({ words: "dddddddd", pageInfo: 2 });
     let tableTools = (
       <div className="row dv-words-table-title">
         <div className="col-4">
@@ -161,7 +227,7 @@ class ViewWordsTable extends React.Component {
       <div className="container-fluid">
         {tableTools}
         {modal}
-        <div className="row" id="scroll_wrap">
+        <div className="row dv-table-scoll-wrap">
           <table className="table thead-light table-bordered" id="words-table">
             <thead className="thead-dark">
               <tr>
@@ -190,7 +256,7 @@ ViewWordsTable.propTypes = {
   uuId: PropTypes.string,
   docId: PropTypes.number,
   userId: PropTypes.number,
-  wordsInfo:PropTypes.any
+  wordsInfo: PropTypes.any
 };
 
 export default ViewWordsTable;
