@@ -3,6 +3,7 @@ import ReactTooltip from "react-tooltip";
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
+import "bootstrap/dist/js/bootstrap.js";
 import request from "../sevice/request.js";
 import PropTypes from "prop-types";
 import utils from "../utils.js";
@@ -38,29 +39,35 @@ class ViewWordsTable extends React.Component {
   componentWillUpdate(item, item1) {
     if (item.uuId != item1.uuId) {
       item1.data = this.props.wordsInfo;
+      item1.docId = this.props.docId;
       item1.uuId = item.uuId;
-      item1.initPage = 0;
-      item1.data = [];
+      item1.initPage = 0; 
       $("#InitPageInputTarget")[0].value = this.state.initPage;
+      $('[data-toggle="tooltip"]').tooltip('show');
     }
   }
 
-  exportTolocal() {
-    console.log(this);
-    request.sendRequstNew(
+  exportTolocal() { 
+    let me = this; 
+    request.sendRequstExportWords(
       "/admin/exportWords",
       {
-        docId: hisInfo.docId,
-        userId: me.state.userId,
-        fileName: me.state.pdfName,
+        docId: me.props.docId,
+        userId: me.props.userId,
+        fileName: me.props.pdfName, 
         type: "doc"
       },
-      function(resp) {}
+      function(resp) {
+        if (resp.code !== "200") { 
+          alert(resp.result);
+        }
+      }
     );
   }
 
   changeInitPage() {
     let oldValue = this.state.initPage;
+    $('[data-toggle="tooltip"]').tooltip('hide');
     let newValue = parseInt($("#InitPageInputTarget").val());
     if (oldValue != newValue) {
       this.setState({
@@ -71,7 +78,7 @@ class ViewWordsTable extends React.Component {
 
   componentDidUpdate() {
     let me = this;
-    let myframe = document.getElementById("myIframe");
+    let myframe = document.getElementById("myIframe"); 
     // 选词录入功能
     if (myframe) {
       myframe.contentWindow.onmouseup = function() {
@@ -87,7 +94,7 @@ class ViewWordsTable extends React.Component {
             params.append("textContent", wordsInfo.words);
             params.append("userId", me.props.userId);
             request.sendRequst("/admin/addWords", params, function(resp) {
-              let data = me.state.data;
+              let data = me.state.data; 
               wordsInfo.pageInfo = wordsInfo.pageInfo + initPage;
               wordsInfo["wordsId"] = 1;
               data.push(wordsInfo);
@@ -107,11 +114,11 @@ class ViewWordsTable extends React.Component {
   }
   modalAction(flag, child) {
     let me = this;
-    let item = this.state.modalData;
+    let item = this.state.modalData; 
     if (flag == "True") {
       request.sendRequstNew(
         "/admin/deleteWords",
-        { wordsId: item.wordsId },
+        { wordsId: item.wordsId,userId:me.props.userId },
         function(resp) {
           if (resp.code === "200") {
             let data = me.state.data;
@@ -126,63 +133,7 @@ class ViewWordsTable extends React.Component {
   }
 
   render() {
-    let data = this.state.data;
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
-    data.push({ words: "dddddddd", pageInfo: 2 });
+    let data = this.state.data; 
     let tableTools = (
       <div className="row dv-words-table-title">
         <div className="col-4">
@@ -199,12 +150,14 @@ class ViewWordsTable extends React.Component {
             <div className="input-group-addon">初始页码</div>
             <input
               type="number"
-              className="form-control"
+              className="form-control tooltip-show"
               style={{ zIndex: "auto" }}
               id="InitPageInputTarget"
               min="0"
               placeholder={this.state.initPage}
               onChange={this.changeInitPage.bind(this)}
+              data-toggle="tooltip"
+              title="请设置初始页码"
             />
           </div>
         </div>
@@ -255,6 +208,7 @@ class ViewWordsTable extends React.Component {
 ViewWordsTable.propTypes = {
   uuId: PropTypes.string,
   docId: PropTypes.number,
+  pdfName: PropTypes.string,
   userId: PropTypes.number,
   wordsInfo: PropTypes.any
 };
