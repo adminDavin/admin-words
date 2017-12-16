@@ -46,12 +46,11 @@ class ViewWordsTable extends React.Component {
         me.setState({
           data: me.props.wordsInfo,
           uuId: item.uuId,
-          docId: me.props.docId,
-          initPage: me.state.initPage
+          docId: me.props.docId
         });
-        $("#InitPageInputTarget")[0].value = me.state.initPage;
-        $('[data-toggle="tooltip"]').tooltip("show");
       }, 500);
+      $("#InitPageInputTarget")[0].value = 0;
+      $('[data-toggle="tooltip"]').tooltip("show");
     }
   }
 

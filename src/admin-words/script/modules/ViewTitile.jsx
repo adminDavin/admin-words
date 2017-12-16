@@ -101,8 +101,10 @@ export default class ViewTitile extends React.Component {
           userId: me.state.userId,
           state: 0
         };
-
         $("#loading").modal("show");
+        setTimeout(() => {
+          $("#loading").modal("hide");
+        }, 1000);
         request.sendRequstNew("/admin/listWords", hist, function(resp) {
           if (resp.code === "200") {
             me.setState({
@@ -112,7 +114,6 @@ export default class ViewTitile extends React.Component {
               wordsInfo: resp.result.data,
               isOpen: !me.state.isOpen
             });
-            $("#loading").modal("hide");
           } else {
             alert(resp.message);
           }
