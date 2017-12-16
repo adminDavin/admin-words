@@ -96,25 +96,30 @@ export default class ViewTitile extends React.Component {
     if (flag == "True") {
       if (sessionStorage.hisInfo) {
         let hisInfo = JSON.parse(sessionStorage.hisInfo);
-        request.sendRequstNew(
-          "/admin/listWords",
-          { docId: hisInfo.docId, userId: me.state.userId, state: 0 },
-          function(resp) {
-            if (resp.code === "200") {
-              me.setState({
-                pdfUrl: hisInfo.pdfUrl,
-                pdfName: hisInfo.pdfName,
-                docId: hisInfo.docId,
-                wordsInfo: resp.result.data
-              });
-            } else {
-              alert(resp.message);
-            }
+        let hist = {
+          docId: hisInfo.docId,
+          userId: me.state.userId,
+          state: 0
+        };
+
+        $("#loading").modal("show");
+        request.sendRequstNew("/admin/listWords", hist, function(resp) {
+          if (resp.code === "200") {
+            me.setState({
+              pdfUrl: hisInfo.pdfUrl,
+              pdfName: hisInfo.pdfName,
+              docId: hisInfo.docId,
+              wordsInfo: resp.result.data,
+              isOpen: !me.state.isOpen
+            });
+            $("#loading").modal("hide");
+          } else {
+            alert(resp.message);
           }
-        );
+        });
       } else {
         let files = $("#wordsFileInput").get(0).files;
-        if (utils.fileValid(files)) {
+        if (utils.fileValid(files[0].name)) {
           let name = $("#wordsFileNameInput").val();
           let formdata = new FormData();
           formdata.append("file", files[0]);
@@ -126,7 +131,8 @@ export default class ViewTitile extends React.Component {
                 pdfUrl: result.result.uuID,
                 pdfName: result.result.name,
                 docId: parseInt(result.result.docId),
-                wordsInfo: []
+                wordsInfo: [],
+                isOpen: !me.state.isOpen
               });
             } else {
               alert(result.message);
@@ -135,10 +141,11 @@ export default class ViewTitile extends React.Component {
           }, formdata);
         }
       }
+    } else {
+      me.setState({ isOpen: !me.state.isOpen });
     }
 
     sessionStorage.removeItem("hisInfo");
-    me.setState({ isOpen: !me.state.isOpen });
   };
   choseDocu(uuID, name, docId, state) {
     if (state === 0) {

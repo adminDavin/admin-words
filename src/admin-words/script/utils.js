@@ -39,31 +39,22 @@ const getUtils = {
     let d = new Date(dateTime);
     return d.Format("yyyy-MM-dd hh:mm:ss");
   },
-  validFile: function(file) {
-    if (file == "") {
-      // alert("请选择要上传的文件");
-      return false;
-    } else {
-      //检验文件类型是否正确
-      var exec = /[.]/.exec(file) ? /[^.]+$/.exec(file.toLowerCase()) : "";
-      if (exec != "pdf") {
-        alert("文件格式不对，请上传Pdf文件!");
-        return false;
-      }
-    }
-    return true;
-  },
   fileValid: function(file) {
     if (file == "") {
       // alert("请选择要上传的文件");
       return false;
     } else {
       //检验文件类型是否正确
-      var exec = /[.]/.exec(file) ? /[^.]+$/.exec(file.toLowerCase()) : "";
-      // if (exec != "pdf") {
-      //   alert("文件格式不对，请上传Pdf文件!");
-      //   return false;
-      // }
+      console.log(file);
+      let exec = /[.]/.exec(file) ? /[^.]+$/.exec(file.toLowerCase()) : "";
+      console.log(exec);
+      let validType = ["pdf", "doc", "docx", "txt", "ppt", "xls", "xlsx"];
+      let index = $.inArray(exec[0], validType);
+      console.log(index);
+      if (index < 0) {
+        alert("文件格式不对，请上传Pdf文件!");
+        return false;
+      }
     }
     return true;
   },

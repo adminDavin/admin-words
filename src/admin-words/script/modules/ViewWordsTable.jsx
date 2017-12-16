@@ -40,13 +40,18 @@ class ViewWordsTable extends React.Component {
   }
 
   componentWillUpdate(item, item1) {
+    let me = this;
     if (item.uuId != item1.uuId) {
-      item1.data = this.props.wordsInfo;
-      item1.docId = this.props.docId;
-      item1.uuId = item.uuId;
-      item1.initPage = 0;
-      $("#InitPageInputTarget")[0].value = this.state.initPage;
-      $('[data-toggle="tooltip"]').tooltip("show");
+      setTimeout(function() {
+        me.setState({
+          data: me.props.wordsInfo,
+          uuId: item.uuId,
+          docId: me.props.docId,
+          initPage: me.state.initPage
+        });
+        $("#InitPageInputTarget")[0].value = me.state.initPage;
+        $('[data-toggle="tooltip"]').tooltip("show");
+      }, 500);
     }
   }
 
@@ -76,10 +81,10 @@ class ViewWordsTable extends React.Component {
       alert("请输入数字!");
       return;
     }
-    if (value == "") {
-      alert("初始页码不能为空!");
-      return;
-    }
+    // if (value == "") {
+    //   alert("初始页码不能为空!");
+    //   return;
+    // }
     let newValue = parseInt(value);
     if (oldValue != newValue) {
       this.setState({
@@ -98,15 +103,15 @@ class ViewWordsTable extends React.Component {
         if (container.getSelection) {
           let wordsInfo = utils.addWordsPre(container);
           if (wordsInfo != null) {
-            let params = new FormData();
             let initPage = parseInt($("#InitPageInputTarget").val());
-
-            params.append("docId", me.props.docId);
-            params.append("initPage", initPage);
-            params.append("pageNum", wordsInfo.pageNum);
-            params.append("textContent", wordsInfo.words);
-            params.append("userId", me.props.userId);
-            request.sendRequst("/admin/addWords", params, function(resp) {
+            let params = {
+              docId: me.props.docId,
+              initPage: initPage,
+              pageNum: wordsInfo.pageNum,
+              textContent: wordsInfo.textContent,
+              userId: me.props.userId
+            };
+            request.sendRequstNew("/admin/addWords", params, function(resp) {
               if (resp.code === "200") {
                 let data = me.state.data;
                 wordsInfo["wordsId"] = resp.result.data.wordsId;
@@ -171,7 +176,8 @@ class ViewWordsTable extends React.Component {
               style={{ zIndex: "auto" }}
               id="InitPageInputTarget"
               min="0"
-              placeholder={this.state.initPage}
+              value={this.state.initPage}
+              // placeholder={this.state.initPage}
               onChange={this.changeInitPage.bind(this)}
               data-toggle="tooltip"
               title="请设置初始页码"
