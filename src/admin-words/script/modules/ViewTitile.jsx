@@ -98,7 +98,7 @@ export default class ViewTitile extends React.Component {
         let hisInfo = JSON.parse(sessionStorage.hisInfo);
         request.sendRequstNew(
           "/admin/listWords",
-          { docId: hisInfo.docId, userId: me.state.userId,state:0 },
+          { docId: hisInfo.docId, userId: me.state.userId, state: 0 },
           function(resp) {
             if (resp.code === "200") {
               me.setState({
@@ -107,8 +107,6 @@ export default class ViewTitile extends React.Component {
                 docId: hisInfo.docId,
                 wordsInfo: resp.result.data
               });
-              console.log(resp.result.data);
-              console.log(me.state.wordsInfo);
             } else {
               alert(resp.message);
             }
@@ -129,7 +127,7 @@ export default class ViewTitile extends React.Component {
                 pdfName: result.result.name,
                 docId: parseInt(result.result.docId),
                 wordsInfo: []
-              }); 
+              });
             } else {
               alert(result.message);
             }
@@ -154,7 +152,7 @@ export default class ViewTitile extends React.Component {
     let me = this;
     request.sendRequstNew(
       "/admin/listDocument",
-      { userId: me.state.userId,state: 0 },
+      { userId: me.state.userId, state: 0 },
       function(resp) {
         if (resp.code === "200") {
           let hisData = resp.result.data;
@@ -257,9 +255,12 @@ export default class ViewTitile extends React.Component {
         </div>
       </div>
     );
-    let url=   "pdf-viewer/web/viewer.html?file=/pdf-store/1/" +  this.state.pdfUrl + ".pdf";
-    if( this.state.pdfUrl=='test'){
-      url=   "pdf-viewer/web/viewer.html?file=" +  this.state.pdfUrl + ".pdf";
+    let url =
+      "pdf-viewer/web/viewer.html?file=/pdf-store/1/" +
+      this.state.pdfUrl +
+      ".pdf";
+    if (this.state.pdfUrl == "test") {
+      url = "pdf-viewer/web/viewer.html?file=" + this.state.pdfUrl + ".pdf";
     }
     return (
       <div className="container">
@@ -305,7 +306,7 @@ export default class ViewTitile extends React.Component {
             />
           </div>
           <Iframe
-            url={url }
+            url={url}
             // url="pdf-viewer/web/viewer.html"
             height="800px"
             width="100%"

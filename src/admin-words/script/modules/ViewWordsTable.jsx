@@ -8,17 +8,20 @@ import request from "../sevice/request.js";
 import PropTypes from "prop-types";
 import utils from "../utils.js";
 import ModalCommonv1 from "./ModalCommonv1.jsx";
+const regNumber = new RegExp("^[0-9]*$");
+
 const trContent = function(me, item, key) {
+  let pageInfo = item.initPage + item.pageNum;
   return (
     <tr key={"words_" + key} onContextMenu={me.onDoubleClick.bind(me, item)}>
       <td>{key + 1}</td>
       <td>
-        <span className="dv-td-text-longer" data-tip={item.words}>
-          {item.words}
+        <span className="dv-td-text-longer" data-tip={item.textContent}>
+          {item.textContent}
         </span>
         <ReactTooltip />
       </td>
-      <td>{item.pageInfo}</td>
+      <td>{pageInfo}</td>
     </tr>
   );
 };
@@ -41,24 +44,24 @@ class ViewWordsTable extends React.Component {
       item1.data = this.props.wordsInfo;
       item1.docId = this.props.docId;
       item1.uuId = item.uuId;
-      item1.initPage = 0; 
+      item1.initPage = 0;
       $("#InitPageInputTarget")[0].value = this.state.initPage;
-      $('[data-toggle="tooltip"]').tooltip('show');
+      $('[data-toggle="tooltip"]').tooltip("show");
     }
   }
 
-  exportTolocal() { 
-    let me = this; 
+  exportTolocal() {
+    let me = this;
     request.sendRequstExportWords(
       "/admin/exportWords",
       {
         docId: me.props.docId,
         userId: me.props.userId,
-        fileName: me.props.pdfName, 
+        fileName: me.props.pdfName,
         type: "doc"
       },
       function(resp) {
-        if (resp.code !== "200") { 
+        if (resp.code !== "200") {
           alert(resp.result);
         }
       }
@@ -67,8 +70,17 @@ class ViewWordsTable extends React.Component {
 
   changeInitPage() {
     let oldValue = this.state.initPage;
-    $('[data-toggle="tooltip"]').tooltip('hide');
-    let newValue = parseInt($("#InitPageInputTarget").val());
+    $('[data-toggle="tooltip"]').tooltip("hide");
+    let value = $("#InitPageInputTarget").val();
+    if (!regNumber.test(value)) {
+      alert("请输入数字!");
+      return;
+    }
+    if (value == "") {
+      alert("初始页码不能为空!");
+      return;
+    }
+    let newValue = parseInt(value);
     if (oldValue != newValue) {
       this.setState({
         initPage: newValue
@@ -78,7 +90,7 @@ class ViewWordsTable extends React.Component {
 
   componentDidUpdate() {
     let me = this;
-    let myframe = document.getElementById("myIframe"); 
+    let myframe = document.getElementById("myIframe");
     // 选词录入功能
     if (myframe) {
       myframe.contentWindow.onmouseup = function() {
@@ -88,17 +100,22 @@ class ViewWordsTable extends React.Component {
           if (wordsInfo != null) {
             let params = new FormData();
             let initPage = parseInt($("#InitPageInputTarget").val());
+
             params.append("docId", me.props.docId);
             params.append("initPage", initPage);
-            params.append("pageNum", wordsInfo.pageInfo);
+            params.append("pageNum", wordsInfo.pageNum);
             params.append("textContent", wordsInfo.words);
             params.append("userId", me.props.userId);
             request.sendRequst("/admin/addWords", params, function(resp) {
-              let data = me.state.data; 
-              wordsInfo.pageInfo = wordsInfo.pageInfo + initPage;
-              wordsInfo["wordsId"] = 1;
-              data.push(wordsInfo);
-              me.setState({ data: data });
+              if (resp.code === "200") {
+                let data = me.state.data;
+                wordsInfo["wordsId"] = resp.result.data.wordsId;
+                wordsInfo["initPage"] = initPage;
+                data.push(wordsInfo);
+                me.setState({ data: data });
+              } else {
+                alert(resp.result);
+              }
             });
           }
         }
@@ -114,11 +131,11 @@ class ViewWordsTable extends React.Component {
   }
   modalAction(flag, child) {
     let me = this;
-    let item = this.state.modalData; 
+    let item = this.state.modalData;
     if (flag == "True") {
       request.sendRequstNew(
         "/admin/deleteWords",
-        { wordsId: item.wordsId,userId:me.props.userId },
+        { wordsId: item.wordsId, userId: me.props.userId },
         function(resp) {
           if (resp.code === "200") {
             let data = me.state.data;
@@ -133,7 +150,7 @@ class ViewWordsTable extends React.Component {
   }
 
   render() {
-    let data = this.state.data; 
+    let data = this.state.data;
     let tableTools = (
       <div className="row dv-words-table-title">
         <div className="col-4">

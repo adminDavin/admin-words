@@ -2,21 +2,29 @@ const trim = function(str) {
   //删除左右两端的空格
   return str.replace(/(^\s*)|(\s*$)/g, "");
 };
-Date.prototype.Format = function (fmt) {  
+Date.prototype.Format = function(fmt) {
   var o = {
-      "M+": this.getMonth() + 1, //月份 
-      "d+": this.getDate(), //日 
-      "h+": this.getHours(), //小时 
-      "m+": this.getMinutes(), //分 
-      "s+": this.getSeconds(), //秒 
-      "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-      "S": this.getMilliseconds() //毫秒 
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    S: this.getMilliseconds() //毫秒
   };
-  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  if (/(y+)/.test(fmt))
+    fmt = fmt.replace(
+      RegExp.$1,
+      (this.getFullYear() + "").substr(4 - RegExp.$1.length)
+    );
   for (var k in o)
-  if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    if (new RegExp("(" + k + ")").test(fmt))
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+      );
   return fmt;
-}
+};
 
 const charFilter = function(str) {
   str = str.replace(/[\n]/gi, "");
@@ -27,10 +35,9 @@ const getUtils = {
   getModel: function() {
     console.log("fdfd");
   },
-  formatDate:function(dateTime){
-     
-    let d = new Date(dateTime); 
-     return  d.Format("yyyy-MM-dd hh:mm:ss");
+  formatDate: function(dateTime) {
+    let d = new Date(dateTime);
+    return d.Format("yyyy-MM-dd hh:mm:ss");
   },
   validFile: function(file) {
     if (file == "") {
@@ -61,7 +68,7 @@ const getUtils = {
     return true;
   },
   addWordsPre: function(container) {
-    let words=container.getSelection().toString();
+    let words = container.getSelection().toString();
     let text = charFilter(words);
     container.getSelection().removeAllRanges();
     if ("" != text) {
@@ -73,8 +80,8 @@ const getUtils = {
         let page = content.find("#pageNumber").val();
         let item = {
           id: 1,
-          words: text,
-          pageInfo: parseInt(page)
+          textContent: text,
+          pageNum: parseInt(page)
         };
         return item;
       }
