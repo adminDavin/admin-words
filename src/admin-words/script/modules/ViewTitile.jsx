@@ -104,15 +104,14 @@ export default class ViewTitile extends React.Component {
         $("#loading").modal("show");
         setTimeout(() => {
           $("#loading").modal("hide");
-        }, 1000);
+        }, 3000);
         request.sendRequstNew("/admin/listWords", hist, function(resp) {
           if (resp.code === "200") {
             me.setState({
               pdfUrl: hisInfo.pdfUrl,
               pdfName: hisInfo.pdfName,
               docId: hisInfo.docId,
-              wordsInfo: resp.result.data,
-              isOpen: !me.state.isOpen
+              wordsInfo: resp.result.data
             });
           } else {
             alert(resp.message);
@@ -126,14 +125,14 @@ export default class ViewTitile extends React.Component {
           formdata.append("file", files[0]);
           formdata.append("name", name);
           formdata.append("userId", me.state.userId);
+          $("#loading").modal("show");
           request.apiLoadFile(function(result) {
             if (result.code === "200") {
               me.setState({
                 pdfUrl: result.result.uuID,
                 pdfName: result.result.name,
                 docId: parseInt(result.result.docId),
-                wordsInfo: [],
-                isOpen: !me.state.isOpen
+                wordsInfo: []
               });
             } else {
               alert(result.message);
@@ -142,9 +141,8 @@ export default class ViewTitile extends React.Component {
           }, formdata);
         }
       }
-    } else {
-      me.setState({ isOpen: !me.state.isOpen });
     }
+    me.setState({ isOpen: !me.state.isOpen });
 
     sessionStorage.removeItem("hisInfo");
   };
