@@ -10,7 +10,10 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: {
     common: "./src/admin-words/script/index.js",
-    viewer: "./src/admin-words/script/viewer.js"
+    viewer: "./src/admin-words/script/viewer.js",
+    reactor: ["react", "react-dom"],
+    reactRouter: ["react-router"],
+    jquery: ["jquery"]
   },
   output: {
     path: __dirname + "/dist",
@@ -28,14 +31,14 @@ module.exports = {
       title: "Custom template",
       filename: "index.html",
       template: "./src/admin-words/index.html",
-      chunks: ["common"]
+      chunks: ["common", "reactor", "jquery", "reactRouter"]
     }),
     new HtmlWebpackPlugin({
       title: "Custom ddsds",
       filename: "viewer.html",
       template: "./src/admin-words/viewer.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["common", "viewer"]
+      chunks: ["common", "viewer", "reactor", "jquery", "reactRouter"]
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -47,11 +50,14 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: __dirname + "/src/admin-words/pdf-viewer",
+        from: __dirname + "/pdf-viewer",
         to: __dirname + "/dist/pdf-viewer"
       }
     ]),
-    new webpack.optimize.CommonsChunkPlugin({ names: ["common"] }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ["common", "reactor", "jquery", "reactRouter"]
+    }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
+
     new ExtractTextPlugin("[name].css"),
     new ExtractTextPlugin({
       filename: "[name].css"

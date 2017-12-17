@@ -13,7 +13,6 @@ import { Provider } from "react-redux";
 
 import ViewTitile from "./modules/ViewTitile.jsx";
 import ViewWordsTable from "./modules/ViewWordsTable.jsx";
-import store from "./redux/Store";
 
 let words = new WordsInfo();
 
