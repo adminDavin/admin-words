@@ -11,6 +11,7 @@ module.exports = {
   entry: {
     common: "./src/admin-words/script/index.js",
     viewer: "./src/admin-words/script/viewer.js",
+    userInfo: "./src/admin-words/script/userInfo.js",
     reactor: ["react", "react-dom"],
     reactRouter: ["react-router"],
     jquery: ["jquery"]
@@ -39,6 +40,13 @@ module.exports = {
       template: "./src/admin-words/viewer.html",
       common: "./src/admin-words/script/index.js",
       chunks: ["common", "viewer", "reactor", "jquery", "reactRouter"]
+    }),
+    new HtmlWebpackPlugin({
+      title: "Custom ddsds",
+      filename: "userInfo.html",
+      template: "./src/admin-words/userInfo.html",
+      common: "./src/admin-words/script/index.js",
+      chunks: ["common", "userInfo", "reactor", "jquery", "reactRouter"]
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
