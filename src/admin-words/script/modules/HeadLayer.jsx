@@ -1,7 +1,14 @@
 import React from "react";
 import logo from "../../style/logo.jpg";
 
+import routeInfo from "../config/routerConfig.js";
+
 export default class HeadLayer extends React.Component {
+  constructor(props) {
+    super(props);
+    let initInfo = routeInfo.getRouteInfo();
+    console.log(initInfo);
+  }
   text = {
     left: "words-admin",
     search: "搜索",
