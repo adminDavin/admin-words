@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../../style/logo.jpg";
 
 import routeInfo from "../config/routerConfig.js";
+import utils from "../utils";
  
 class TrContent extends React.Component {
   render() {
@@ -26,22 +27,25 @@ export default class HeadLayer extends React.Component {
     baidu: "百度"
   };  
   getHeaderInfo(){ 
-    let route  = this.state.route;   
+    let me =this;
+    let route  = me.state.route;   
     return  <div className="row">
-         {route.title.map(function(pro, index) {
-          return <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={this.managelogin(pro.url,pro.params)}
-              >
-                {pro.name}
-              </button>;
+         {route.title.map(function(pro, index) { 
+                return <button
+                      type="button"
+                      key={"button"+index}
+                      className="btn btn-outline-secondary"
+                      onClick={me.managelogin.bind(me,pro.url,pro.params)}
+                    >
+                      {pro.name}
+                    </button>;
         })}
     </div>;
   }
-  managelogin = function(url,params) {
-    console.log("login ",url,params);
+  managelogin(url,params) {  
+    location.href = url+"?" + utils.parseParam(params);
   };
+  
   render() {
     return (
       <div className="container-fluid row dv-header">

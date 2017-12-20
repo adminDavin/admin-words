@@ -10,6 +10,7 @@ import InputNumber from "react-input-number";
 
 import ReactTooltip from "react-tooltip";
 
+import routeInfo from "../config/routerConfig.js";
 class TrContent extends React.Component {
   render() {
     let state = "异常";
@@ -78,7 +79,8 @@ class TbodyContent extends React.Component {
 
 export default class ViewTitile extends React.Component {
   constructor() {
-    super();
+    super(); 
+    let params = routeInfo.getRouteInfo().params;
     this.state = {
       pdfUrl: "test",
       pdfName: "测试文档",
@@ -86,7 +88,7 @@ export default class ViewTitile extends React.Component {
       hisData: [],
       docId: 0,
       initPage: 0,
-      userId: 1,
+      userId: parseInt(params.userId),
       wordsInfo: []
     };
   }

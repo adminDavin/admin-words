@@ -26,12 +26,28 @@ Date.prototype.Format = function(fmt) {
   return fmt;
 };
 
+
+const parseParam=function(param, key){  
+  let paramStr="";  
+  if(param instanceof String||param instanceof Number||param instanceof Boolean){  
+    paramStr+="&"+key+"="+encodeURIComponent(param);  
+  }else{  
+    for(let p in param){ 
+      paramStr+='&'+p+"="+encodeURIComponent(param[p]);
+    };  
+  }  
+  return paramStr.substr(1);  
+};
+
 const charFilter = function(str) {
   str = str.replace(/[\n]/gi, "");
   str = str.replace(/\"/g, "");
   return trim(str);
 };
 const getUtils = {
+  parseParam: function(param, key){   
+    return parseParam(param, key);  
+  }, 
   getModel: function() {
     console.log("fdfd");
   },
