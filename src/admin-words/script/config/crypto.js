@@ -1,5 +1,5 @@
 const CryptoJS = require("crypto-js");
- 
+
 const crypto = {
   encodeBase64: function(encodeStr) {
     let str = CryptoJS.enc.Utf8.parse(encodeStr);
