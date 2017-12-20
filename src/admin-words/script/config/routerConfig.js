@@ -1,5 +1,17 @@
 import crypto from "./crypto.js";
 
+const title = {right: "管理员登录",
+regist: "用户注册",
+userMange: "用户管理"};
+
+const urlConfig ={
+  viewer:{current:"/viewer.html",to:{userInfo:"/userInfo.html"},isUserAuth:true},
+  userInfo:{current:"/userInfo.html",to:{viewer:"/viewer.html",manageInfo:"/manageInfo.html"},isUserAuth:true}, 
+  manageInfo:{current:"/manageInfo.html",to:{userInfo:"/userInfo.html"},isUserAuth:true},
+  login:{current:"/login.html",to:{viewer:"/viewer.html",manageInfo:"/manageInfo.html",userInfo:"/userInfo.html"}}, 
+  register:{current:"/register.html"}
+};
+
 const getParamData = function() {
   let params = {};
   let paramsStr = window.location.search;
@@ -30,12 +42,15 @@ const getParamData = function() {
 
 const routeInfo = {
   getRouteInfo: function() {
-    let data = { params: getParamData(), url: window.location.pathname };
-
-    if (data.url === "/viewer.html") {
-      if (data.params.userId) {
+    let data = { params: getParamData() };  
+    if (window.location.pathname === urlConfig.viewer.current) {
+      let current = urlConfig.viewer; 
+      if (current.isUserAuth&&!data.params.userId) {
+        location.href = urlConfig.login.current;
       }
-    }
+      data['title'] = {name:title.userMange,url:current.to.userInfo,params:data.params};
+      return data;
+    } 
     return data;
   }
 };

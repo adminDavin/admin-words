@@ -35,10 +35,6 @@ import {
 //   </BrowserRouter>,
 //   document.getElementById("header")
 // );
-
-// ReactDOM.render(<Home />, document.getElementById("header"));
-
-ReactDOM.render( < HeadLayer / > , document.getElementById("header"));
 // ReactDOM.render(<ModalTest />, document.getElementById("content"));
 
 // ReactDOM.render(<UserLogin />, document.getElementById("content"));
@@ -49,3 +45,6 @@ ReactDOM.render( < HeadLayer / > , document.getElementById("header"));
 //   </Provider>,
 //   document.getElementById("content")
 // );
+// ReactDOM.render(<Home />, document.getElementById("header"));
+
+ReactDOM.render( < HeadLayer / > , document.getElementById("header"));

@@ -2,23 +2,45 @@ import React from "react";
 import logo from "../../style/logo.jpg";
 
 import routeInfo from "../config/routerConfig.js";
-
+ 
+class TrContent extends React.Component {
+  render() {
+    var item = this.props.data;
+    return (
+      <tr>
+        <td>{item.name}</td>
+        <td>{item.price}</td>
+        <td>{item.sale}</td>
+      </tr>
+    );
+  }
+}
 export default class HeadLayer extends React.Component {
   constructor(props) {
-    super(props);
-    let initInfo = routeInfo.getRouteInfo();
-    console.log(initInfo);
+    super(props);   
+    this.state = {route:routeInfo.getRouteInfo()};
   }
   text = {
     left: "words-admin",
     search: "搜索",
-    baidu: "百度",
-    right: "管理员登录",
-    regist: "用户注册"
-  };
-
-  managelogin = function() {
-    console.log("login ");
+    baidu: "百度"
+  };  
+  getHeaderInfo(){ 
+    let route  = this.state.route;   
+    return  <div className="row">
+         {route.title.map(function(pro, index) {
+          return <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={this.managelogin(pro.url,pro.params)}
+              >
+                {pro.name}
+              </button>;
+        })}
+    </div>;
+  }
+  managelogin = function(url,params) {
+    console.log("login ",url,params);
   };
   render() {
     return (
@@ -43,18 +65,7 @@ export default class HeadLayer extends React.Component {
           </div>
         </div>
         <div className="col-sm-12 col-md-2">
-          <div className="row">
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={this.managelogin}
-            >
-              {this.text.right}
-            </button>
-            <button type="button" className="btn btn-outline-primary">
-              {this.text.regist}
-            </button>
-          </div>
+            {this.getHeaderInfo()}
         </div>
       </div>
     );

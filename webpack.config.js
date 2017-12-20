@@ -48,6 +48,13 @@ module.exports = {
       common: "./src/admin-words/script/index.js",
       chunks: ["common", "userInfo", "reactor", "jquery", "reactRouter"]
     }),
+    new HtmlWebpackPlugin({
+      title: "Custom ddsds",
+      filename: "login.html",
+      template: "./src/admin-words/login.html",
+      common: "./src/admin-words/script/index.js",
+      chunks: ["common", "userInfo", "reactor", "jquery", "reactRouter"]
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
