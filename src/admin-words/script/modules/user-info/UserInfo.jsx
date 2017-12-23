@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import UserInfoDocu from "./UserInfoDocu.jsx";
+import UserInfoMessage from "./UserInfoMessage.jsx";
 
 const commonNavCol = "col-6 nav-item nav-link ";
 
@@ -20,7 +21,7 @@ class UserInfo extends React.Component {
     this.doNavClick(this.nav.col1);
   }
 
-  doNavClick = function(item) {
+  doNavClick = function (item) {
     if (item) {
       if (item.task) {
         this.setState({
@@ -78,7 +79,9 @@ class UserInfo extends React.Component {
             </div>
           </div>
           <div className="container-fluid dv-user-info-main">
-            <Route path="/ddfd" strict component={UserInfoDocu} />
+            {/* <UserInfoDocu userId={this.props.userId} /> */}
+            <UserInfoMessage userId={this.props.userId} />
+            {/* <Route path="/ddfd" strict component={UserInfoDocu} /> */}
           </div>
         </div>
       </BrowserRouter>

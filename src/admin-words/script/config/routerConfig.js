@@ -39,7 +39,7 @@ const urlConfig = {
   }
 };
 
-const getParamData = function() {
+const getParamData = function () {
   let params = {};
   let paramsStr = window.location.search;
   // console.log("---------------------------");
@@ -66,12 +66,12 @@ const getParamData = function() {
   }
   return params;
 };
-const checkValidAndGetParams = function(config, params) {
+const checkValidAndGetParams = function (config, params) {
   let urlGotoConfig = [];
   if (config.isUserAuth && !params.userId) {
     location.href = urlConfig.login.current;
   }
-  config.to.map(function(item, index) {
+  config.to.map(function (item, index) {
     urlGotoConfig.push({
       name: item.button,
       url: item.url,
@@ -83,7 +83,7 @@ const checkValidAndGetParams = function(config, params) {
 };
 
 const routeInfo = {
-  getRouteInfo: function() {
+  getRouteInfo: function () {
     let data = { params: getParamData() };
     let url = window.location.pathname;
 
@@ -101,6 +101,22 @@ const routeInfo = {
       default:
         console.log("sdddd");
     }
+  },
+  getParamData: function () {
+    let params = {};
+    let paramsStr = window.location.search;
+    if (paramsStr) {
+      let encodeParams = paramsStr.replace(/^\?/, "");
+      let paramsDecode = encodeParams;
+      let tmp = paramsDecode.replace(/^\?/, "").split("&");
+      for (let item of tmp) {
+        let param = item.split("=");
+        if (param.length == 2) {
+          params[param[0]] = param[1];
+        }
+      }
+    }
+    return params;
   }
 };
 
