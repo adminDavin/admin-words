@@ -21,7 +21,7 @@ class UserInfo extends React.Component {
     this.doNavClick(this.nav.col1);
   }
 
-  doNavClick = function (item) {
+  doNavClick = function(item) {
     if (item) {
       if (item.task) {
         this.setState({

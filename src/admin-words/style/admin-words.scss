@@ -51,8 +51,7 @@ body {
   padding-bottom: 40px;
   padding-right: 50px;
   div{ 
-    margin-top: 50px; 
-    background: cornflowerblue;
+    margin-top: 30px; 
 
     form{   
       margin-left: 10px;
@@ -93,6 +92,10 @@ body {
   padding-top: 0.3rem;
   padding-bottom: 0.1rem;
   padding-left: 0.05rem; 
+}
+
+.dv-mr10{
+  margin-right: 10px;
 }
 
 .dv-words-table{
@@ -188,4 +191,33 @@ label{
   margin-bottom: 0px;
   padding-bottom: 0px;
 
+}
+
+.center-child {
+  justify-content:center;//子元素水平居中
+  align-items:center;//子元素垂直居中
+  display:-webkit-flex;
+  
+}
+
+.dv-login {
+     margin-bottom: 5%;
+    width: 70%;
+    height: 60%;
+    background-color: aliceblue;
+  
+}
+
+.dv-login-title{
+  margin-top: 10px!important;
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  padding-bottom: 5px;
+}
+.dv-modal{
+  margin-top: 70px;
+}
+.dv-modal-register{
+  margin-top: 30px;
 }

@@ -2,6 +2,10 @@ const trim = function(str) {
   //删除左右两端的空格
   return str.replace(/(^\s*)|(\s*$)/g, "");
 };
+const isEmailStr = function(str) {
+  let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+  return reg.test(str);
+};
 Date.prototype.Format = function(fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -26,17 +30,20 @@ Date.prototype.Format = function(fmt) {
   return fmt;
 };
 
-
-const parseParam=function(param, key){  
-  let paramStr="";  
-  if(param instanceof String||param instanceof Number||param instanceof Boolean){  
-    paramStr+="&"+key+"="+encodeURIComponent(param);  
-  }else{  
-    for(let p in param){ 
-      paramStr+='&'+p+"="+encodeURIComponent(param[p]);
-    };  
-  }  
-  return paramStr.substr(1);  
+const parseParam = function(param, key) {
+  let paramStr = "";
+  if (
+    param instanceof String ||
+    param instanceof Number ||
+    param instanceof Boolean
+  ) {
+    paramStr += "&" + key + "=" + encodeURIComponent(param);
+  } else {
+    for (let p in param) {
+      paramStr += "&" + p + "=" + encodeURIComponent(param[p]);
+    }
+  }
+  return paramStr.substr(1);
 };
 
 const charFilter = function(str) {
@@ -45,9 +52,9 @@ const charFilter = function(str) {
   return trim(str);
 };
 const getUtils = {
-  parseParam: function(param, key){   
-    return parseParam(param, key);  
-  }, 
+  parseParam: function(param, key) {
+    return parseParam(param, key);
+  },
   getModel: function() {
     console.log("fdfd");
   },
@@ -94,6 +101,19 @@ const getUtils = {
       }
       return null;
     }
+  },
+  isEmailStr: function(str) {
+    let strForm = trim(str);
+    return { content: strForm, valid: isEmailStr(strForm) };
+  },
+
+  deleteSpaceStr: function(str) {
+    let strForm = str.replace(/\s+/g, "");
+    let valid = false;
+    if (strForm.length > 8) {
+      valid = true;
+    }
+    return { content: strForm, valid: valid };
   },
   textFormater: function(str) {
     str = str.replace(/[\n]/gi, "");
