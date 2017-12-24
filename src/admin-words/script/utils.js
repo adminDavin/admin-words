@@ -62,6 +62,11 @@ const getUtils = {
     let d = new Date(dateTime);
     return d.Format("yyyy-MM-dd hh:mm:ss");
   },
+
+  formatDateNew: function(dateTime) {
+    let d = new Date(dateTime);
+    return d.Format("yyyy-MM-dd");
+  },
   fileValid: function(file) {
     if (file == "") {
       // alert("请选择要上传的文件");

@@ -8,6 +8,15 @@ body {
 .navbar{
   position: inherit;
 }
+// .dl-horizontal dt {
+//   float: left;
+//   width: 160px;
+//   clear: left;
+//   text-align: right;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }
 
 .dv-size{
   background-color: #ff0000;
@@ -92,6 +101,7 @@ body {
   padding-top: 0.3rem;
   padding-bottom: 0.1rem;
   padding-left: 0.05rem; 
+  white-space: nowrap;
 }
 
 .dv-mr10{
@@ -165,15 +175,21 @@ label{
   max-height: 760px;
   overflow-y: auto;
 }
+.dv-tbody{
+  height: 100px;
+  max-width: 150%;
+  overflow-y: auto;  
+}
 
 .dv-user-info-main{
-  max-height: 1000px;
-  height: 800px;
-  overflow-y: auto;
-  background-color:white;
-  margin-bottom: 10px;
-  padding-right: 0px;
-  padding-left: 0px;
+  // max-height: 1000px;
+  height: 600px;
+  max-width: 150%;
+  overflow: auto;
+  // background-color:white;
+  // margin-bottom: 10px;
+  // padding-right: 0px;
+  // padding-left: 0px;
 }
 
 .dv-user-info-nav{
@@ -186,6 +202,9 @@ label{
 
 .dv-mt5{
   margin-top: 5px;
+}
+.dv-mt20{
+  margin-top: 20px;
 }
 .dv-bot0{
   margin-bottom: 0px;

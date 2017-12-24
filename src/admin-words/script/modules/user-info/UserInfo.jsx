@@ -78,10 +78,10 @@ class UserInfo extends React.Component {
               个人信息维护
             </div>
           </div>
-          <div className="container-fluid dv-user-info-main">
+          <div className="container-fluid">
             {/* <UserInfoDocu userId={this.props.userId} /> */}
-            <UserInfoMessage userId={this.props.userId} />
-            {/* <Route path="/ddfd" strict component={UserInfoDocu} /> */}
+            <UserInfoDocu userId={this.props.userId} />
+            {/* <Route path="/ddfd" strict component={UserInfoDocu} />  <UserInfoMessage userId={this.props.userId} />*/}
           </div>
         </div>
       </BrowserRouter>

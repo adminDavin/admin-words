@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import utils from "../../utils.js";
 import "bootstrap/dist/js/bootstrap.js";
+import request from "../../sevice/request.js";
+import crypto from "../../config/crypto.js";
 
 class LoginInfo extends React.Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class LoginInfo extends React.Component {
     ];
   }
   loginAction() {
+    let me = this;
     let form = $("#loginForm");
     let inputList = form.find("input");
     let params = {};
@@ -26,24 +29,42 @@ class LoginInfo extends React.Component {
           alert("账号输入不合法，请确认");
           return false;
         }
-        params["username"] = value.content;
+        params["loginName"] = value.content;
       } else {
         let value = utils.deleteSpaceStr(item.value);
         if (!value.valid) {
           alert("密码输入不合法，请确认");
           return false;
         }
-        params["password"] = value.content;
+        params["password"] = crypto.encodeBase64(value.content);
         flag = true;
       }
     }
     if (flag) {
-      console.log("dddddddddddd");
+      request.sendRequstNew("/admin/login", params, function(result) {
+        if (result.code != "200") {
+          alert(result.result);
+        } else {
+          let data = result.result.data;
+          console.log(data);
+          location.href =
+            "/userInfo.html?userId=" +
+            data.userId +
+            "&key=" +
+            data.key +
+            "&loginName=" +
+            data.loginName;
+
+          me.setState({ data: data });
+        }
+      });
     }
   }
   modalAction(flagging, event) {
+    let me = this;
     let form = $("#modalForm");
     let inputList = form.find("input");
+    let params = {};
     if (flagging === "register") {
       let password = "";
       let flag = false;
@@ -55,7 +76,7 @@ class LoginInfo extends React.Component {
             alert("账号输入不合法，请确认");
             return false;
           }
-          params["username"] = value.content;
+          params["loginName"] = value.content;
         } else {
           let value = utils.deleteSpaceStr(item.value);
           if (!value.valid) {
@@ -68,12 +89,19 @@ class LoginInfo extends React.Component {
             alert("密码输入不一致，请确认");
             return false;
           }
-          params["password"] = value.content;
+          params["password"] = crypto.encodeBase64(value.content);
           flag = true;
         }
       }
       if (flag) {
-        console.log("dddddddddddd");
+        request.sendRequstNew("/admin/simpleRegist", params, function(result) {
+          if (result.code != "200") {
+            alert(result.result);
+          } else {
+            let data = result.result.data;
+            alert("您已注册成功，请登录完善用户信息，以便管理员进行审核！");
+          }
+        });
       }
     }
   }
@@ -103,7 +131,7 @@ class LoginInfo extends React.Component {
           <button
             type="button"
             className="btn btn-dark btn-lg btn-block"
-            onClick={this.loginAction}
+            onClick={this.loginAction.bind(this)}
           >
             登录
           </button>

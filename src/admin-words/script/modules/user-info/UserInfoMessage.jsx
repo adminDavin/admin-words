@@ -1,6 +1,8 @@
 import React from "react";
 import "bootstrap/dist/js/bootstrap.js";
 import request from "../../sevice/request.js";
+import utils from "../../utils.js";
+
 export default class UserInfoMessage extends React.Component {
   constructor(props) {
     super(props);
