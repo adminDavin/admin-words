@@ -100,6 +100,13 @@ class LoginInfo extends React.Component {
           } else {
             let data = result.result.data;
             alert("您已注册成功，请登录完善用户信息，以便管理员进行审核！");
+            location.href =
+              "/userInfo.html?userId=" +
+              data.userId +
+              "&key=" +
+              data.key +
+              "&loginName=" +
+              data.loginName;
           }
         });
       }

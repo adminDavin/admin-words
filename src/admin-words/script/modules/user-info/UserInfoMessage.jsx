@@ -221,7 +221,7 @@ export default class UserInfoMessage extends React.Component {
             </div>
           </form>
         </div>
-        <div className="row justify-content-end">
+        <div className="row justify-content-center">
           <button
             type="button"
             className="col-1 btn btn-primary btn-lg btn-block dv-mr10"

@@ -194,7 +194,6 @@ export default class UserInfoDocu extends React.Component {
         {modelEle}
         <div className="row">
           <div className="col-12">
-            <div className="row dv-table-title">sfdsfd</div>
             <div className="row dv-user-info-main">
               <table className="table table-responsive-sm">
                 {th}
