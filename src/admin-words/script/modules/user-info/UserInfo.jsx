@@ -11,7 +11,7 @@ class UserInfo extends React.Component {
     super(props);
   }
   componentDidMount() {
-    $(function() {
+    $(function () {
       $('[data-toggle="popover"]').popover();
     });
   }
@@ -22,23 +22,26 @@ class UserInfo extends React.Component {
         <div className="container-fluid">
           <div className="row dv-user-info-title">
             <nav className="nav ustify-content-end">
-              <a className="nav-link active" href="#doc">
+              <a className="flex-sm-fill text-sm-center nav-link active" data-toggle="tab" href="#doc" role="tab">
                 <h5>历史文档信息</h5>
               </a>
-              <a className="nav-link" href="#user">
+              <a className="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#user" role="tab">
                 <h5>个人信息维护</h5>
+              </a>
+              <a className="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#user" role="tab">
+                <h5>修改密码</h5>
               </a>
             </nav>
           </div>
           <div className="container-fluid">
-            {/* <UserInfoDocu userId={this.props.userId} /> */}
-            <Link to="#doc" activeStyle={{ color: "red" }}>
-              <UserInfoDocu userId={this.props.userId} />
-            </Link>
-            <Link to="#user" activeStyle={{ color: "red" }}>
-              <UserInfoMessage userId={this.props.userId} />
-            </Link>
-            {/* <Route path="/ddfd" strict component={UserInfoDocu} />  <UserInfoMessage userId={this.props.userId} />*/}
+            <div className="tab-content">
+              <div className="tab-pane active" id="doc" role="tabpanel">
+                <UserInfoDocu userId={this.props.userId} />
+              </div>
+              <div className="tab-pane" id="user" role="tabpanel">
+                <UserInfoMessage userId={this.props.userId} />
+              </div>
+            </div>
           </div>
         </div>
       </BrowserRouter>

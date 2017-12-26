@@ -13,13 +13,13 @@ export default class UserInfoDocu extends React.Component {
 
   componentDidMount() {
     let me = this;
-    $(function() {
+    $(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
     request.sendRequstNew(
       "/admin/listDocument",
       { userId: this.props.userId },
-      function(result) {
+      function (result) {
         if (result.code != "200") {
           alert(result.result);
         } else {
@@ -36,7 +36,7 @@ export default class UserInfoDocu extends React.Component {
     request.sendRequstNew(
       "/admin/deleteDoc",
       { wordsId: doc.docId, userId: doc.userId },
-      function(resp) {
+      function (resp) {
         if (resp.code === "200") {
           let data = me.state.data;
           me.setState({ data: utils.removeElement(data, words) });
@@ -86,7 +86,7 @@ export default class UserInfoDocu extends React.Component {
                 type="button"
                 className="btn btn-primary"
                 data-dismiss="modal"
-                // onClick={this.modalAction.bind(this, "register")}
+              // onClick={this.modalAction.bind(this, "register")}
               >
                 {"确定"}
               </button>
@@ -190,7 +190,7 @@ export default class UserInfoDocu extends React.Component {
       </tbody>
     );
     return (
-      <div className="container">
+      <div className="container  dv-mt5">
         {modelEle}
         <div className="row">
           <div className="col-12">

@@ -1,13 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
-
-
 body {
-  background-color:#f5f0f0; 
+  background-color: #f5f0f0;
 }
 
-.navbar{
+.navbar {
   position: inherit;
 }
+
 // .dl-horizontal dt {
 //   float: left;
 //   width: 160px;
@@ -17,230 +16,232 @@ body {
 //   text-overflow: ellipsis;
 //   white-space: nowrap;
 // }
-
-.dv-size{
+.dv-size {
   background-color: #ff0000;
 }
 
-#manageContent{
+#manageContent {
   background-color: rgb(204, 197, 197);
 }
-.dv-header{
+
+.dv-header {
   background-color: black;
-  height: 50px;  
-  div{ 
+  height: 50px;
+  div {
     color: bisque;
-    font-size:1rem; 
-    line-height: 3.5; 
-    .input-group{
+    font-size: 1rem;
+    line-height: 3.5;
+    .input-group {
       margin-top: 0.4rem;
     }
-    button{
-      margin-top: 0.4rem; 
+    button {
+      margin-top: 0.4rem;
     }
   }
 }
 
-.dv-logo{
+.dv-logo {
   height: 30px;
   display: block;
   margin-top: 0.6rem;
 }
 
-.dv-content{ 
+.dv-content {
   background-color: brown;
   height: 800px;
   width: 100%;
 }
 
-.dv-user-login{
+.dv-user-login {
   background-color: #dddbdb;
   height: 600px;
   padding-top: 20px;
   padding-bottom: 40px;
   padding-right: 50px;
-  div{ 
-    margin-top: 30px; 
-
-    form{   
+  div {
+    margin-top: 30px;
+    form {
       margin-left: 10px;
       margin-right: 10px;
       border-style: hidden;
-  
     }
-    }
+  }
 }
 
-
-.react-bs-table-tool-bar{
+.react-bs-table-tool-bar {
   background-color: cornflowerblue;
   margin-bottom: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
- 
- 
 
-.dv-td-text-longer{
+.dv-td-text-longer {
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 120px;
   display: block;
 }
 
-.dv-modal-dialog{
+.dv-modal-dialog {
   position: absolute;
   top: 100px;
-  width:700px; 
-  left: 20%; 
-  border-radius: 5px; 
+  width: 700px;
+  left: 20%;
+  border-radius: 5px;
 }
 
-.table th,.table td{
+.table th,
+.table td {
   padding-top: 0.3rem;
   padding-bottom: 0.1rem;
-  padding-left: 0.05rem; 
+  padding-left: 0.05rem;
   white-space: nowrap;
 }
 
-.dv-mr10{
+.dv-mr10 {
   margin-right: 10px;
 }
 
-.dv-words-table{
-  height:800px;background-color: snow;padding-left: 0;padding-right: 0;padding-top: 0px;
+.dv-words-table {
+  height: 800px;
+  background-color: snow;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0px;
 }
-.dv-words-table-up{
+
+.dv-words-table-up {
   margin-bottom: 5px;
   margin-top: 10px;
 }
 
-.btn-toolbar{
+.btn-toolbar {
   padding-top: 0px;
   padding-bottom: 0px;
   margin-left: 25px;
 }
 
-.modal-header{
+.modal-header {
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
-.modal-footer{
+.modal-footer {
   padding-top: 5px;
-  padding-bottom: 5px; 
+  padding-bottom: 5px;
 }
 
-.modal-body{
-  padding-top:0px;
+.modal-body {
+  padding-top: 0px;
 }
 
-.nav-link{
+.nav-link {
   padding-top: 0px;
   padding-bottom: 0px;
 }
 
-label{
+label {
   margin-top: 5px;
   margin-bottom: 0px;
 }
-.dv-table-hist{  
+
+.dv-table-hist {
   max-height: 200px;
   overflow-y: auto;
   font-size: 12px;
 }
 
-
-.dv-words-table-title{
+.dv-words-table-title {
   margin-top: 10px;
   margin-bottom: 5px;
-  div{
-    div{
-    .form-control{
-      width: 20px;
+  div {
+    div {
+      .form-control {
+        width: 20px;
+      }
     }
   }
-  }
-} 
-
-
-
-.scroll_table_content{
-  width:100%; 
-  height:600px;
-  overflow:auto;
 }
-.dv-table-scoll-wrap{
+
+.scroll_table_content {
+  width: 100%;
+  height: 600px;
+  overflow: auto;
+}
+
+.dv-table-scoll-wrap {
   max-height: 760px;
   overflow-y: auto;
 }
-.dv-tbody{
+
+.dv-tbody {
   height: 100px;
   max-width: 150%;
-  overflow-y: auto;  
+  overflow-y: auto;
 }
 
-.dv-user-info-main{
+.dv-user-info-main {
   // max-height: 1000px;
   height: 600px;
   max-width: 150%;
-  overflow: auto;
-  // background-color:white;
+  overflow: auto; // background-color:white;
   // margin-bottom: 10px;
   // padding-right: 0px;
   // padding-left: 0px;
 }
 
-.dv-user-info-nav{
+.dv-user-info-nav {
   background-color: black;
 }
 
-.dv-border{
+.dv-border {
   border-block-end-style: dashed;
 }
 
-.dv-mt5{
+.dv-mt5 {
   margin-top: 5px;
 }
-.dv-mt20{
+
+.dv-mt20 {
   margin-top: 20px;
 }
 
-.dv-user-info-title{
-  background-color: #f5f0f0;
+.dv-user-info-title {
+  background-color: dimgray;
+  padding-top: 10px;
 }
-.dv-bot0{
+
+.dv-bot0 {
   margin-bottom: 0px;
   padding-bottom: 0px;
-
 }
 
 .center-child {
-  justify-content:center;//子元素水平居中
-  align-items:center;//子元素垂直居中
-  display:-webkit-flex;
-  
+  justify-content: center; //子元素水平居中
+  align-items: center; //子元素垂直居中
+  display: -webkit-flex;
 }
 
 .dv-login {
-     margin-bottom: 5%;
-    width: 70%;
-    height: 60%;
-    background-color: aliceblue;
-  
+  margin-bottom: 5%;
+  width: 70%;
+  height: 60%;
+  background-color: aliceblue;
 }
 
-.dv-login-title{
+.dv-login-title {
   margin-top: 10px!important;
   border-bottom-color: black;
   border-bottom-width: 2px;
   border-bottom-style: solid;
   padding-bottom: 5px;
 }
-.dv-modal{
+
+.dv-modal {
   margin-top: 70px;
 }
-.dv-modal-register{
+
+.dv-modal-register {
   margin-top: 30px;
 }

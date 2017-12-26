@@ -7,11 +7,15 @@ export default class UserInfoMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { data: {} };
+    this.handleChange = this.handleChange.bind(this);
   }
   checkIsNull(e) {
     if (e.target.value === "") {
       alert("不可以为空");
     }
+  }
+  handleChange(event) {
+    this.setState({ value: event.target.value });
   }
   componentDidMount() {
     console.log("dfdfd");
@@ -20,7 +24,7 @@ export default class UserInfoMessage extends React.Component {
     request.sendRequstNew(
       "/admin/getUserListByUserId",
       { userId: this.props.userId },
-      function(result) {
+      function (result) {
         if (result.code != "200") {
           alert(result.result);
         } else {
