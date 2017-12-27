@@ -2,14 +2,16 @@ import React from "react";
 import "bootstrap/dist/js/bootstrap.js";
 import request from "../../sevice/request.js";
 import utils from "../../utils.js";
-
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 export default class UserInfoMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userEmail: "",
       userAddress: "",
-      userBirthDate: new Date(),
+      userBirthDate: moment(),
       userName: "",
       userNamePin: "",
       userOrganize: "",
@@ -17,6 +19,7 @@ export default class UserInfoMessage extends React.Component {
       userRemark: "申请备注"
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeDate = this.handleChangeDate.bind(this);
   }
   checkIsNull(e) {
     if (e.target.value === "") {
@@ -25,19 +28,34 @@ export default class UserInfoMessage extends React.Component {
   }
   handleChange(vari, event) {
     let data = {};
+
     data[vari] = event.target.value;
     this.setState(data);
+
+  }
+
+  handleChangeDate(date) {
+    console.log(date.utc());
+    this.setState({
+      userBirthDate: date
+    });
   }
   componentDidMount() {
     let me = this;
+    $("input[name='radio']").get(0).checked = true;
     request.sendRequstNew(
       "/admin/getUserListByUserId",
       { userId: this.props.userId },
-      function(result) {
+      function (result) {
         if (result.code != "200") {
           alert(result.result);
         } else {
           let data = result.result.data;
+          if (data.sex == 1) {
+            $("input[name='radio']").get(0).checked = true;
+          } else {
+            $("input[name='radio']").get(1).checked = true;
+          }
           me.setState({
             userEmail: data.email,
             userAddress: data.address,
@@ -52,8 +70,12 @@ export default class UserInfoMessage extends React.Component {
       }
     );
   }
+
   baseAction(e) {
-    console.log($("#collapseUserInfoBase")[0]);
+    let sex = 0;
+    if ($("input[name='radio']").get(0).checked) {
+      sex = 1;
+    }
     let params = {
       userId: this.props.userId,
       namepin: this.state.userNamePin,
@@ -63,7 +85,7 @@ export default class UserInfoMessage extends React.Component {
       address: this.state.userAddress,
       birthDate: this.state.userBirthDate
     };
-    request.sendRequstNew("/admin/updateUserInfo", params, function(result) {
+    request.sendRequstNew("/admin/updateUserInfo", params, function (result) {
       if (result.code != "200") {
         alert(result.result);
       } else {
@@ -72,8 +94,6 @@ export default class UserInfoMessage extends React.Component {
     });
   }
   render() {
-    let user = this.state.data;
-    console.log(user);
     return (
       <div className="container">
         <div
@@ -88,7 +108,7 @@ export default class UserInfoMessage extends React.Component {
         </div>
         <div className="row" id="collapseUserInfoBase">
           <form className="col-7">
-            <div className="form-group row">
+            <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 {"用户名"}
               </label>
@@ -103,7 +123,7 @@ export default class UserInfoMessage extends React.Component {
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 {"姓名"}
               </label>
@@ -117,7 +137,7 @@ export default class UserInfoMessage extends React.Component {
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 {"姓名拼写"}
               </label>
@@ -131,17 +151,14 @@ export default class UserInfoMessage extends React.Component {
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 {"出生日期"}
               </label>
               <div className="col-sm-5">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder=""
-                  onChange={this.handleChange.bind(this, "userBirthDate")}
-                  value={this.state.userBirthDate || ""}
+                <DatePicker className="form-control dv-mt5"
+                  selected={this.state.userBirthDate}
+                  onChange={this.handleChangeDate}
                 />
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
@@ -184,7 +201,7 @@ export default class UserInfoMessage extends React.Component {
         </div>
         <div className="row" id="collapseUserInfoContact">
           <form className="col-7">
-            <div className="form-group row">
+            <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 {"所属组织"}
               </label>
@@ -198,7 +215,7 @@ export default class UserInfoMessage extends React.Component {
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 {"用户地址"}
               </label>
@@ -212,7 +229,7 @@ export default class UserInfoMessage extends React.Component {
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 {"联系电话"}
               </label>
@@ -253,8 +270,8 @@ export default class UserInfoMessage extends React.Component {
         </div>
         <div className="row dv-mt5" id="collapseUserInfoSelf">
           <form className="col-10">
-            <div className="form-group row">
-              <label className=" text-center  col-sm-2 col-form-label alert-link">
+            <div className="row">
+              <label className="text-center  col-sm-2 col-form-label alert-link">
                 {"备注"}
               </label>
               <div className="col-sm-10">

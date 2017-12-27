@@ -4,20 +4,16 @@ import utils from "../../utils.js";
 import "bootstrap/dist/js/bootstrap.js";
 import request from "../../sevice/request.js";
 import crypto from "../../config/crypto.js";
+import Modal from "./Modal.jsx";
 
 class LoginInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.nav = [
-      { col1: { task: "待处理消息" } },
-      { col2: { userList: "用户管理" } },
-      { col3: { roleList: "角色管理" } },
-      { col4: { serverList: "系统服务" } }
-    ];
+    this.state = { isManage: false, forgetPassEleDisplay: {} };
   }
   loginAction() {
     let me = this;
-    let form = $("#loginForm");
+    let form = $(".loginForm");
     let inputList = form.find("input");
     let params = {};
     let flag = false;
@@ -40,13 +36,13 @@ class LoginInfo extends React.Component {
         flag = true;
       }
     }
+    params['isManage'] = me.state.isManage;
     if (flag) {
-      request.sendRequstNew("/admin/login", params, function(result) {
+      request.sendRequstNew("/admin/login", params, function (result) {
         if (result.code != "200") {
           alert(result.result);
         } else {
           let data = result.result.data;
-          console.log(data);
           location.href =
             "/userInfo.html?userId=" +
             data.userId +
@@ -54,11 +50,18 @@ class LoginInfo extends React.Component {
             data.key +
             "&loginName=" +
             data.loginName;
-
           me.setState({ data: data });
         }
       });
     }
+  }
+  componentDidMount() {
+    let me = this;
+    $('#managerModalLong').on('show.bs.modal', function (e) {
+      me.setState({ isManage: true, forgetPassEleDisplay: { display: "none" } });
+    }).on('hidden.bs.modal', function (e) {
+      me.setState({ isManage: false, forgetPassEleDisplay: {} });
+    })
   }
   modalAction(flagging, event) {
     let me = this;
@@ -93,8 +96,9 @@ class LoginInfo extends React.Component {
           flag = true;
         }
       }
+
       if (flag) {
-        request.sendRequstNew("/admin/simpleRegist", params, function(result) {
+        request.sendRequstNew("/admin/simpleRegist", params, function (result) {
           if (result.code != "200") {
             alert(result.result);
           } else {
@@ -114,11 +118,8 @@ class LoginInfo extends React.Component {
   }
   render() {
     const loginForm = (
-      <form id="loginForm">
-        <div className="form-group row justify-content-center">
-          <h1>用户登录</h1>
-        </div>
-        <div className="form-group row">
+      <form className="loginForm">
+        <div className="row">
           <label className="col-form-label">账号</label>
           <input
             type="text"
@@ -126,7 +127,7 @@ class LoginInfo extends React.Component {
             placeholder="name@example.com"
           />
         </div>
-        <div className="form-group row has-danger">
+        <div className="row has-danger">
           <label className="col-form-label">密码</label>
           <input
             type="password"
@@ -145,6 +146,7 @@ class LoginInfo extends React.Component {
         </div>
       </form>
     );
+
     const register = (
       <form className="dv-modal-register">
         <div className="form-group row has-success">
@@ -173,52 +175,6 @@ class LoginInfo extends React.Component {
         </div>
       </form>
     );
-    const modelEle = (
-      <div
-        className="modal fade"
-        id="exampleModalLong"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLongTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog dv-modal" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">{"新用户注册"}</h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body" id="modalForm">
-              {register}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                data-dismiss="modal"
-                onClick={this.modalAction.bind(this, "register")}
-              >
-                {"确定"}
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                {"取消"}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
 
     return (
       <div className="container">
@@ -229,23 +185,45 @@ class LoginInfo extends React.Component {
                 type="button"
                 className="col-3 btn btn-outline-info dv-mr10"
                 data-toggle="modal"
-                data-target="#exampleModalLong"
+                data-target="#registerModalLong"
               >
                 新用户注册
               </button>
+              <Modal modalEleId="registerModalLong" modalTitle="新用户注册" modalAction={this.modalAction} >
+                {register}
+              </Modal>
               <button
                 type="button"
                 className="col-3 btn btn-outline-info"
                 data-toggle="modal"
-                data-target="#exampleModalLong"
+                data-target="#managerModalLong"
               >
                 管理员登录
               </button>
+              <Modal modalEleId="managerModalLong" modalTitle="管理员登录" modalAction={this.modalAction} >
+                {loginForm}
+              </Modal>
+            </div>
+            <div className="form-group row justify-content-center">
+              <h1>用户登录</h1>
             </div>
             {loginForm}
+            <div className="row">
+              <label className="col col-form-label" >
+                <input type="checkbox" className="form-check-input" />
+                记住我?
+              </label>
+              <button type="button" className="btn btn-secondary btn-sm"
+                data-toggle="modal"
+                data-target="#forgetPassModalLong">
+                忘记密码
+              </button>
+              <Modal modalEleId="forgetPassModalLong" modalTitle="忘记密码" modalAction={this.modalAction} >
+                {register}
+              </Modal>
+            </div>
           </div>
         </div>
-        {modelEle}
       </div>
     );
   }
