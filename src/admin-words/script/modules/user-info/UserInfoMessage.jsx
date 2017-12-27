@@ -6,7 +6,16 @@ import utils from "../../utils.js";
 export default class UserInfoMessage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: {} };
+    this.state = {
+      userEmail: "",
+      userAddress: "",
+      userBirthDate: new Date(),
+      userName: "",
+      userNamePin: "",
+      userOrganize: "",
+      userPhone: "",
+      userRemark: "申请备注"
+    };
     this.handleChange = this.handleChange.bind(this);
   }
   checkIsNull(e) {
@@ -14,28 +23,53 @@ export default class UserInfoMessage extends React.Component {
       alert("不可以为空");
     }
   }
-  handleChange(event) {
-    this.setState({ value: event.target.value });
+  handleChange(vari, event) {
+    let data = {};
+    data[vari] = event.target.value;
+    this.setState(data);
   }
   componentDidMount() {
-    console.log("dfdfd");
     let me = this;
-
     request.sendRequstNew(
       "/admin/getUserListByUserId",
       { userId: this.props.userId },
-      function (result) {
+      function(result) {
         if (result.code != "200") {
           alert(result.result);
         } else {
           let data = result.result.data;
-          me.setState({ data: data });
+          me.setState({
+            userEmail: data.email,
+            userAddress: data.address,
+            userBirthDate: data.birthDate,
+            userName: data.name,
+            userNamePin: data.namePin,
+            userOrganize: data.organize,
+            userPhone: data.phone,
+            userRemark: data.remark
+          });
         }
       }
     );
   }
   baseAction(e) {
     console.log($("#collapseUserInfoBase")[0]);
+    let params = {
+      userId: this.props.userId,
+      namepin: this.state.userNamePin,
+      organize: this.state.userOrganize,
+      phone: this.state.userPhone,
+      remark: this.state.userRemark,
+      address: this.state.userAddress,
+      birthDate: this.state.userBirthDate
+    };
+    request.sendRequstNew("/admin/updateUserInfo", params, function(result) {
+      if (result.code != "200") {
+        alert(result.result);
+      } else {
+        let data = result.result.data;
+      }
+    });
   }
   render() {
     let user = this.state.data;
@@ -63,8 +97,9 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder="user name"
-                  value={user.email || ""}
-                  onChange={this.checkIsNull.bind(this)}
+                  value={this.state.userEmail || ""}
+                  onChange={this.handleChange.bind(this, "userEmail")}
+                  readOnly
                 />
               </div>
             </div>
@@ -77,7 +112,8 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder="real name"
-                  value={user.name || ""}
+                  value={this.state.userName || ""}
+                  onChange={this.handleChange.bind(this, "userName")}
                 />
               </div>
             </div>
@@ -90,7 +126,8 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder="user name"
-                  value={user.namePin || ""}
+                  onChange={this.handleChange.bind(this, "userNamePin")}
+                  value={this.state.userNamePin || ""}
                 />
               </div>
             </div>
@@ -103,7 +140,8 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder=""
-                  value={user.birthDate || ""}
+                  onChange={this.handleChange.bind(this, "userBirthDate")}
+                  value={this.state.userBirthDate || ""}
                 />
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
@@ -155,7 +193,8 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder="organize"
-                  value={user.organize || ""}
+                  onChange={this.handleChange.bind(this, "userOrganize")}
+                  value={this.state.userOrganize || ""}
                 />
               </div>
             </div>
@@ -168,7 +207,8 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder="address"
-                  value={user.address || ""}
+                  onChange={this.handleChange.bind(this, "userAddress")}
+                  value={this.state.userAddress || ""}
                 />
               </div>
             </div>
@@ -181,7 +221,8 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder="phone"
-                  value={user.phone || ""}
+                  onChange={this.handleChange.bind(this, "userPhone")}
+                  value={this.state.userPhone || ""}
                 />
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
@@ -192,7 +233,9 @@ export default class UserInfoMessage extends React.Component {
                   type="text"
                   className="form-control dv-mt5"
                   placeholder="email"
-                  value={user.email || ""}
+                  onChange={this.handleChange.bind(this, "userEmail")}
+                  value={this.state.userEmail || ""}
+                  readOnly
                 />
               </div>
             </div>
@@ -206,7 +249,6 @@ export default class UserInfoMessage extends React.Component {
           aria-controls="collapseExample"
           href="#collapseUserInfoSelf"
         >
-          {" "}
           备注
         </div>
         <div className="row dv-mt5" id="collapseUserInfoSelf">
@@ -219,7 +261,8 @@ export default class UserInfoMessage extends React.Component {
                 <textarea
                   className="form-control"
                   rows="3"
-                  value={user.remark || ""}
+                  onChange={this.handleChange.bind(this, "userRemark")}
+                  value={this.state.userRemark}
                 />
               </div>
             </div>
