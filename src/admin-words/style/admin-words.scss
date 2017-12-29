@@ -58,14 +58,12 @@ body {
   padding-top: 20px;
   padding-bottom: 40px;
   padding-right: 50px;
-  div {
-    margin-top: 30px;
-    form {
-      margin-left: 10px;
-      margin-right: 10px;
-      border-style: hidden;
-    }
-  }
+   
+}
+.dv-border-top30{
+  margin-top: 30px;
+  border-top-style: solid;
+  border-top-color: grey;
 }
 
 .react-bs-table-tool-bar {

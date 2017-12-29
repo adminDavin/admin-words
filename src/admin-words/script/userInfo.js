@@ -6,7 +6,7 @@ import routeInfo from "./config/routerConfig.js";
 const params = routeInfo.getParamData();
 if (params.userId) {
   ReactDOM.render(
-    <UserInfo userId={params.userId} />,
+    <UserInfo userId={params.userId} loginName={params.loginName} />,
     document.getElementById("userInfo")
   );
 }

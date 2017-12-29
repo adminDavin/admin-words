@@ -8,23 +8,23 @@ import utils from "../../utils.js";
 export default class UserInfoDocu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: [], docInfo: {} };
+    this.state = { data: [], docInfo: {}, nodata: "none" };
   }
 
   componentDidMount() {
     let me = this;
-    $(function () {
+    $(function() {
       $('[data-toggle="tooltip"]').tooltip();
     });
     request.sendRequstNew(
       "/admin/listDocument",
       { userId: this.props.userId },
-      function (result) {
+      function(result) {
         if (result.code != "200") {
-          alert(result.result);
+          me.setState({ data: [], nodata: "" });
         } else {
           let data = result.result.data;
-          me.setState({ data: data });
+          me.setState({ data: data, nodata: "none" });
         }
       }
     );
@@ -36,7 +36,7 @@ export default class UserInfoDocu extends React.Component {
     request.sendRequstNew(
       "/admin/deleteDoc",
       { wordsId: doc.docId, userId: doc.userId },
-      function (resp) {
+      function(resp) {
         if (resp.code === "200") {
           let data = me.state.data;
           me.setState({ data: utils.removeElement(data, words) });
@@ -86,7 +86,7 @@ export default class UserInfoDocu extends React.Component {
                 type="button"
                 className="btn btn-primary"
                 data-dismiss="modal"
-              // onClick={this.modalAction.bind(this, "register")}
+                // onClick={this.modalAction.bind(this, "register")}
               >
                 {"确定"}
               </button>
@@ -137,6 +137,10 @@ export default class UserInfoDocu extends React.Component {
     let td = (
       <tbody>
         {this.state.data.map((pro, index) => {
+          let realState = "不可用";
+          if (pro.state == 0) {
+            realState = "可操作";
+          }
           return (
             <tr key={pro.docId}>
               <td>{index}</td>
@@ -180,7 +184,7 @@ export default class UserInfoDocu extends React.Component {
               </td>
               <td>{pro.uuid}</td>
               <td>{pro.wordsCont}</td>
-              <td>{pro.state}</td>
+              <td>{realState}</td>
               <td>{utils.formatDate(pro.createDate)}</td>
               <td>{utils.formatDate(pro.modifyDate)}</td>
               <td>{pro.expireTime}</td>
@@ -197,8 +201,15 @@ export default class UserInfoDocu extends React.Component {
             <div className="row dv-user-info-main">
               <table className="table table-responsive-sm">
                 {th}
+
                 {td}
               </table>
+              <div
+                className="container row justify-content-center"
+                style={{ display: this.state.nodata }}
+              >
+                没有数据！
+              </div>
             </div>
           </div>
         </div>

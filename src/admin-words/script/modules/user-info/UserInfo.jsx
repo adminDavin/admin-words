@@ -59,7 +59,10 @@ class UserInfo extends React.Component {
                 <UserInfoMessage userId={this.props.userId} />
               </div>
               <div className="tab-pane" id="pass" role="tabpanel">
-                <UserChangePass userId={this.props.userId} />
+                <UserChangePass
+                  userId={this.props.userId}
+                  loginName={this.props.loginName}
+                />
               </div>
             </div>
           </div>

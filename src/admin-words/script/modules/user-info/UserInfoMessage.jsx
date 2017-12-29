@@ -2,9 +2,9 @@ import React from "react";
 import "bootstrap/dist/js/bootstrap.js";
 import request from "../../sevice/request.js";
 import utils from "../../utils.js";
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import moment from "moment";
+import "react-datepicker/dist/react-datepicker.css";
 export default class UserInfoMessage extends React.Component {
   constructor(props) {
     super(props);
@@ -16,29 +16,24 @@ export default class UserInfoMessage extends React.Component {
       userNamePin: "",
       userOrganize: "",
       userPhone: "",
-      userRemark: "申请备注"
+      userRemark: "申请备注",
+      userState: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
   }
-  checkIsNull(e) {
-    if (e.target.value === "") {
-      alert("不可以为空");
-    }
-  }
   handleChange(vari, event) {
     let data = {};
-
     data[vari] = event.target.value;
     this.setState(data);
-
   }
 
   handleChangeDate(date) {
-    console.log(date.utc());
-    this.setState({
-      userBirthDate: date
-    });
+    if (!this.state.userState) {
+      this.setState({
+        userBirthDate: date
+      });
+    }
   }
   componentDidMount() {
     let me = this;
@@ -46,11 +41,15 @@ export default class UserInfoMessage extends React.Component {
     request.sendRequstNew(
       "/admin/getUserListByUserId",
       { userId: this.props.userId },
-      function (result) {
+      function(result) {
         if (result.code != "200") {
           alert(result.result);
         } else {
           let data = result.result.data;
+          let userState = true;
+          if (data.state != 1) {
+            userState = false;
+          }
           if (data.sex == 1) {
             $("input[name='radio']").get(0).checked = true;
           } else {
@@ -59,12 +58,13 @@ export default class UserInfoMessage extends React.Component {
           me.setState({
             userEmail: data.email,
             userAddress: data.address,
-            userBirthDate: data.birthDate,
+            userBirthDate: moment(data.birthDate),
             userName: data.name,
             userNamePin: data.namePin,
             userOrganize: data.organize,
             userPhone: data.phone,
-            userRemark: data.remark
+            userRemark: data.remark == null ? me.state.userRemark : data.remark,
+            userState: userState
           });
         }
       }
@@ -76,22 +76,41 @@ export default class UserInfoMessage extends React.Component {
     if ($("input[name='radio']").get(0).checked) {
       sex = 1;
     }
+    let birthDating = moment.utc(this.state.userBirthDate).format();
+    // console.log(birthDating);
+
     let params = {
       userId: this.props.userId,
+      name: this.state.userName,
       namepin: this.state.userNamePin,
       organize: this.state.userOrganize,
       phone: this.state.userPhone,
+      sex: sex,
+      birthDate: birthDating,
       remark: this.state.userRemark,
-      address: this.state.userAddress,
-      birthDate: this.state.userBirthDate
+      address: this.state.userAddress
     };
-    request.sendRequstNew("/admin/updateUserInfo", params, function (result) {
-      if (result.code != "200") {
-        alert(result.result);
-      } else {
-        let data = result.result.data;
+
+    let flag = true;
+    for (let item in params) {
+      console.log(params[item]);
+      if (params[item] == null || params[item].length === 0) {
+        alert(item + " can't be null");
+        return false;
       }
-    });
+    }
+
+    // console.log(params);
+    if (flag) {
+      request.sendRequstNew("/admin/updateUserInfo", params, function(result) {
+        if (result.code != "200") {
+          alert(result.result);
+        } else {
+          let data = result.result.data;
+          alert("用户信息已更新");
+        }
+      });
+    }
   }
   render() {
     return (
@@ -134,6 +153,7 @@ export default class UserInfoMessage extends React.Component {
                   placeholder="real name"
                   value={this.state.userName || ""}
                   onChange={this.handleChange.bind(this, "userName")}
+                  readOnly={this.state.userState}
                 />
               </div>
             </div>
@@ -148,6 +168,7 @@ export default class UserInfoMessage extends React.Component {
                   placeholder="user name"
                   onChange={this.handleChange.bind(this, "userNamePin")}
                   value={this.state.userNamePin || ""}
+                  readOnly={this.state.userState}
                 />
               </div>
             </div>
@@ -156,9 +177,11 @@ export default class UserInfoMessage extends React.Component {
                 {"出生日期"}
               </label>
               <div className="col-sm-5">
-                <DatePicker className="form-control dv-mt5"
+                <DatePicker
+                  className="form-control dv-mt5"
                   selected={this.state.userBirthDate}
                   onChange={this.handleChangeDate}
+                  readOnly={this.state.userState}
                 />
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
@@ -171,6 +194,7 @@ export default class UserInfoMessage extends React.Component {
                     name="radio"
                     type="radio"
                     className="custom-control-input"
+                    disabled={this.state.userState}
                   />
                   <span className="custom-control-indicator" />
                   <span className="custom-control-description">男</span>
@@ -181,6 +205,7 @@ export default class UserInfoMessage extends React.Component {
                     name="radio"
                     type="radio"
                     className="custom-control-input"
+                    disabled={this.state.userState}
                   />
                   <span className="custom-control-indicator" />
                   <span className="custom-control-description">女</span>
@@ -212,6 +237,7 @@ export default class UserInfoMessage extends React.Component {
                   placeholder="organize"
                   onChange={this.handleChange.bind(this, "userOrganize")}
                   value={this.state.userOrganize || ""}
+                  readOnly={this.state.userState}
                 />
               </div>
             </div>
@@ -226,6 +252,7 @@ export default class UserInfoMessage extends React.Component {
                   placeholder="address"
                   onChange={this.handleChange.bind(this, "userAddress")}
                   value={this.state.userAddress || ""}
+                  readOnly={this.state.userState}
                 />
               </div>
             </div>
@@ -240,6 +267,7 @@ export default class UserInfoMessage extends React.Component {
                   placeholder="phone"
                   onChange={this.handleChange.bind(this, "userPhone")}
                   value={this.state.userPhone || ""}
+                  readOnly={this.state.userState}
                 />
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
@@ -280,6 +308,7 @@ export default class UserInfoMessage extends React.Component {
                   rows="3"
                   onChange={this.handleChange.bind(this, "userRemark")}
                   value={this.state.userRemark}
+                  readOnly={this.state.userState}
                 />
               </div>
             </div>
