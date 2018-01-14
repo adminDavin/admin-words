@@ -30,21 +30,34 @@ class LoginInfo extends React.Component {
   loginAction() {
     let me = this;
     let userName = this.checkEmail();
-    let password = this.checkPassword();
+    let password = this.checkPasswordForlogin();
 
     if (password == "" || userName == "") {
       return false;
     }
+
     let params = {
-      password: crypto.encodeBase64(password.content),
+      password: crypto.encodeBase64(password),
       isManage: me.state.isManage,
-      loginName: userName.content
+      loginName: userName
     };
     request.sendRequstNew("/admin/login", params, function(result) {
       if (result.code != "200") {
         alert(result.result);
       } else {
         let data = result.result.data;
+        if (me.state.isManage == true) {
+          location.href =
+            "/manager.html?userId=" +
+            data.userId +
+            "&key=" +
+            data.key +
+            "&loginName=" +
+            data.loginName +
+            "&isManage=" +
+            me.state.isManage;
+          return false;
+        }
         location.href =
           "/userInfo.html?userId=" +
           data.userId +
@@ -52,7 +65,7 @@ class LoginInfo extends React.Component {
           data.key +
           "&loginName=" +
           data.loginName;
-        me.setState({ data: data });
+        // me.setState({ data: data });
       }
     });
   }
@@ -68,6 +81,15 @@ class LoginInfo extends React.Component {
       .on("hidden.bs.modal", function(e) {
         me.setState({ isManage: false, forgetPassEleDisplay: {} });
       });
+  }
+  checkPasswordForlogin() {
+    let me = this;
+    let password = utils.deleteSpaceStr(me.state.password);
+    if (!password.valid) {
+      alert("密码输入不合法，请确认");
+      return "";
+    }
+    return password.content;
   }
   checkPassword() {
     let me = this;
@@ -148,6 +170,7 @@ class LoginInfo extends React.Component {
     });
   }
 
+  closeAction() {}
   sendVariCodeAction() {
     let me = this;
     let userName = this.checkEmail();
@@ -327,6 +350,7 @@ class LoginInfo extends React.Component {
                 modalEleId="registerModalLong"
                 modalTitle="新用户注册"
                 modalAction={this.modalAction}
+                modalColseAction={this.closeAction}
                 mine={this}
               >
                 {register}
@@ -344,6 +368,7 @@ class LoginInfo extends React.Component {
                 modalEleId="managerModalLong"
                 modalTitle="管理员登录"
                 modalAction={this.manageAction}
+                modalColseAction={this.closeAction}
                 mine={this}
               >
                 {loginForm}
@@ -373,6 +398,7 @@ class LoginInfo extends React.Component {
                 modalEleId="forgetPassModalLong"
                 modalTitle="忘记密码"
                 modalAction={this.forgetPassAction}
+                modalColseAction={this.closeAction}
                 mine={this}
               >
                 {forgetPass}

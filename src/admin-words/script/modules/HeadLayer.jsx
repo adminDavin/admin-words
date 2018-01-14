@@ -79,23 +79,11 @@ export default class HeadLayer extends React.Component {
         <div className="row col-9 justify-content-center">
           <img className="dv-logo col-md-1" src={logo} alt="" />
           <div className="col-md-2">{this.text.left}</div>
-          <div className="col-md-5">
-            <div className="input-group">
-              <span className="input-group-addon" id="basic-addon1">
-                <a
-                  href="http://www.baidu.com/"
-                  onClick={this.search.bind(this)}
-                />
-                {this.text.baidu}
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                placeholder={this.text.search}
-                aria-label="search"
-                aria-describedby="basic-addon1"
-              />
-            </div>
+          <div className="col-md-5 dv-mt5">
+            <form className="form-inline my-4 my-lg-0">
+              <input className="form-control mr-sm-3 " type="text" placeholder="Search" aria-label="Search"/>
+              <button className="btn btn-outline-success my-3 my-sm-0" type="submit">Search</button>
+            </form>
           </div>
         </div>
         <div className="col-3">{this.getHeaderInfo()}</div>

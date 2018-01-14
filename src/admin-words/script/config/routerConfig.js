@@ -36,6 +36,10 @@ const urlConfig = {
   register: {
     current: "/register.html",
     to: [{ name: "login", url: "/login.html", button: title.login }]
+  },
+  manager:{
+    current:"/manager.html",
+    to: [ { name: "userInfo", url: "/userInfo.html", button: title.userMange }]
   }
 };
 
@@ -97,6 +101,9 @@ const routeInfo = {
         return data;
       case urlConfig.login.current:
         data["title"] = checkValidAndGetParams(urlConfig.login, data.params);
+        return data;
+      case urlConfig.manager.current:
+        data["title"] = checkValidAndGetParams(urlConfig.manager, data.params);
         return data;
       default:
         console.log("sdddd");

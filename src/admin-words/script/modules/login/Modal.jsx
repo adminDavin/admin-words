@@ -3,9 +3,7 @@ export default class Modal extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    console.log(this.props);
-  }
+  componentDidMount() {}
   render() {
     return (
       <div
@@ -17,7 +15,7 @@ export default class Modal extends React.Component {
         aria-hidden="true"
       >
         <div className="modal-dialog dv-modal" role="document">
-          <div className="modal-content">
+          <div className="modal-content" style={{ width: this.props.width }}>
             <div className="modal-header">
               <h5 className="modal-title">{this.props.modalTitle}</h5>
               <button
@@ -25,6 +23,10 @@ export default class Modal extends React.Component {
                 className="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                onClick={this.props.modalColseAction.bind(
+                  this,
+                  this.props.mine
+                )}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -45,6 +47,10 @@ export default class Modal extends React.Component {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={this.props.modalColseAction.bind(
+                  this,
+                  this.props.mine
+                )}
               >
                 {"取消"}
               </button>

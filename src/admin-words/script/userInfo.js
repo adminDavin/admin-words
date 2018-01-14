@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import UserInfo from "./modules/user-info/UserInfo.jsx";
-
 import routeInfo from "./config/routerConfig.js";
 const params = routeInfo.getParamData();
 if (params.userId) {

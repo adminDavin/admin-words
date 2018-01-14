@@ -1,4 +1,36 @@
 @import "~bootstrap/scss/bootstrap";
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    @include alert-variant(theme-color-level($color, -10), theme-color-level($color, -9), theme-color-level($color, 6));
+  }
+}
+
+$colors: (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800
+) !default;
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .text#{$infix}-left   { text-align: left !important; }
+    .text#{$infix}-right  { text-align: right !important; }
+    .text#{$infix}-center { text-align: center !important; }
+  }
+}
+
 body {
   background-color: #f5f0f0;
 }
@@ -83,8 +115,7 @@ body {
 
 .dv-modal-dialog {
   position: absolute;
-  top: 100px;
-  width: 700px;
+  top: 100px; 
   left: 20%;
   border-radius: 5px;
 }
@@ -200,7 +231,9 @@ label {
 .dv-mt5 {
   margin-top: 5px;
 }
-
+.dv-mt10 {
+  margin-top: 10px;
+}
 .dv-mt20 {
   margin-top: 20px;
 }
@@ -242,4 +275,22 @@ label {
 
 .dv-modal-register {
   margin-top: 30px;
+}
+
+
+.dv-manager-contant{
+  background-color: rgb(188, 221, 255);
+  
+}
+
+.dv-manager-nav{
+  background-color: black;
+}
+
+.dv-card-body{
+  height: 590px;
+} 
+
+.dv-tab-content{
+  background-color: antiquewhite;
 }

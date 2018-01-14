@@ -12,6 +12,7 @@ module.exports = {
     common: "./src/admin-words/script/index.js",
     viewer: "./src/admin-words/script/viewer.js",
     userInfo: "./src/admin-words/script/userInfo.js",
+    manager: "./src/admin-words/script/manager.js",
     login: "./src/admin-words/script/login.js",
     reactor: ["react", "react-dom"],
     reactRouter: ["react-router"],
@@ -36,6 +37,12 @@ module.exports = {
       chunks: ["common", "reactor", "jquery", "reactRouter"]
     }),
     new HtmlWebpackPlugin({
+      title: "Custom template",
+      filename: "manager.html",
+      template: "./src/admin-words/manager.html",
+      chunks: ["common", "reactor", "jquery", "reactRouter","manager"]
+    }),  
+    new HtmlWebpackPlugin({
       title: "words admin worker",
       filename: "viewer.html",
       template: "./src/admin-words/viewer.html",
@@ -57,9 +64,15 @@ module.exports = {
       chunks: ["common", "login", "reactor", "jquery", "reactRouter"]
     }),
     new webpack.optimize.UglifyJsPlugin({
+      minify:{
+        removeAttributeQuotes:true
+      },
+      output: {
+        comments: false,  
+      },
       compress: {
         warnings: false
-      }
+      }  
     }),
     new purifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
@@ -72,9 +85,7 @@ module.exports = {
     ]),
     new webpack.optimize.CommonsChunkPlugin({
       names: ["common", "reactor", "jquery", "reactRouter"]
-    }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
-
-    new ExtractTextPlugin("[name].css"),
+    }),   
     new ExtractTextPlugin({
       filename: "[name].css"
     }),
@@ -86,6 +97,8 @@ module.exports = {
       Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
     })
   ],
+
+  
   devtool: "cheap-module-eval-source-map",
   devServer: {
     // 配置服务与热更新

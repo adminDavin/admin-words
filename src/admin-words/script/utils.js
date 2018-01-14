@@ -125,6 +125,26 @@ const getUtils = {
     str = str.replace(/\"/g, "");
     return str;
   },
+  removeElementById: function(arr, ele) {
+    var result = [];
+    if (arr instanceof Array) {
+      if (ele instanceof Array) {
+        result = arr.filter(function(item) {
+          var isInEle = ele.some(function(eleItem) {
+            return item === eleItem;
+          });
+          return !isInEle;
+        });
+      } else {
+        result = arr.filter(function(item) {
+          return item[ele.name] !== ele.value;
+        });
+      }
+    } else {
+      console.log("parameter error of function removeElement");
+    }
+    return result;
+  },
   removeElement: function(arr, ele) {
     var result = [];
     if (arr instanceof Array) {
