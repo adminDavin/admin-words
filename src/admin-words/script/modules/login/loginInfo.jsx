@@ -170,7 +170,9 @@ class LoginInfo extends React.Component {
     });
   }
 
-  closeAction() {}
+  closeAction() {
+    this.setState({ isManage: false });
+  }
   sendVariCodeAction() {
     let me = this;
     let userName = this.checkEmail();

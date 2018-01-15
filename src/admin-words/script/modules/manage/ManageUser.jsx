@@ -114,6 +114,8 @@ class ManageUser extends React.Component {
       state = "未更新个人信息";
     } else if (item.state == 6) {
       state = "待审核";
+    } else if (item.state == 5) {
+      state = "可用";
     } else {
       state = item.state;
     }
