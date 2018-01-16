@@ -37,13 +37,13 @@ const urlConfig = {
     current: "/register.html",
     to: [{ name: "login", url: "/login.html", button: title.login }]
   },
-  manager:{
-    current:"/manager.html",
-    to: [ { name: "userInfo", url: "/userInfo.html", button: title.userMange }]
+  manager: {
+    current: "/manager.html",
+    to: [{ name: "userInfo", url: "/userInfo.html", button: title.userMange }]
   }
 };
 
-const getParamData = function () {
+const getParamData = function() {
   let params = {};
   let paramsStr = window.location.search;
   // console.log("---------------------------");
@@ -70,12 +70,12 @@ const getParamData = function () {
   }
   return params;
 };
-const checkValidAndGetParams = function (config, params) {
+const checkValidAndGetParams = function(config, params) {
   let urlGotoConfig = [];
   if (config.isUserAuth && !params.userId) {
     location.href = urlConfig.login.current;
   }
-  config.to.map(function (item, index) {
+  config.to.map(function(item, index) {
     urlGotoConfig.push({
       name: item.button,
       url: item.url,
@@ -87,7 +87,7 @@ const checkValidAndGetParams = function (config, params) {
 };
 
 const routeInfo = {
-  getRouteInfo: function () {
+  getRouteInfo: function() {
     let data = { params: getParamData() };
     let url = window.location.pathname;
 
@@ -107,9 +107,10 @@ const routeInfo = {
         return data;
       default:
         console.log("sdddd");
+        location.href = urlConfig.login.current;
     }
   },
-  getParamData: function () {
+  getParamData: function() {
     let params = {};
     let paramsStr = window.location.search;
     if (paramsStr) {
