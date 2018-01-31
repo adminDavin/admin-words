@@ -17,6 +17,7 @@ export default class Modal extends React.Component {
         <div className="modal-dialog dv-modal" role="document">
           <div className="modal-content" style={{ width: this.props.width }}>
             <div className="modal-header">
+              <span className="fi-credit-card"></span> 
               <h5 className="modal-title">{this.props.modalTitle}</h5>
               <button
                 type="button"
@@ -37,7 +38,7 @@ export default class Modal extends React.Component {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary btn-sm"
                 data-dismiss="modal"
                 onClick={this.props.modalAction.bind(this, this.props.mine)}
               >
@@ -45,7 +46,7 @@ export default class Modal extends React.Component {
               </button>
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-secondary btn-sm"
                 data-dismiss="modal"
                 onClick={this.props.modalColseAction.bind(
                   this,
