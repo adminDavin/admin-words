@@ -208,6 +208,15 @@ label {
   // padding-left: 0px;
 }
 
+.dv-nav {
+  padding-top: 2rem;
+  padding-left: 1rem;
+  background-color: darkslategrey;
+  min-height: 35rem;
+}
+
+.dv-nav-contents {}
+
 .dv-user-info-nav {
   background-color: black;
 }
@@ -217,6 +226,10 @@ label {
 }
 
 .dv-pt30 {
+  padding-top: 30px;
+}
+
+.dv-pt10 {
   padding-top: 30px;
 }
 

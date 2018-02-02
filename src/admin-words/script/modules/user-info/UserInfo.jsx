@@ -1,74 +1,106 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Link } from "react-router-dom";
 import UserInfoDocu from "./UserInfoDocu.jsx";
 import UserInfoMessage from "./UserInfoMessage.jsx";
 import UserChangePass from "./UserChangePass.jsx";
 
 import "bootstrap/dist/js/bootstrap.js";
-const commonNavCol = "col-6 nav-item nav-link ";
 
 class UserInfo extends React.Component {
   constructor(props) {
     super(props);
+    let commonClass = "flex-sm-fill nav-link dv-mt10";
+    this.state = {
+      navs: [
+        {
+          class: commonClass,
+          name: "docMessage",
+          href: "#docContent",
+          title: "历史文档信息",
+          content: <UserInfoDocu userId={this.props.userId}/>
+        }, {
+          class: commonClass,
+          name: "userMessage",
+          href: "#userContent",
+          title: "个人信息维护",
+          content: <UserInfoMessage userId={this.props.userId}/>
+        }, {
+          class: commonClass,
+          name: "changePass",
+          href: "#passContent",
+          title: "修改密码",
+          content: <UserChangePass userId={this.props.userId} loginName={this.props.loginName}/>
+        }, {
+          class: commonClass,
+          name: "exit",
+          href: "#exitContent",
+          title: "退出登录"
+        }
+      ],
+      currentContent: {}
+    }
   }
   componentDidMount() {
-    $(function() {
-      $('[data-toggle="popover"]').popover();
-    });
+    this.setState({currentContent: this.state.navs[0]});
+  }
+
+  getNav() {
+    let me = this;
+    let navs = this.state.navs;
+    return (
+      <nav className="col-2 nav flex-column ustify-content-end dv-nav">
+        {navs
+          .map(function (item, index) {
+            return (
+              <a
+                key={index}
+                className={item.class}
+                data-toggle="tab"
+                href="#doc"
+                role="tab"
+                onClick={me
+                .getContentAction
+                .bind(this, item, me)}>
+                <h5>{item.title}</h5>
+              </a>
+            );
+          })}
+      </nav>
+    )
+  }
+
+  getContent() {
+    let returnContenr = (
+      <h4 className="card-title">抱歉，功能尚未开发完成！</h4>
+    );
+    let item = this.state.currentContent;
+    if (item.hasOwnProperty('content')) {
+      returnContenr = item.content;
+    }
+    return returnContenr;
+  }
+
+  getContentAction(item, mine, event) {
+    mine.setState({currentContent: item});
   }
 
   render() {
     return (
-      <BrowserRouter basename="/userInfo.html">
-        <div className="container-fluid">
-          <div className="row dv-user-info-title">
-            <nav className="nav ustify-content-end">
-              <a
-                className="flex-sm-fill text-sm-center nav-link active"
-                data-toggle="tab"
-                href="#doc"
-                role="tab"
-              >
-                <h5>历史文档信息</h5>
-              </a>
-              <a
-                className="flex-sm-fill text-sm-center nav-link"
-                data-toggle="tab"
-                href="#user"
-                role="tab"
-              >
-                <h5>个人信息维护</h5>
-              </a>
-              <a
-                className="flex-sm-fill text-sm-center nav-link"
-                data-toggle="tab"
-                href="#pass"
-                role="tab"
-              >
-                <h5>修改密码</h5>
-              </a>
-            </nav>
-          </div>
-          <div className="container-fluid">
-            <div className="tab-content">
-              <div className="tab-pane active" id="doc" role="tabpanel">
-                <UserInfoDocu userId={this.props.userId} />
-              </div>
-              <div className="tab-pane" id="user" role="tabpanel">
-                <UserInfoMessage userId={this.props.userId} />
-              </div>
-              <div className="tab-pane" id="pass" role="tabpanel">
-                <UserChangePass
-                  userId={this.props.userId}
-                  loginName={this.props.loginName}
-                />
-              </div>
+      <div className="row">
+        {this.getNav()}
+        <div className="col-10">
+          <div className="card dv-nav-contents">
+            <div className="card-header">
+              <strong>{this.state.currentContent.title}</strong>
+            </div>
+            <div className="card-block">
+              {this.getContent()}
             </div>
           </div>
         </div>
-      </BrowserRouter>
-    );
+      </div>
+    )
   }
-}
+};
+
 export default UserInfo;
