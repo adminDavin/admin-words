@@ -5,6 +5,63 @@ import ReactTooltip from "react-tooltip";
 import WordsDoc from "./WordsDoc.jsx";
 import utils from "../../utils.js";
 
+class MyModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [], docInfo: {}, nodata: "none" };
+  }
+
+  render(){
+   return (
+      <div
+        className="modal fade"
+        id="exampleModalLong"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog dv-modal" role="document">
+          <div className="modal-content dv-modal-kingwords-show" >
+            <div className="modal-header">
+              <h5 className="modal-title">{"关键字信息"}</h5>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body" id="modalForm">
+              {wordsDoc}
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-dismiss="modal"
+                // onClick={this.modalAction.bind(this, "register")}
+              >
+                {"确定"}
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                {"取消"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+
 export default class UserInfoDocu extends React.Component {
   constructor(props) {
     super(props);
@@ -199,7 +256,7 @@ export default class UserInfoDocu extends React.Component {
         <div className="row">
           <div className="col-12">
             <div className="row dv-user-info-main">
-              <table className="table table-responsive-sm">
+              <table className="table table-bordered table-responsive-sm">
                 {th}
 
                 {td}

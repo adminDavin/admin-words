@@ -202,10 +202,12 @@ label {
   // max-height: 1000px;
   height: 600px;
   max-width: 150%;
-  overflow: auto; // background-color:white;
-  // margin-bottom: 10px;
-  // padding-right: 0px;
-  // padding-left: 0px;
+  overflow: auto;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.dv-modal-kingwords-show{
+  min-width: 50%;
 }
 
 .dv-nav {
@@ -286,7 +288,7 @@ label {
 }
 
 .dv-modal {
-  margin-top: 70px;
+  margin-top: 5%;
 }
 
 .dv-modal-register {
