@@ -73,11 +73,11 @@ body {
   width: 100%;
 }
 
- 
-.dv-border-rl2 { 
+.dv-border-rl2 {
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
 .dv-border-top30 {
   margin-top: 1rem;
   border-top-style: solid;
@@ -118,7 +118,7 @@ body {
 
 .dv-mr10 {
   margin-right: 10px;
-} 
+}
 
 .dv-words-table {
   height: 800px;
@@ -216,8 +216,17 @@ label {
   border-block-end-style: dashed;
 }
 
+.dv-pt30 {
+  padding-top: 30px;
+}
+
 .dv-mt5 {
   margin-top: 5px;
+}
+
+.dv-m5 {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .dv-mt10 {
@@ -251,13 +260,6 @@ label {
   background-color: aliceblue;
 }
 
-.dv-jumbotron-t20-p2{
-  margin-top: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  margin-bottom: 1rem;
-}
-
 .dv-login-title {
   margin-top: 10px !important;
   border-bottom-color: black;
@@ -265,9 +267,11 @@ label {
   border-bottom-style: solid;
   padding-bottom: 5px;
 }
-.dv-manager{
-  background-color:#a29fda;
+
+.dv-manager {
+  background-color: #a29fda;
 }
+
 .dv-modal {
   margin-top: 70px;
 }

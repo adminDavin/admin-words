@@ -103,7 +103,7 @@ class ManageLogin extends React.Component {
           alert(result.result);
         } else {
           let data = result.result.data;
-          if (me.state.isManage == true) {
+          if (me.props.isManage == true) {
             location.href = "/manager.html?userId=" + data.userId + "&key=" + data.key + "&loginName=" + data.loginName + "&isManage=" + me.props.isManage;
             return false;
           } else {
@@ -397,8 +397,8 @@ class LoginInfo extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-5 jumbotron dv-jumbotron-t20-p2" style={{ marginTop: 20 }}>
+        <div className="row justify-content-center dv-pt30">
+          <div className="col-5 jumbotron" style={{ marginTop: 20 }}>
             <ManageLogin isManage={this.state.isManage} />
           </div>
         </div>

@@ -51,7 +51,7 @@ export default class HeadLayer extends React.Component {
             <button
               type="button"
               key={"button" + index}
-              className="col-auto btn btn-outline-secondary dv-mr5"
+              className="col-auto btn btn-outline-secondary dv-m5"
               style={{ marginLeft: 5 }}
               onClick={me.managelogin.bind(me, pro.url, pro.params)}
             >

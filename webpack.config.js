@@ -14,8 +14,9 @@ module.exports = {
     userInfo: "./src/admin-words/script/userInfo.js",
     manager: "./src/admin-words/script/manager.js",
     login: "./src/admin-words/script/login.js",
-    reactor: ["react", "react-dom"], 
-    jquery: ["jquery"]
+    reactor: ["react", "react-dom"],
+    jquery: ["jquery"],
+    crypto: ["crypto-js"]
   },
   output: {
     path: __dirname + "/dist",
@@ -33,60 +34,62 @@ module.exports = {
       title: "Custom template",
       filename: "index.html",
       template: "./src/admin-words/index.html",
-      chunks: ["common", "reactor", "jquery"]
+      chunks: ["crypto", "common", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "Custom template",
       filename: "manager.html",
       template: "./src/admin-words/manager.html",
-      chunks: ["common", "reactor", "jquery", "manager"]
-    }),  
+      chunks: ["crypto", "common", "reactor", "jquery", "manager"]
+    }),
     new HtmlWebpackPlugin({
       title: "words admin worker",
       filename: "viewer.html",
       template: "./src/admin-words/viewer.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["common", "viewer", "reactor", "jquery"]
+      chunks: ["crypto", "common", "viewer", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "words admin user manage",
       filename: "userInfo.html",
       template: "./src/admin-words/userInfo.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["common", "userInfo", "reactor", "jquery"]
+      chunks: ["crypto", "common", "userInfo", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "words admin logining",
       filename: "login.html",
       template: "./src/admin-words/login.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["common", "login", "reactor", "jquery"]
+      chunks: ["crypto", "common", "login", "reactor", "jquery"]
     }),
     new webpack.optimize.UglifyJsPlugin({
-      minify:{
-        removeAttributeQuotes:true
+      minify: {
+        removeAttributeQuotes: true
       },
       output: {
-        comments: false,  
+        comments: false,
       },
       compress: {
         warnings: false
-      }  
+      },
+      mangle: {
+        except: ['$super', '$', 'exports', 'require']
+      }
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new purifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
     }),
-    new CopyWebpackPlugin([
-      {
-        from: __dirname + "/pdf-viewer",
-        to: __dirname + "/dist/pdf-viewer"
-      }
-    ]),
+    new CopyWebpackPlugin([{
+      from: __dirname + "/pdf-viewer",
+      to: __dirname + "/dist/pdf-viewer"
+    }]),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ["common", "reactor", "jquery"]
-    }),   
+      names: ["common", "reactor", "jquery", "crypto"]
+    }),
     new ExtractTextPlugin({
-      filename: "[name].css"
+      filename: "style/[name].css"
     }),
     new webpack.ProvidePlugin({
       jQuery: "jquery",
@@ -97,7 +100,7 @@ module.exports = {
     })
   ],
 
-  
+
   devtool: "cheap-module-eval-source-map",
   devServer: {
     // 配置服务与热更新
@@ -114,7 +117,9 @@ module.exports = {
       "/pdf-store": {
         target: "http://localhost:8080/words-admin/admin/downloadFile",
         secure: false,
-        pathRewrite: { "^/pdf-store": "" }
+        pathRewrite: {
+          "^/pdf-store": ""
+        }
       }
     }
   },
