@@ -1,12 +1,16 @@
-const trim = function(str) {
+const trim = function (str) {
   //删除左右两端的空格
   return str.replace(/(^\s*)|(\s*$)/g, "");
 };
-const isEmailStr = function(str) {
+const isEmailStr = function (str) {
   let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-  return reg.test(str);
+  let strForm = trim(str);
+  return {
+    content: strForm,
+    valid: reg.test(strForm)
+  };
 };
-Date.prototype.Format = function(fmt) {
+Date.prototype.Format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
     "d+": this.getDate(), //日
@@ -30,7 +34,7 @@ Date.prototype.Format = function(fmt) {
   return fmt;
 };
 
-const parseParam = function(param, key) {
+const parseParam = function (param, key) {
   let paramStr = "";
   if (
     param instanceof String ||
@@ -46,28 +50,41 @@ const parseParam = function(param, key) {
   return paramStr.substr(1);
 };
 
-const charFilter = function(str) {
+const charFilter = function (str) {
   str = str.replace(/[\n]/gi, "");
   str = str.replace(/\"/g, "");
   return trim(str);
 };
+
+const deleteSpaceStr = function (str, flag) {
+  let strForm = str.replace(/\s+/g, "");
+  let valid = false;
+
+  if (strForm.length > 8 || flag) {
+    valid = true;
+  }
+  return {
+    content: strForm,
+    valid: valid
+  };
+};
+
 const getUtils = {
-  parseParam: function(param, key) {
-    return parseParam(param, key);
-  },
-  getModel: function() {
+  trim: trim,
+  parseParam: parseParam,
+  getModel: function () {
     console.log("fdfd");
   },
-  formatDate: function(dateTime) {
+  formatDate: function (dateTime) {
     let d = new Date(dateTime);
     return d.Format("yyyy-MM-dd hh:mm:ss");
   },
 
-  formatDateNew: function(dateTime) {
+  formatDateNew: function (dateTime) {
     let d = new Date(dateTime);
     return d.Format("yyyy-MM-dd");
   },
-  fileValid: function(file) {
+  fileValid: function (file) {
     if (file == "") {
       // alert("请选择要上传的文件");
       return false;
@@ -86,7 +103,7 @@ const getUtils = {
     }
     return true;
   },
-  addWordsPre: function(container) {
+  addWordsPre: function (container) {
     let words = container.getSelection().toString();
     let text = charFilter(words);
     container.getSelection().removeAllRanges();
@@ -107,36 +124,26 @@ const getUtils = {
       return null;
     }
   },
-  isEmailStr: function(str) {
-    let strForm = trim(str);
-    return { content: strForm, valid: isEmailStr(strForm) };
-  },
 
-  deleteSpaceStr: function(str) {
-    let strForm = str.replace(/\s+/g, "");
-    let valid = false;
-    if (strForm.length > 8) {
-      valid = true;
-    }
-    return { content: strForm, valid: valid };
-  },
-  textFormater: function(str) {
+
+
+  textFormater: function (str) {
     str = str.replace(/[\n]/gi, "");
     str = str.replace(/\"/g, "");
     return str;
   },
-  removeElementById: function(arr, ele) {
+  removeElementById: function (arr, ele) {
     var result = [];
     if (arr instanceof Array) {
       if (ele instanceof Array) {
-        result = arr.filter(function(item) {
-          var isInEle = ele.some(function(eleItem) {
+        result = arr.filter(function (item) {
+          var isInEle = ele.some(function (eleItem) {
             return item === eleItem;
           });
           return !isInEle;
         });
       } else {
-        result = arr.filter(function(item) {
+        result = arr.filter(function (item) {
           return item[ele.name] !== ele.value;
         });
       }
@@ -145,18 +152,18 @@ const getUtils = {
     }
     return result;
   },
-  removeElement: function(arr, ele) {
+  removeElement: function (arr, ele) {
     var result = [];
     if (arr instanceof Array) {
       if (ele instanceof Array) {
-        result = arr.filter(function(item) {
-          var isInEle = ele.some(function(eleItem) {
+        result = arr.filter(function (item) {
+          var isInEle = ele.some(function (eleItem) {
             return item === eleItem;
           });
           return !isInEle;
         });
       } else {
-        result = arr.filter(function(item) {
+        result = arr.filter(function (item) {
           return item !== ele;
         });
       }
@@ -164,6 +171,23 @@ const getUtils = {
       console.log("parameter error of function removeElement");
     }
     return result;
+  },
+  checkIsEmail(email) {
+    let userName = isEmailStr(email);
+    if (!userName.valid) {
+      alert("这不是一个合法邮箱，请确认");
+      return "";
+    }
+    return userName.content;
+  },
+  checkIsNull(value, flag) {
+    console.log(value, flag);
+    let password = deleteSpaceStr(value, flag);
+    if (!password.valid) {
+      alert("值不允许为空或者小于8位，请确认");
+      return "";
+    }
+    return password.content;
   }
 };
 

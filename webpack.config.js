@@ -14,8 +14,7 @@ module.exports = {
     userInfo: "./src/admin-words/script/userInfo.js",
     manager: "./src/admin-words/script/manager.js",
     login: "./src/admin-words/script/login.js",
-    reactor: ["react", "react-dom"],
-    reactRouter: ["react-router"],
+    reactor: ["react", "react-dom"], 
     jquery: ["jquery"]
   },
   output: {
@@ -34,34 +33,34 @@ module.exports = {
       title: "Custom template",
       filename: "index.html",
       template: "./src/admin-words/index.html",
-      chunks: ["common", "reactor", "jquery", "reactRouter"]
+      chunks: ["common", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "Custom template",
       filename: "manager.html",
       template: "./src/admin-words/manager.html",
-      chunks: ["common", "reactor", "jquery", "reactRouter","manager"]
+      chunks: ["common", "reactor", "jquery", "manager"]
     }),  
     new HtmlWebpackPlugin({
       title: "words admin worker",
       filename: "viewer.html",
       template: "./src/admin-words/viewer.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["common", "viewer", "reactor", "jquery", "reactRouter"]
+      chunks: ["common", "viewer", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "words admin user manage",
       filename: "userInfo.html",
       template: "./src/admin-words/userInfo.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["common", "userInfo", "reactor", "jquery", "reactRouter"]
+      chunks: ["common", "userInfo", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "words admin logining",
       filename: "login.html",
       template: "./src/admin-words/login.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["common", "login", "reactor", "jquery", "reactRouter"]
+      chunks: ["common", "login", "reactor", "jquery"]
     }),
     new webpack.optimize.UglifyJsPlugin({
       minify:{
@@ -84,7 +83,7 @@ module.exports = {
       }
     ]),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ["common", "reactor", "jquery", "reactRouter"]
+      names: ["common", "reactor", "jquery"]
     }),   
     new ExtractTextPlugin({
       filename: "[name].css"
