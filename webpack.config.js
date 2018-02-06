@@ -62,21 +62,7 @@ module.exports = {
       template: "./src/admin-words/login.html",
       common: "./src/admin-words/script/index.js",
       chunks: ["crypto", "common", "login", "reactor", "jquery"]
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      minify: {
-        removeAttributeQuotes: true
-      },
-      output: {
-        comments: false,
-      },
-      compress: {
-        warnings: false
-      },
-      mangle: {
-        except: ['$super', '$', 'exports', 'require']
-      }
-    }),
+    }), 
     new webpack.optimize.ModuleConcatenationPlugin(),
     new purifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
