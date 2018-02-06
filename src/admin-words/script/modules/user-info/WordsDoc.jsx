@@ -126,35 +126,40 @@ export default class WordsDoc extends React.Component {
     );
 
     return (
-      <div className="container">
-        <div className="row">
-          <dl className="col-2 dl-horizontal">
+      <div className="container row">
+        <div className="col-5">
+          <dl className="dl-horizontal">
             <dt>文档名称</dt>
             <dd>
-              <span className="dv-td-text-longer" data-tip={doc.name}>
+              <span  >
                 {doc.name}
-              </span>
-              <ReactTooltip />
+              </span> 
             </dd>
           </dl>
-          <dl className="col-2 dl-horizontal">
+          <dl className="dl-horizontal">
             <dt>原始文件名</dt>
             <dd>
-              <span className="dv-td-text-longer" data-tip={doc.originalName}>
+              <span>
                 {doc.originalName}
-              </span>
-              <ReactTooltip />
+              </span> 
             </dd>
           </dl>
-          <dl className="col-4 dl-horizontal">
+          <dl className="dl-horizontal">
             <dt>文档Id</dt>
             <dd>{doc.uuid}</dd>
           </dl>
-          <dl className="col-2 dl-horizontal">
+          <dl className="dl-horizontal">
             <dt>状态</dt>
             <dd>{doc.state}</dd>
           </dl>
-          <div className="col-2">
+          
+        </div>
+        <div className="col-7">
+          <table className="table table-bordered">
+            {th}
+            {td}
+          </table>
+          <div className="row justify-content-end">
             <button
               type="button"
               className="btn btn-primary dv-mt20"
@@ -164,10 +169,6 @@ export default class WordsDoc extends React.Component {
             </button>
           </div>
         </div>
-        <table className="table">
-          {th}
-          {td}
-        </table>
       </div>
     );
   }

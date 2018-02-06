@@ -7,8 +7,15 @@ import utils from "../../utils.js";
 
 class MyModal extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { data: [], docInfo: {}, nodata: "none" };
+    super(props);  
+    this.state = {
+      docInfo: props.docInfo
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState({docInfo: nextProps.docInfo});
   }
 
   render(){
@@ -21,7 +28,7 @@ class MyModal extends React.Component {
         aria-labelledby="exampleModalLongTitle"
         aria-hidden="true"
       >
-        <div className="modal-dialog dv-modal" role="document">
+        <div className="modal-dialog dv-modal-doc-detail" role="document">
           <div className="modal-content dv-modal-kingwords-show" >
             <div className="modal-header">
               <h5 className="modal-title">{"关键字信息"}</h5>
@@ -35,7 +42,9 @@ class MyModal extends React.Component {
               </button>
             </div>
             <div className="modal-body" id="modalForm">
-              {wordsDoc}
+              <div className="row">
+                <WordsDoc docInfo={this.state.docInfo} />
+              </div>
             </div>
             <div className="modal-footer">
               <button
@@ -61,105 +70,9 @@ class MyModal extends React.Component {
   }
 }
 
-
-export default class UserInfoDocu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { data: [], docInfo: {}, nodata: "none" };
-  }
-
-  componentDidMount() {
-    let me = this;
-    $(function() {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-    request.sendRequstNew(
-      "/admin/listDocument",
-      { userId: this.props.userId },
-      function(result) {
-        if (result.code != "200") {
-          me.setState({ data: [], nodata: "" });
-        } else {
-          let data = result.result.data;
-          me.setState({ data: data, nodata: "none" });
-        }
-      }
-    );
-  }
-
-  deleteDocBydoc(doc, e) {
-    this.setState({ docInfo: doc });
-    let me = this;
-    request.sendRequstNew(
-      "/admin/deleteDoc",
-      { wordsId: doc.docId, userId: doc.userId },
-      function(resp) {
-        if (resp.code === "200") {
-          let data = me.state.data;
-          me.setState({ data: utils.removeElement(data, words) });
-        } else {
-          alert(resp.result);
-        }
-      }
-    );
-  }
-
-  getWordsBydoc(doc, e) {
-    this.setState({ docInfo: doc });
-  }
-  render() {
-    const wordsDoc = (
-      <div className="row">
-        <WordsDoc docInfo={this.state.docInfo} />
-      </div>
-    );
-    const modelEle = (
-      <div
-        className="modal fade"
-        id="exampleModalLong"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLongTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog dv-modal" role="document">
-          <div className="modal-content" style={{ width: 1000 }}>
-            <div className="modal-header">
-              <h5 className="modal-title">{"关键字信息"}</h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body" id="modalForm">
-              {wordsDoc}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                data-dismiss="modal"
-                // onClick={this.modalAction.bind(this, "register")}
-              >
-                {"确定"}
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                {"取消"}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-    let th = (
+class ThContent extends React.Component{
+  render(){
+    return (
       <thead className="thead-light">
         <tr>
           <th scope="col">#</th>
@@ -191,9 +104,16 @@ export default class UserInfoDocu extends React.Component {
         </tr>
       </thead>
     );
-    let td = (
-      <tbody>
-        {this.state.data.map((pro, index) => {
+  }
+}
+
+class TdContent extends React.Component{
+  constructor(props) {
+    super(props); 
+  } 
+  render(){ 
+    return ( <tbody>
+        {this.props.data.map((pro, index) => {
           let realState = "不可用";
           if (pro.state == 0) {
             realState = "可操作";
@@ -209,19 +129,15 @@ export default class UserInfoDocu extends React.Component {
                 >
                   <button
                     type="button"
-                    className="btn btn-secondary dv-mr10"
-                    data-toggle="modal"
-                    data-target="#exampleModalLong"
-                    onClick={this.deleteDocBydoc.bind(this, pro)}
+                    className="btn btn-secondary dv-mr10" 
+                    onClick={this.props.currentItem.bind(this, pro, this.props.pState, "delete")}
                   >
                     删除
                   </button>
                   <button
                     type="button"
-                    className="btn btn-secondary"
-                    data-toggle="modal"
-                    data-target="#exampleModalLong"
-                    onClick={this.getWordsBydoc.bind(this, pro)}
+                    className="btn btn-secondary" 
+                    onClick={this.props.currentItem.bind(this, pro, this.props.pState, "detail")}
                   >
                     关键词
                   </button>
@@ -248,18 +164,71 @@ export default class UserInfoDocu extends React.Component {
             </tr>
           );
         })}
-      </tbody>
+      </tbody>);
+  }
+}
+
+export default class UserInfoDocu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [], docInfo: {}, nodata: "none" };
+  }
+
+  componentDidMount() {
+    let me = this;
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+    request.sendRequstNew(
+      "/admin/listDocument",
+      { userId: this.props.userId },
+      function(result) {
+        if (result.code != "200") {
+          me.setState({ data: [], nodata: "" });
+        } else {
+          let data = result.result.data;
+          me.setState({ data: data, nodata: "none" });
+        }
+      }
     );
+  }
+
+  deleteDocBydoc(doc, e) {  
+    let me = this;
+    request.sendRequstNew(
+      "/admin/deleteDoc",
+      { wordsId: doc.docId, userId: doc.userId },
+      function(resp) {
+        if (resp.code === "200") {
+          let data = me.state.data;
+          me.setState({ data: utils.removeElement(data, words) });
+        } else {
+          alert(resp.result);
+        }
+      }
+    );
+  } 
+
+  getCurrentItem(doc, mine, flag, e){ 
+    mine.setState({ docInfo: doc });   
+    if(flag == 'delete'){
+      mine.deleteDocBydoc(doc);
+    }else if(flag == 'detail'){
+      $('#exampleModalLong').modal({show: true}); 
+    }
+  }
+
+  render() {  
+    let mine = this;
     return (
       <div className="container  dv-mt5">
-        {modelEle}
+        <MyModal  docInfo={this.state.docInfo} />
         <div className="row">
           <div className="col-12">
             <div className="row dv-user-info-main">
-              <table className="table table-bordered table-responsive-sm">
-                {th}
-
-                {td}
+              <table className="table table-bordered table-responsive-sm"> 
+                <ThContent />
+                <TdContent data={this.state.data} currentItem={this.getCurrentItem} pState={mine}/>
               </table>
               <div
                 className="container row justify-content-center"

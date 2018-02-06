@@ -32,7 +32,7 @@ export default class UserChangePass extends React.Component {
       oldPassword: crypto.encodeBase64(oldPassword.content),
       newPassword: crypto.encodeBase64(newPassword.content),
       loginName: this.state.loginName
-    };
+    }; 
     request.sendRequstNew("/admin/modifyPass", params, function(result) {
       if (result.code != "200") {
         alert(result.result);
@@ -62,10 +62,10 @@ export default class UserChangePass extends React.Component {
                   <div className="col-sm-10">
                     <input
                       type="text"
-                      className="form-control-plaintext"
+                      className="form-control"
+                      readOnly
                       id="staticEmail"
-                      value={this.state.loginName}
-                      onChange={this.handleChange.bind(this, "loginName")}
+                      value={this.state.loginName.replace("%2540","@")} 
                     />
                   </div>
                 </div>
