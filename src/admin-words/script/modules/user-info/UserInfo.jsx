@@ -4,8 +4,6 @@ import UserInfoDocu from "./UserInfoDocu.jsx";
 import UserInfoMessage from "./UserInfoMessage.jsx";
 import UserChangePass from "./UserChangePass.jsx";
 
-import "bootstrap/dist/js/bootstrap.js";
-
 class UserInfo extends React.Component {
   constructor(props) {
     super(props);

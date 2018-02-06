@@ -1,3 +1,4 @@
+import moment from "moment";
 const trim = function (str) {
   //删除左右两端的空格
   return str.replace(/(^\s*)|(\s*$)/g, "");
@@ -188,6 +189,23 @@ const getUtils = {
       return "";
     }
     return password.content;
+  },
+
+  getRequestParams() {
+    let params = {};
+    let paramsStr = window.location.search;
+    if (paramsStr) {
+      let encodeParams = paramsStr.replace(/^\?/, "");
+      let paramsDecode = encodeParams;
+      let tmp = paramsDecode.replace(/^\?/, "").split("&");
+      for (let item of tmp) {
+        let param = item.split("=");
+        if (param.length == 2) {
+          params[param[0]] = param[1];
+        }
+      }
+    }
+    return params;
   }
 };
 

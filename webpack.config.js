@@ -14,6 +14,7 @@ module.exports = {
     userInfo: "./src/admin-words/script/userInfo.js",
     manager: "./src/admin-words/script/manager.js",
     login: "./src/admin-words/script/login.js",
+    utils: "./src/admin-words/script/utils.js",
     reactor: ["react", "react-dom"],
     jquery: ["jquery"],
     crypto: ["crypto-js"]
@@ -34,34 +35,34 @@ module.exports = {
       title: "Custom template",
       filename: "index.html",
       template: "./src/admin-words/index.html",
-      chunks: ["crypto", "common", "reactor", "jquery"]
+      chunks: ["utils", "crypto", "common", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "Custom template",
       filename: "manager.html",
       template: "./src/admin-words/manager.html",
-      chunks: ["crypto", "common", "reactor", "jquery", "manager"]
+      chunks: ["utils", "crypto", "common", "reactor", "jquery", "manager"]
     }),
     new HtmlWebpackPlugin({
       title: "words admin worker",
       filename: "viewer.html",
       template: "./src/admin-words/viewer.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["crypto", "common", "viewer", "reactor", "jquery"]
+      chunks: ["utils", "crypto", "common", "viewer", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "words admin user manage",
       filename: "userInfo.html",
       template: "./src/admin-words/userInfo.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["crypto", "common", "userInfo", "reactor", "jquery"]
+      chunks: ["utils", "crypto", "common", "userInfo", "reactor", "jquery"]
     }),
     new HtmlWebpackPlugin({
       title: "words admin logining",
       filename: "login.html",
       template: "./src/admin-words/login.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["crypto", "common", "login", "reactor", "jquery"]
+      chunks: ["utils", "crypto", "common", "login", "reactor", "jquery"]
     }), 
     new webpack.optimize.ModuleConcatenationPlugin(),
     new purifyCSSPlugin({
