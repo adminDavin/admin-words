@@ -17,8 +17,7 @@ module.exports = {
     login: "./src/admin-words/script/login.js",
     reactor: [
       "react", "react-dom"
-    ],
-    dataPicker: "react-datepicker",
+    ], 
     jquery: ["jquery"],
     crypto: ["crypto-js"]
   },
@@ -60,13 +59,13 @@ module.exports = {
       filename: "viewer.html",
       template: "./src/admin-words/viewer.html",
       common: "./src/admin-words/script/index.js",
-      chunks: [
+      chunks: [ 
+        "reactor",
+        "jquery",
         "utils",
         "crypto",
         "common",
-        "viewer",
-        "reactor",
-        "jquery"
+        "viewer"
       ]
     }),
     new HtmlWebpackPlugin({
@@ -80,8 +79,7 @@ module.exports = {
         "common",
         "userInfo",
         "reactor",
-        "jquery",
-        "dataPicker"
+        "jquery" 
       ]
     }),
     new HtmlWebpackPlugin({
@@ -89,12 +87,12 @@ module.exports = {
       filename: "login.html",
       template: "./src/admin-words/login.html",
       common: "./src/admin-words/script/index.js",
-      chunks: [
+      chunks: [ 
+        "reactor",
         "utils",
         "crypto",
         "common",
         "login",
-        "reactor",
         "jquery"
       ]
     }),
@@ -114,12 +112,11 @@ module.exports = {
       .optimize
       .CommonsChunkPlugin({
         names: [
-          "reactor",
           "common",
           "crypto",
           "utils",
           "jquery",
-          "dataPicker"
+          "reactor"
         ]
       }),
     new ExtractTextPlugin({filename: "style/[name].css"}),
