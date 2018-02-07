@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import UserInfo from "./modules/user-info/UserInfo.jsx";
-import utils from "./utils.js"; 
+import utils from "./utils.js";
 
-const getParams = utils.getRequestParams();
+const params = utils.getRequestParams();
 
 if (params.userId) {
   ReactDOM.render(

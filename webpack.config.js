@@ -10,12 +10,15 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: {
     common: "./src/admin-words/script/index.js",
+    utils: "./src/admin-words/script/utils.js",
     viewer: "./src/admin-words/script/viewer.js",
     userInfo: "./src/admin-words/script/userInfo.js",
     manager: "./src/admin-words/script/manager.js",
     login: "./src/admin-words/script/login.js",
-    utils: "./src/admin-words/script/utils.js",
-    reactor: ["react", "react-dom"],
+    reactor: [
+      "react", "react-dom"
+    ],
+    dataPicker: "react-datepicker",
     jquery: ["jquery"],
     crypto: ["crypto-js"]
   },
@@ -26,7 +29,9 @@ module.exports = {
   module: moduleRulesLoader,
   resolve: {
     enforceExtension: false,
-    extensions: [".js", ".json", ".jsx"],
+    extensions: [
+      ".js", ".json", ".jsx"
+    ],
     modules: ["node_modules"]
   },
   plugins: [
@@ -41,52 +46,93 @@ module.exports = {
       title: "Custom template",
       filename: "manager.html",
       template: "./src/admin-words/manager.html",
-      chunks: ["utils", "crypto", "common", "reactor", "jquery", "manager"]
+      chunks: [
+        "utils",
+        "crypto",
+        "common",
+        "reactor",
+        "jquery",
+        "manager"
+      ]
     }),
     new HtmlWebpackPlugin({
       title: "words admin worker",
       filename: "viewer.html",
       template: "./src/admin-words/viewer.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["utils", "crypto", "common", "viewer", "reactor", "jquery"]
+      chunks: [
+        "utils",
+        "crypto",
+        "common",
+        "viewer",
+        "reactor",
+        "jquery"
+      ]
     }),
     new HtmlWebpackPlugin({
       title: "words admin user manage",
       filename: "userInfo.html",
       template: "./src/admin-words/userInfo.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["utils", "crypto", "common", "userInfo", "reactor", "jquery"]
+      chunks: [
+        "utils",
+        "crypto",
+        "common",
+        "userInfo",
+        "reactor",
+        "jquery",
+        "dataPicker"
+      ]
     }),
     new HtmlWebpackPlugin({
       title: "words admin logining",
       filename: "login.html",
       template: "./src/admin-words/login.html",
       common: "./src/admin-words/script/index.js",
-      chunks: ["utils", "crypto", "common", "login", "reactor", "jquery"]
-    }), 
-    new webpack.optimize.ModuleConcatenationPlugin(),
+      chunks: [
+        "utils",
+        "crypto",
+        "common",
+        "login",
+        "reactor",
+        "jquery"
+      ]
+    }),
+    new webpack
+      .optimize
+      .ModuleConcatenationPlugin(),
     new purifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
     }),
-    new CopyWebpackPlugin([{
-      from: __dirname + "/pdf-viewer",
-      to: __dirname + "/dist/pdf-viewer"
-    }]),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ["common", "reactor", "jquery", "crypto"]
-    }),
-    new ExtractTextPlugin({
-      filename: "style/[name].css"
-    }),
+    new CopyWebpackPlugin([
+      {
+        from: __dirname + "/pdf-viewer",
+        to: __dirname + "/dist/pdf-viewer"
+      }
+    ]),
+    new webpack
+      .optimize
+      .CommonsChunkPlugin({
+        names: [
+          "reactor",
+          "common",
+          "crypto",
+          "utils",
+          "jquery",
+          "dataPicker"
+        ]
+      }),
+    new ExtractTextPlugin({filename: "style/[name].css"}),
     new webpack.ProvidePlugin({
       jQuery: "jquery",
       $: "jquery",
-      Popper: ["popper.js", "default"],
+      Popper: [
+        "popper.js", "default"
+      ],
       Util: "exports-loader?Util!bootstrap/js/dist/util",
       Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
     })
   ],
-
 
   devtool: "cheap-module-eval-source-map",
   devServer: {
