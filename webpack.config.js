@@ -131,7 +131,9 @@ module.exports = {
     })
   ],
 
-  devtool: "cheap-module-eval-source-map",
+  devtool: "cheap-module-eval-source-map",//开发模式
+  
+  // devtool: "cheap-module-source-map", //生产模式
   devServer: {
     // 配置服务与热更新
     contentBase: path.resolve(__dirname, "dist"), // 监听哪个目录下启动热更新

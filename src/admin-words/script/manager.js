@@ -5,5 +5,5 @@ import routeInfo from "./config/routerConfig.js";
 
 const params = routeInfo.getParamData();
 if (params.userId) {
-  ReactDOM.render(<ManageUserInfo userId={params.userId} loginName={params.loginName}/>, document.getElementById("mainContent"));
+  ReactDOM.render(<ManageUserInfo userId={params.userId} loginName={params.loginName}/>, document.getElementById("content"));
 }

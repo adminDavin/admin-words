@@ -114,13 +114,11 @@ class ManageUserInfo extends React.Component {
     // this.setState({ contentData: [{ title: "fff" }] });
   }
   render() {
-    return (
-      <div className="container-fluid dv-manager-contant">
-        <Tabs
+    return ( 
+        <Tabs  
           defaultIndex={0}
           onSelect={(index, name, e) => this.tabSelectedContent(index, name, e)}
-        >
-          <div className="row">
+        > 
             <TabList className="col-2 nav flex-column">
               {this.state.tabContent.map((item, index) => {
                 return <Tab key={item.name + item.index}>{item.tabTitle}</Tab>;
@@ -141,11 +139,9 @@ class ManageUserInfo extends React.Component {
                     />
                   </TabPanel>
                 );
-              })}
+              })} 
             </div>
-          </div>
         </Tabs>
-      </div>
     );
   }
 }
