@@ -19,47 +19,26 @@ class CommonTable extends React.Component {
     return (
       <div className="row">
         <div className="container-fluid">
-          <BootstrapTable
-            version="4"
-            data={this.props.data}
-            condensed
-            hover
-            pagination
-            search
-            searchPlaceholder="key words ..."
-            ignoreSinglePage
-            options={options}
-          >
-            {this.props.columns.map((col, i) => {
-              if (i == 0) {
-                return (
-                  <TableHeaderColumn
-                    isKey
-                    dataField={col.col}
-                    searchable={false}
-                    key={i}
-                    width={col.width}
-                  >
-                    {col.name}
-                  </TableHeaderColumn>
-                );
-              } else {
-                return (
-                  <TableHeaderColumn
-                    dataField={col.col}
-                    searchable={false}
-                    key={i}
-                    width={col.width}
-                  >
-                    {col.name}
-                  </TableHeaderColumn>
-                );
-              }
-            })}
+          <BootstrapTable version="4" data={ this.props.data } condensed hover pagination search searchPlaceholder="key words ..." ignoreSinglePage options={ options }>
+            { this.props.columns.map((col, i) => {
+                if (i == 0) {
+                  return (
+                    <TableHeaderColumn isKey dataField={ col.col } searchable={ false } key={ i } width={ col.width }>
+                      { col.name }
+                    </TableHeaderColumn>
+                    );
+                } else {
+                  return (
+                    <TableHeaderColumn dataField={ col.col } searchable={ false } key={ i } width={ col.width }>
+                      { col.name }
+                    </TableHeaderColumn>
+                    );
+                }
+              }) }
           </BootstrapTable>
         </div>
       </div>
-    );
+      );
   }
 }
 

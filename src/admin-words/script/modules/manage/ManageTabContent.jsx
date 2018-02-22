@@ -27,7 +27,9 @@ class ManageTabContent extends React.Component {
     $("#loading").modal("show");
     request.sendRequstNew(
       this.props.dataSource.url,
-      { userState: JSON.stringify(this.props.dataSource.params) },
+      {
+        userState: JSON.stringify(this.props.dataSource.params)
+      },
       function(result) {
         setTimeout(() => {
           $("#loading").modal("hide");
@@ -46,7 +48,9 @@ class ManageTabContent extends React.Component {
             }
             return item;
           });
-          me.setState({ data: resultData });
+          me.setState({
+            data: resultData
+          });
           $("#loading").modal("hide");
         }
       }
@@ -55,51 +59,33 @@ class ManageTabContent extends React.Component {
   getThData() {
     if (this.props.name === "taskInfo") {
       return (
-        <ManageTableTaskInfo
-          manageId={this.props.manageId}
-          data={this.state.data}
-          colum={this.props.colum}
-        />
-      );
+        <ManageTableTaskInfo manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } />
+        );
     } else if (this.props.name === "userInfo") {
       return (
-        <ManageUser
-          manageId={this.props.manageId}
-          data={this.state.data}
-          colum={this.props.colum}
-          flag={false}
-        />
-      );
+        <ManageUser manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } flag={ false } />
+        );
     } else if (this.props.name === "managerInfo") {
       return (
-        <ManageUser
-          manageId={this.props.manageId}
-          data={this.state.data}
-          colum={this.props.colum}
-          flag={true}
-        />
-      );
+        <ManageUser manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } flag={ true } />
+        );
     } else if (this.props.name === "authInfo") {
       return (
-        <ManageAuthInfo
-          manageId={this.props.manageId}
-          data={this.state.data}
-          colum={this.props.colum}
-        />
-      );
+        <ManageAuthInfo manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } />
+        );
     } else if (this.props.name === "serviceInfo") {
       return (
         <table className="table">
-          <ThContent data={this.props.colum} />
+          <ThContent data={ this.props.colum } />
           <tbody>
-            {this.state.data.map((item, index) => {
-              return (
-                <ManageServiceInfo key={index} data={item} index={index} />
-              );
-            })}
+            { this.state.data.map((item, index) => {
+                return (
+                  <ManageServiceInfo key={ index } data={ item } index={ index } />
+                  );
+              }) }
           </tbody>
         </table>
-      );
+        );
     }
     return <p>测试页面</p>;
   }
@@ -107,17 +93,14 @@ class ManageTabContent extends React.Component {
   render() {
     return (
       <div className="card">
-        <div className="card-header" onClick={this.flashTabContent.bind(this)}>
-          {this.props.title}
+        <div className="card-header" onClick={ this.flashTabContent.bind(this) }>
+          { this.props.title }
         </div>
-        <div
-          className="card-body dv-card-body"
-          style={{ paddingLeft: 0, paddingRight: 0 }}
-        >
-          {this.getThData()}
+        <div className="card-body dv-card-body" style={ { paddingLeft: 0, paddingRight: 0 } }>
+          { this.getThData() }
         </div>
       </div>
-    );
+      );
   }
 }
 

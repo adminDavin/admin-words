@@ -29,6 +29,7 @@ body {
   margin-bottom: -15px;
 }
 
+
 .navbar {
   position: inherit;
 }
@@ -288,9 +289,15 @@ label {
   border-bottom-style: solid;
   padding-bottom: 5px;
 }
+ 
 
-.dv-manager {
-  background-color: #a29fda;
+.dv-width-100{
+  width: 100%;
+}
+
+.dv-manager {  
+  background-color: mediumslateblue;
+  padding-left: 15px;
 }
 
 .dv-modal {

@@ -33,7 +33,9 @@ export default class UserInfoMessage extends React.Component {
 
   handleChangeDate(date) {
     if (!this.state.userState) {
-      this.setState({userBirthDate: date});
+      this.setState({
+        userBirthDate: date
+      });
     }
   }
   componentDidMount() {
@@ -43,7 +45,7 @@ export default class UserInfoMessage extends React.Component {
       .checked = true;
     request.sendRequstNew("/admin/getUserListByUserId", {
       userId: this.props.userId
-    }, function (result) {
+    }, function(result) {
       if (result.code != "200") {
         alert(result.result);
       } else {
@@ -110,7 +112,7 @@ export default class UserInfoMessage extends React.Component {
     // console.log(params);
     if (flag) {
       request
-        .sendRequstNew("/admin/updateUserInfo", params, function (result) {
+        .sendRequstNew("/admin/updateUserInfo", params, function(result) {
           if (result.code != "200") {
             alert(result.result);
           } else {
@@ -123,218 +125,140 @@ export default class UserInfoMessage extends React.Component {
   render() {
     return (
       <div className="container">
-        <div
-          className="alert alert-secondary dv-bot0 dv-mt5"
-          role="alert"
-          data-toggle="collapse"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-          href="#collapseUserInfoBase">
+        <div className="alert alert-secondary dv-bot0 dv-mt5" role="alert" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" href="#collapseUserInfoBase">
           基本信息
         </div>
         <div className="row" id="collapseUserInfoBase">
           <form className="col-7">
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"用户名"}
+                { "用户名" }
               </label>
               <div className="col-sm-10">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder="user name"
-                  value={this.state.userEmail || ""}
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userEmail")}
-                  readOnly/>
+                <input type="text" className="form-control dv-mt5" placeholder="user name" value={ this.state.userEmail || "" } onChange={ this
+                                                                                                                                             .handleChange
+                                                                                                                                             .bind(this, "userEmail") } readOnly/>
               </div>
             </div>
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"姓名"}
+                { "姓名" }
               </label>
               <div className="col-sm-10">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder="real name"
-                  value={this.state.userName || ""}
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userName")}
-                  readOnly={this.state.userState}/>
+                <input type="text" className="form-control dv-mt5" placeholder="real name" value={ this.state.userName || "" } onChange={ this
+                                                                                                                                            .handleChange
+                                                                                                                                            .bind(this, "userName") } readOnly={ this.state.userState }
+                />
               </div>
             </div>
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"姓名拼写"}
+                { "姓名拼写" }
               </label>
               <div className="col-sm-10">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder="user name"
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userNamePin")}
-                  value={this.state.userNamePin || ""}
-                  readOnly={this.state.userState}/>
+                <input type="text" className="form-control dv-mt5" placeholder="user name" onChange={ this
+                                                                                                        .handleChange
+                                                                                                        .bind(this, "userNamePin") } value={ this.state.userNamePin || "" } readOnly={ this.state.userState }
+                />
               </div>
             </div>
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"出生日期"}
+                { "出生日期" }
               </label>
               <div className="col-sm-5">
-                <DatePicker
-                  className="form-control dv-mt5"
-                  selected={this.state.userBirthDate}
-                  onChange={this.handleChangeDate}
-                  readOnly={this.state.userState}/>
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"性别"}
+                { "性别" }
               </label>
               <div className="col-sm-3 dv-mt5">
                 <label className="custom-control custom-radio">
-                  <input
-                    id="radio1"
-                    name="radio"
-                    type="radio"
-                    className="custom-control-input"
-                    disabled={this.state.userState}/>
-                  <span className="custom-control-indicator"/>
+                  <input id="radio1" name="radio" type="radio" className="custom-control-input" disabled={ this.state.userState } />
+                  <span className="custom-control-indicator" />
                   <span className="custom-control-description">男</span>
                 </label>
                 <label className="custom-control custom-radio">
-                  <input
-                    id="radio2"
-                    name="radio"
-                    type="radio"
-                    className="custom-control-input"
-                    disabled={this.state.userState}/>
-                  <span className="custom-control-indicator"/>
+                  <input id="radio2" name="radio" type="radio" className="custom-control-input" disabled={ this.state.userState } />
+                  <span className="custom-control-indicator" />
                   <span className="custom-control-description">女</span>
                 </label>
               </div>
             </div>
           </form>
         </div>
-        <div
-          className="alert alert-secondary dv-bot0 dv-mt5"
-          role="alert"
-          data-toggle="collapse"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-          href="#collapseUserInfoContact">
+        <div className="alert alert-secondary dv-bot0 dv-mt5" role="alert" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" href="#collapseUserInfoContact">
           联系方式
         </div>
         <div className="row" id="collapseUserInfoContact">
           <form className="col-7">
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"所属组织"}
+                { "所属组织" }
               </label>
               <div className="col-sm-10">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder="organize"
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userOrganize")}
-                  value={this.state.userOrganize || ""}
-                  readOnly={this.state.userState}/>
+                <input type="text" className="form-control dv-mt5" placeholder="organize" onChange={ this
+                                                                                                       .handleChange
+                                                                                                       .bind(this, "userOrganize") } value={ this.state.userOrganize || "" } readOnly={ this.state.userState }
+                />
               </div>
             </div>
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"用户地址"}
+                { "用户地址" }
               </label>
               <div className="col-sm-10">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder="address"
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userAddress")}
-                  value={this.state.userAddress || ""}
-                  readOnly={this.state.userState}/>
+                <input type="text" className="form-control dv-mt5" placeholder="address" onChange={ this
+                                                                                                      .handleChange
+                                                                                                      .bind(this, "userAddress") } value={ this.state.userAddress || "" } readOnly={ this.state.userState }
+                />
               </div>
             </div>
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"联系电话"}
+                { "联系电话" }
               </label>
               <div className="col-sm-4">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder="phone"
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userPhone")}
-                  value={this.state.userPhone || ""}
-                  readOnly={this.state.userState}/>
+                <input type="text" className="form-control dv-mt5" placeholder="phone" onChange={ this
+                                                                                                    .handleChange
+                                                                                                    .bind(this, "userPhone") } value={ this.state.userPhone || "" } readOnly={ this.state.userState }
+                />
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
-                {"邮箱"}
+                { "邮箱" }
               </label>
               <div className="col-sm-4">
-                <input
-                  type="text"
-                  className="form-control dv-mt5"
-                  placeholder="email"
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userEmail")}
-                  value={this.state.userEmail || ""}
-                  readOnly/>
+                <input type="text" className="form-control dv-mt5" placeholder="email" onChange={ this
+                                                                                                    .handleChange
+                                                                                                    .bind(this, "userEmail") } value={ this.state.userEmail || "" } readOnly/>
               </div>
             </div>
           </form>
         </div>
-        <div
-          className="alert alert-secondary dv-bot0 dv-mt5"
-          role="alert"
-          data-toggle="collapse"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-          href="#collapseUserInfoSelf">
+        <div className="alert alert-secondary dv-bot0 dv-mt5" role="alert" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" href="#collapseUserInfoSelf">
           备注
         </div>
         <div className="row dv-mt5" id="collapseUserInfoSelf">
           <form className="col-10">
             <div className="row">
               <label className="text-center  col-sm-2 col-form-label alert-link">
-                {"备注"}
+                { "备注" }
               </label>
               <div className="col-sm-10">
-                <textarea
-                  className="form-control"
-                  rows="3"
-                  onChange={this
-                  .handleChange
-                  .bind(this, "userRemark")}
-                  value={this.state.userRemark}
-                  readOnly={this.state.userState}/>
+                <textarea className="form-control" rows="3" onChange={ this
+                                                                         .handleChange
+                                                                         .bind(this, "userRemark") } value={ this.state.userRemark } readOnly={ this.state.userState } />
               </div>
             </div>
           </form>
         </div>
         <div className="row justify-content-center">
-          <button
-            type="button"
-            className="col-1 btn btn-primary btn-lg btn-block dv-mr10"
-            onClick={this
-            .baseAction
-            .bind(this)}>
+          <button type="button" className="col-1 btn btn-primary btn-lg btn-block dv-mr10" onClick={ this
+                                                                                                       .baseAction
+                                                                                                       .bind(this) }>
             保存
           </button>
         </div>
       </div>
-    );
+      );
   }
 }

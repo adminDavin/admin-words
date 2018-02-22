@@ -16,15 +16,39 @@ class ManageUserInfo extends React.Component {
           tabTitle: "待处理任务",
           index: 0,
           name: "taskInfo",
-          dataSource: { url: "/admin/getUserListByState", params: [0, 6] },
+          dataSource: {
+            url: "/admin/getUserListByState",
+            params: [0, 6]
+          },
           columnList: [
-            { name: "index", title: "#" },
-            { name: "taskName", title: "任务名称" },
-            { name: "taskType", title: "任务类型" },
-            { name: "createTime", title: "创建时间" },
-            { name: "state", title: "处理状态" },
-            { name: "applyer", title: "申请人账号" },
-            { name: "operat", title: "操作" }
+            {
+              name: "index",
+              title: "#"
+            },
+            {
+              name: "taskName",
+              title: "任务名称"
+            },
+            {
+              name: "taskType",
+              title: "任务类型"
+            },
+            {
+              name: "createTime",
+              title: "创建时间"
+            },
+            {
+              name: "state",
+              title: "处理状态"
+            },
+            {
+              name: "applyer",
+              title: "申请人账号"
+            },
+            {
+              name: "operat",
+              title: "操作"
+            }
           ]
         },
         {
@@ -36,14 +60,38 @@ class ManageUserInfo extends React.Component {
             params: [0, 1, 2, 3, 6]
           },
           columnList: [
-            { name: "index", title: "#" },
-            { name: "operat", title: "操作" },
-            { name: "userName", title: "用户账号" },
-            { name: "organize", title: "所属组织" },
-            { name: "phone", title: "联系电话" },
-            { name: "state", title: "处理状态" },
-            { name: "accepter", title: "审核人" },
-            { name: "acceptDate", title: "处理时间" }
+            {
+              name: "index",
+              title: "#"
+            },
+            {
+              name: "userName",
+              title: "用户账号"
+            },
+            {
+              name: "organize",
+              title: "所属组织"
+            },
+            {
+              name: "phone",
+              title: "联系电话"
+            },
+            {
+              name: "state",
+              title: "处理状态"
+            },
+            {
+              name: "accepter",
+              title: "审核人"
+            },
+            {
+              name: "acceptDate",
+              title: "处理时间"
+            },
+            {
+              name: "operat",
+              title: "操作"
+            }
           ]
         },
         {
@@ -55,18 +103,42 @@ class ManageUserInfo extends React.Component {
             params: [5, 7]
           },
           columnList: [
-            { name: "index", title: "#" },
-            { name: "operat", title: "操作" },
-            { name: "userName", title: "用户账号" },
-            { name: "organize", title: "所属组织" },
-            { name: "phone", title: "联系电话" },
-            { name: "state", title: "处理状态" },
-            { name: "acceptDate", title: "处理时间" },
-            { name: "accepter", title: "审核人" }
+            {
+              name: "index",
+              title: "#"
+            },
+            {
+              name: "userName",
+              title: "用户账号"
+            },
+            {
+              name: "organize",
+              title: "所属组织"
+            },
+            {
+              name: "phone",
+              title: "联系电话"
+            },
+            {
+              name: "state",
+              title: "处理状态"
+            },
+            {
+              name: "acceptDate",
+              title: "处理时间"
+            },
+            {
+              name: "accepter",
+              title: "审核人"
+            },
+            {
+              name: "operat",
+              title: "操作"
+            }
           ]
         },
         {
-          tabTitle: "权限管理",
+          tabTitle: "角色管理",
           index: 3,
           name: "authInfo",
           dataSource: {
@@ -74,34 +146,77 @@ class ManageUserInfo extends React.Component {
             params: [5, 7]
           },
           columnList: [
-            { name: "index", title: "#" },
-            { name: "roleName", title: "角色名称" },
-            { name: "roleDesc", title: "角色描述" },
-            { name: "creator", title: "创建人" },
-            { name: "createDate", title: "创建时间" },
-            { name: "state", title: "角色状态" },
-            { name: "baseSevice", title: "基础服务" },
-            { name: "operat", title: "操作" }
+            {
+              name: "index",
+              title: "#"
+            },
+            {
+              name: "roleName",
+              title: "角色名称"
+            },
+            {
+              name: "roleDesc",
+              title: "角色描述"
+            },
+            {
+              name: "creator",
+              title: "创建人"
+            },
+            {
+              name: "createDate",
+              title: "创建时间"
+            },
+            {
+              name: "state",
+              title: "角色状态"
+            },
+            {
+              name: "baseSevice",
+              title: "基础服务"
+            },
+            {
+              name: "operat",
+              title: "操作"
+            }
           ]
         },
         {
           tabTitle: "系统服务",
           index: 4,
           name: "serviceInfo",
-
           dataSource: {
             url: "/admin/getServerList",
             params: [5, 7]
           },
           columnList: [
-            { name: "index", title: "#" },
-            { name: "serviceName", title: "服务名称" },
-            { name: "serviceDesc", title: "服务描述" },
-            { name: "state", title: "服务状态" },
-            { name: "createDate", title: "创建时间" }
+            {
+              name: "index",
+              title: "#"
+            },
+            {
+              name: "serviceName",
+              title: "服务名称"
+            },
+            {
+              name: "serviceDesc",
+              title: "服务描述"
+            },
+            {
+              name: "state",
+              title: "服务状态"
+            },
+            {
+              name: "createDate",
+              title: "创建时间"
+            }
           ]
-        },
-        { tabTitle: "设置", index: 6, name: "settingInfo", columnList: [] }
+        }
+      // {
+      //   tabTitle: "设置",
+      //   index: 6,
+      //   name: "settingInfo",
+      //   columnList: []
+      // }
       ],
       currentIndex: 0,
       contentData: []
@@ -114,35 +229,29 @@ class ManageUserInfo extends React.Component {
     // this.setState({ contentData: [{ title: "fff" }] });
   }
   render() {
-    return ( 
-        <Tabs  
-          defaultIndex={0}
-          onSelect={(index, name, e) => this.tabSelectedContent(index, name, e)}
-        > 
-            <TabList className="col-2 nav flex-column">
-              {this.state.tabContent.map((item, index) => {
-                return <Tab key={item.name + item.index}>{item.tabTitle}</Tab>;
-              })}
-            </TabList>
-            <div className="col-10 dv-tab-content">
-              {this.state.tabContent.map((item, index) => {
+    return (
+      <div className="row container-fluid" style={ { marginLeft: 15 } }>
+        <Tabs className="row dv-width-100" defaultIndex={ 0 } onSelect={ (index, name, e) => this.tabSelectedContent(index, name, e) }>
+          <TabList className="col-auto nav flex-column dv-manager">
+            { this.state.tabContent.map((item, index) => {
+                return <Tab key={ item.name + item.index }>
+                         { item.tabTitle }
+                       </Tab>;
+              }) }
+          </TabList>
+          <div className="col dv-tab-content">
+            { this.state.tabContent.map((item, index) => {
                 return (
-                  <TabPanel key={item.name + item.index} name={item.name}>
-                    <ManageTabContent
-                      index={2}
-                      manageId={this.props.userId}
-                      title={item.tabTitle}
-                      name={item.name}
-                      colum={item.columnList}
-                      dataSource={item.dataSource}
-                      data={this.state.contentData}
-                    />
+                  <TabPanel key={ item.name + item.index } name={ item.name }>
+                    <ManageTabContent index={ 2 } manageId={ this.props.userId } title={ item.tabTitle } name={ item.name } colum={ item.columnList } dataSource={ item.dataSource }
+                      data={ this.state.contentData } />
                   </TabPanel>
-                );
-              })} 
-            </div>
+                  );
+              }) }
+          </div>
         </Tabs>
-    );
+      </div>
+      );
   }
 }
 

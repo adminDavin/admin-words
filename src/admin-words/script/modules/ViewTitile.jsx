@@ -24,34 +24,38 @@ class TrContent extends React.Component {
           <input
             type="radio"
             name="exampleRadios"
-            onClick={this.props.choseDocu.bind(
-              this,
-              item.uuid,
-              item.name,
-              item.docId,
-              item.state
-            )}
-          />
+            onClick={this
+            .props
+            .choseDocu
+            .bind(this, item.uuid, item.name, item.docId, item.state)}/>
         </td>
         <td>
           <span className="dv-td-text-longer" data-tip={item.uuid}>
             {item.uuid}
           </span>
-          <ReactTooltip data-place="right" />
+          <ReactTooltip data-place="right"/>
         </td>
         <td>
           <span className="dv-td-text-longer" data-tip={item.name}>
             {item.name}
-          </span>{" "}
+          </span>
+          {" "}
         </td>
         <td>
           <span className="dv-td-text-longer" data-tip={item.originalName}>
             {item.originalName}
-          </span>{" "}
+          </span>
+          {" "}
         </td>
-        <td>{state}</td>
-        <td>{utils.formatDate(item.modifyDate)}</td>
-        <td>{utils.formatDate(item.createDate)}</td>
+        <td>
+          {state}
+        </td>
+        <td>
+          {utils.formatDate(item.modifyDate)}
+        </td>
+        <td>
+          {utils.formatDate(item.createDate)}
+        </td>
       </tr>
     );
   }
@@ -62,16 +66,16 @@ class TbodyContent extends React.Component {
     let me = this;
     return (
       <tbody>
-        {this.props.data.map(function(pro, index) {
-          return (
-            <TrContent
+        {this
+          .props
+          .data
+          .map(function (pro, index) {
+            return (<TrContent
               data={pro}
               key={pro.docId}
               index={index}
-              choseDocu={me.props.choseDocu}
-            />
-          );
-        })}
+              choseDocu={me.props.choseDocu}/>);
+          })}
       </tbody>
     );
   }
@@ -79,8 +83,10 @@ class TbodyContent extends React.Component {
 
 export default class ViewTitile extends React.Component {
   constructor() {
-    super(); 
-    let params = routeInfo.getRouteInfo().params;
+    super();
+    let params = routeInfo
+      .getRouteInfo()
+      .params;
     this.state = {
       pdfUrl: "test",
       pdfName: "测试文档",
@@ -107,20 +113,17 @@ export default class ViewTitile extends React.Component {
         setTimeout(() => {
           $("#loading").modal("hide");
         }, 3000);
-        request.sendRequstNew("/admin/listWords", hist, function(resp) {
+        request.sendRequstNew("/admin/listWords", hist, function (resp) {
           if (resp.code === "200") {
-            me.setState({
-              pdfUrl: hisInfo.pdfUrl,
-              pdfName: hisInfo.pdfName,
-              docId: hisInfo.docId,
-              wordsInfo: resp.result.data
-            });
+            me.setState({pdfUrl: hisInfo.pdfUrl, pdfName: hisInfo.pdfName, docId: hisInfo.docId, wordsInfo: resp.result.data});
           } else {
             alert(resp.message);
           }
         });
       } else {
-        let files = $("#wordsFileInput").get(0).files;
+        let files = $("#wordsFileInput")
+          .get(0)
+          .files;
         if (utils.fileValid(files[0].name)) {
           let name = $("#wordsFileNameInput").val();
           let formdata = new FormData();
@@ -128,7 +131,7 @@ export default class ViewTitile extends React.Component {
           formdata.append("name", name);
           formdata.append("userId", me.state.userId);
           $("#loading").modal("show");
-          request.apiLoadFile(function(result) {
+          request.apiLoadFile(function (result) {
             if (result.code === "200") {
               me.setState({
                 pdfUrl: result.result.uuID,
@@ -144,32 +147,30 @@ export default class ViewTitile extends React.Component {
         }
       }
     }
-    me.setState({ isOpen: !me.state.isOpen });
+    me.setState({
+      isOpen: !me.state.isOpen
+    });
 
     sessionStorage.removeItem("hisInfo");
   };
   choseDocu(uuID, name, docId, state) {
     if (state === 0) {
-      sessionStorage.setItem(
-        "hisInfo",
-        JSON.stringify({ pdfUrl: uuID, pdfName: name, docId: docId })
-      );
+      sessionStorage.setItem("hisInfo", JSON.stringify({pdfUrl: uuID, pdfName: name, docId: docId}));
     }
   }
   getDocuLog() {
     let me = this;
-    request.sendRequstNew(
-      "/admin/listDocument",
-      { userId: me.state.userId, state: 0 },
-      function(resp) {
-        if (resp.code === "200") {
-          let hisData = resp.result.data;
-          me.setState({ hisData: hisData });
-        } else {
-          alert(resp.result);
-        }
+    request.sendRequstNew("/admin/listDocument", {
+      userId: me.state.userId,
+      state: 0
+    }, function (resp) {
+      if (resp.code === "200") {
+        let hisData = resp.result.data;
+        me.setState({hisData: hisData});
+      } else {
+        alert(resp.result);
       }
-    );
+    });
   }
   render() {
     let me = this;
@@ -184,8 +185,7 @@ export default class ViewTitile extends React.Component {
               href="#home"
               role="tab"
               aria-controls="home"
-              aria-selected="true"
-            >
+              aria-selected="true">
               {"新建文档"}
             </a>
           </li>
@@ -195,11 +195,12 @@ export default class ViewTitile extends React.Component {
               id="profile-tab"
               data-toggle="tab"
               href="#profile"
-              onClick={this.getDocuLog.bind(this)}
+              onClick={this
+              .getDocuLog
+              .bind(this)}
               role="tab"
               aria-controls="profile"
-              aria-selected="false"
-            >
+              aria-selected="false">
               {"查看历史"}
             </a>
           </li>
@@ -209,8 +210,7 @@ export default class ViewTitile extends React.Component {
             className="tab-pane fade show active"
             id="home"
             role="tabpanel"
-            aria-labelledby="home-tab"
-          >
+            aria-labelledby="home-tab">
             <form>
               <div className="form-group">
                 <label>文档名称</label>
@@ -218,16 +218,11 @@ export default class ViewTitile extends React.Component {
                   type="text"
                   className="form-control"
                   id="wordsFileNameInput"
-                  placeholder="文档名称"
-                />
+                  placeholder="文档名称"/>
               </div>
               <div className="form-group">
                 <label>选择文档</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="wordsFileInput"
-                />
+                <input type="file" className="form-control" id="wordsFileInput"/>
               </div>
             </form>
           </div>
@@ -235,13 +230,13 @@ export default class ViewTitile extends React.Component {
             className="tab-pane fade "
             id="profile"
             role="tabpanel"
-            aria-labelledby="profile-tab"
-          >
+            aria-labelledby="profile-tab">
             <div className="dv-table-hist">
               <table
                 className="table table-bordered table-hover"
-                style={{ minWidth: 800 }}
-              >
+                style={{
+                minWidth: 800
+              }}>
                 <thead className="thead-dark">
                   <tr>
                     <th>#</th>
@@ -253,20 +248,14 @@ export default class ViewTitile extends React.Component {
                     <th>创建时间</th>
                   </tr>
                 </thead>
-                <TbodyContent
-                  data={this.state.hisData}
-                  choseDocu={this.choseDocu}
-                />
+                <TbodyContent data={this.state.hisData} choseDocu={this.choseDocu}/>
               </table>
             </div>
           </div>
         </div>
       </div>
     );
-    let url =
-      "pdf-viewer/web/viewer.html?file=/pdf-store/1/" +
-      this.state.pdfUrl +
-      ".pdf";
+    let url = "pdf-viewer/web/viewer.html?file=/pdf-store/1/" + this.state.pdfUrl + ".pdf";
     if (this.state.pdfUrl == "test") {
       url = "pdf-viewer/web/viewer.html?file=" + this.state.pdfUrl + ".pdf";
     }
@@ -279,15 +268,13 @@ export default class ViewTitile extends React.Component {
               className="btn btn-outline-secondary btn-sm"
               data-toggle="modal"
               data-target="#myModal"
-              onClick={this.toggleModal}
-            >
+              onClick={this.toggleModal}>
               {"切换文档"}
             </button>
             <ModalCommon
               onClose={this.toggleModal}
               pe={"#viewTitle"}
-              show={this.state.isOpen}
-            >
+              show={this.state.isOpen}>
               {formContent}
             </ModalCommon>
           </div>
@@ -301,21 +288,16 @@ export default class ViewTitile extends React.Component {
           </div>
         </div>
         <div className="row justify-content-md-center">
-          <div
-            id="words-table"
-            className="col-3 alert alert-primary dv-words-table"
-          >
+          <div id="words-table" className="col-3 alert alert-primary dv-words-table">
             <ViewWordsTable
               uuId={this.state.pdfUrl}
               docId={this.state.docId}
               userId={this.state.userId}
               wordsInfo={this.state.wordsInfo}
-              pdfName={this.state.pdfName}
-            />
+              pdfName={this.state.pdfName}/>
           </div>
           <Iframe
             url={url}
-            // url="pdf-viewer/web/viewer.html"
             height="800px"
             width="100%"
             id="myIframe"
@@ -323,8 +305,7 @@ export default class ViewTitile extends React.Component {
             display="initial"
             position="relative"
             allowFullScreen
-            on
-          />
+            on/>
         </div>
       </div>
     );
