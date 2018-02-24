@@ -1,4 +1,9 @@
-@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";   
+//import font awesome
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+
 @each $color,
 $value in $theme-colors {
   .alert-#{$color} {
@@ -119,6 +124,9 @@ body {
 
 .dv-mr10 {
   margin-right: 10px;
+}
+.dv-mr5 {
+  margin-right: 5px;
 }
 
 .dv-words-table {
@@ -302,6 +310,7 @@ label {
 
 .dv-modal {
   margin-top: 5%;
+  min-width: 70%;
 }
 
 .dv-modal-register {

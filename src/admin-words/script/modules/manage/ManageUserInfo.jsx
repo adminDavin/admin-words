@@ -52,171 +52,35 @@ class ManageUserInfo extends React.Component {
           ]
         },
         {
-          tabTitle: "用户列表",
+          tabTitle: "所有用户列表",
           index: 1,
-          name: "userInfo",
-          dataSource: {
-            url: "/admin/getUserListByState",
-            params: [0, 1, 2, 3, 6]
-          },
-          columnList: [
-            {
-              name: "index",
-              title: "#"
-            },
-            {
-              name: "userName",
-              title: "用户账号"
-            },
-            {
-              name: "organize",
-              title: "所属组织"
-            },
-            {
-              name: "phone",
-              title: "联系电话"
-            },
-            {
-              name: "state",
-              title: "处理状态"
-            },
-            {
-              name: "accepter",
-              title: "审核人"
-            },
-            {
-              name: "acceptDate",
-              title: "处理时间"
-            },
-            {
-              name: "operat",
-              title: "操作"
-            }
-          ]
+          name: "userInfo"
+        },
+        {
+          tabTitle: "在用用户列表",
+          index: 2,
+          name: "userList"
         },
         {
           tabTitle: "管理员列表",
-          index: 2,
-          name: "managerInfo",
-          dataSource: {
-            url: "/admin/getUserListByState",
-            params: [5, 7]
-          },
-          columnList: [
-            {
-              name: "index",
-              title: "#"
-            },
-            {
-              name: "userName",
-              title: "用户账号"
-            },
-            {
-              name: "organize",
-              title: "所属组织"
-            },
-            {
-              name: "phone",
-              title: "联系电话"
-            },
-            {
-              name: "state",
-              title: "处理状态"
-            },
-            {
-              name: "acceptDate",
-              title: "处理时间"
-            },
-            {
-              name: "accepter",
-              title: "审核人"
-            },
-            {
-              name: "operat",
-              title: "操作"
-            }
-          ]
+          index: 3,
+          name: "managerInfo"
         },
         {
           tabTitle: "角色管理",
-          index: 3,
-          name: "authInfo",
-          dataSource: {
-            url: "/admin/getRoleList",
-            params: [5, 7]
-          },
-          columnList: [
-            {
-              name: "index",
-              title: "#"
-            },
-            {
-              name: "roleName",
-              title: "角色名称"
-            },
-            {
-              name: "roleDesc",
-              title: "角色描述"
-            },
-            {
-              name: "creator",
-              title: "创建人"
-            },
-            {
-              name: "createDate",
-              title: "创建时间"
-            },
-            {
-              name: "state",
-              title: "角色状态"
-            },
-            {
-              name: "baseSevice",
-              title: "基础服务"
-            },
-            {
-              name: "operat",
-              title: "操作"
-            }
-          ]
+          index: 4,
+          name: "authInfo"
         },
         {
           tabTitle: "系统服务",
-          index: 4,
-          name: "serviceInfo",
-          dataSource: {
-            url: "/admin/getServerList",
-            params: [5, 7]
-          },
-          columnList: [
-            {
-              name: "index",
-              title: "#"
-            },
-            {
-              name: "serviceName",
-              title: "服务名称"
-            },
-            {
-              name: "serviceDesc",
-              title: "服务描述"
-            },
-            {
-              name: "state",
-              title: "服务状态"
-            },
-            {
-              name: "createDate",
-              title: "创建时间"
-            }
-          ]
+          index: 5,
+          name: "serviceInfo"
+        },
+        {
+          tabTitle: "设置",
+          index: 6,
+          name: "settingInfo"
         }
-      // {
-      //   tabTitle: "设置",
-      //   index: 6,
-      //   name: "settingInfo",
-      //   columnList: []
-      // }
       ],
       currentIndex: 0,
       contentData: []

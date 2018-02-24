@@ -6,8 +6,8 @@ import ManageTableTaskInfo from "./ManageTableTaskInfo.jsx";
 
 import ManageUser from "./ManageUser.jsx";
 import ManageAuthInfo from "./ManageAuthInfo.jsx";
-import ManageServiceInfo from "./ManageServiceInfo.jsx";
-
+import ServiceInfo from "./ServiceInfo.jsx";
+import UserList from "./UserList.jsx";
 import request from "../../sevice/request.js";
 
 class ManageTabContent extends React.Component {
@@ -24,6 +24,12 @@ class ManageTabContent extends React.Component {
 
   flashTabContent() {
     let me = this;
+    if (this.props.dataSource == null) {
+      this.state = {
+        data: []
+      };
+      return;
+    }
     $("#loading").modal("show");
     request.sendRequstNew(
       this.props.dataSource.url,
@@ -56,36 +62,21 @@ class ManageTabContent extends React.Component {
       }
     );
   }
+
   getThData() {
+    let userState = [2];
     if (this.props.name === "taskInfo") {
-      return (
-        <ManageTableTaskInfo manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } />
-        );
+      return (<ManageTableTaskInfo manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } />);
     } else if (this.props.name === "userInfo") {
-      return (
-        <ManageUser manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } flag={ false } />
-        );
+      return (<ManageUser manageId={ this.props.manageId } flag={ true } />);
     } else if (this.props.name === "managerInfo") {
-      return (
-        <ManageUser manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } flag={ true } />
-        );
+      return (<ManageUser manageId={ this.props.manageId } flag={ false } />);
     } else if (this.props.name === "authInfo") {
-      return (
-        <ManageAuthInfo manageId={ this.props.manageId } data={ this.state.data } colum={ this.props.colum } />
-        );
+      return (<ManageAuthInfo manageId={ this.props.manageId } />);
     } else if (this.props.name === "serviceInfo") {
-      return (
-        <table className="table">
-          <ThContent data={ this.props.colum } />
-          <tbody>
-            { this.state.data.map((item, index) => {
-                return (
-                  <ManageServiceInfo key={ index } data={ item } index={ index } />
-                  );
-              }) }
-          </tbody>
-        </table>
-        );
+      return (<ServiceInfo roleId="0" manageId={ this.props.manageId } />);
+    } else if (this.props.name === "userList") {
+      return (<UserList className="container" manageId={ this.props.manageId } userState={ userState } flag={ true } />);
     }
     return <p>测试页面</p>;
   }

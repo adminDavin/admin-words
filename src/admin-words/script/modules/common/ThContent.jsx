@@ -2,16 +2,22 @@ import React from "react";
 
 class ThContent extends React.Component {
   render() {
-    var item = this.props.data;
+    let item = this.props.data;
+    let isHidden = false;
+    if (item.isHidden == true) {
+      isHidden = true;
+    }
     return (
       <thead>
         <tr>
-          {item.map((pro, index) => {
-            return <th key={index}>{pro.title}</th>;
-          })}
+          { item.map((pro, index) => {
+              return <th key={ index }>
+                       { pro.title }
+                     </th>;
+            }) }
         </tr>
       </thead>
-    );
+      );
   }
 }
 
