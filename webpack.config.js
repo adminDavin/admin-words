@@ -131,8 +131,9 @@ module.exports = {
     })
   ],
 
-  devtool: "cheap-module-eval-source-map",//开发模式
-  
+  // devtool: "cheap-module-eval-source-map",//开发模式
+  devtool: 'false',
+
   // devtool: "cheap-module-source-map", //生产模式
   devServer: {
     // 配置服务与热更新

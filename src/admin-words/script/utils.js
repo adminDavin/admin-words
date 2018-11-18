@@ -20,13 +20,13 @@ Date.prototype.Format = function (fmt) {
     "q+": Math.floor((this.getMonth() + 3) / 3), //季度
     S: this.getMilliseconds() //毫秒
   };
-  if (/(y+)/.test(fmt)) 
+  if (/(y+)/.test(fmt))
     fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  for (var k in o) 
-    if (new RegExp("(" + k + ")").test(fmt)) 
-      fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1
-        ? o[k]
-        : ("00" + o[k]).substr(("" + o[k]).length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt))
+      fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ?
+        o[k] :
+        ("00" + o[k]).substr(("" + o[k]).length));
   return fmt;
 };
 
@@ -55,7 +55,10 @@ const deleteSpaceStr = function (str, flag) {
   if (strForm.length > 8 || flag) {
     valid = true;
   }
-  return {content: strForm, valid: valid};
+  return {
+    content: strForm,
+    valid: valid
+  };
 };
 
 const getUtils = {
@@ -80,9 +83,9 @@ const getUtils = {
     } else {
       //检验文件类型是否正确
       console.log(file);
-      let exec = /[.]/.exec(file)
-        ? /[^.]+$/.exec(file.toLowerCase())
-        : "";
+      let exec = /[.]/.exec(file) ?
+        /[^.]+$/.exec(file.toLowerCase()) :
+        "";
       console.log(exec);
       let validType = [
         "pdf",
@@ -119,6 +122,15 @@ const getUtils = {
         let page = content
           .find("#pageNumber")
           .val();
+        console.log('current page is ' + page);
+        if (isNaN(parseInt(page))) {
+          let tmpPage = content
+          .find("#numPages").innerText;
+          console.log('current page is ' + tmpPage);
+          page = tmpPage.replace('(', '').replace(')', '').split('/')[0];
+          page = parseInt(page);
+          console.log('current page is ' + page);
+        }
         let item = {
           id: 1,
           textContent: text,
