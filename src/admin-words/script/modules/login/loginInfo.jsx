@@ -227,7 +227,7 @@ class ManageLogin extends React.Component {
           />
         </div>
       </div>
-      <div className="form-group row" hidden={showVariCode}>
+      <div className="form-group row justify-content-center" hidden={showVariCode}>
         <label className="col-auto col-form-label col-form-label-sm">获取邮箱验证码</label>
         <button
           type="button"

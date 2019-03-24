@@ -8,7 +8,7 @@ import request from "../sevice/request.js";
 import PropTypes from "prop-types";
 import utils from "../utils.js";
 import ModalCommonv1 from "./ModalCommonv1.jsx";
-const regNumber = new RegExp("^[0-9]*$");
+const regNumber = new RegExp("^-?[0-9]*$");
 
 const trContent = function(me, item, key) {
   let pageInfo = item.initPage + item.pageNum;
@@ -68,6 +68,7 @@ class ViewWordsTable extends React.Component {
         if (resp.code !== "200") {
           alert(resp.result);
         }
+        console.log(resp);
       }
     );
   }
@@ -77,7 +78,7 @@ class ViewWordsTable extends React.Component {
     $('[data-toggle="tooltip"]').tooltip("hide");
     let value = $("#InitPageInputTarget").val();
     if (!regNumber.test(value)) {
-      alert("请输入数字!");
+      alert("初始页码设置错误!");
       return;
     }
     // if (value == "") {
@@ -174,7 +175,6 @@ class ViewWordsTable extends React.Component {
               className="form-control tooltip-show"
               style={{ zIndex: "auto" }}
               id="InitPageInputTarget"
-              min="0"
               value={this.state.initPage}
               // placeholder={this.state.initPage}
               onChange={this.changeInitPage.bind(this)}

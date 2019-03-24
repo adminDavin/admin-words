@@ -7,7 +7,10 @@ function downFile(blob, fileName) {
   } else {
       var link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', fileName);
       link.download = fileName;
+      link.style.display = 'none';
+      document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(link.href);
   }
@@ -21,17 +24,14 @@ const request = {
     let option = {
       method: "post",
       url: url,
+      responseType: 'blob',
       data: qs.stringify(params)
     };
     axios(option).then(function(res) { 
       if (res.status == 200) {
-        if(res.data.code){
-          alert(res.data.result);
-        }else{ 
-          let blob = new Blob([res.data]);
-          let fileName = params.fileName+"."+params.type;
-          downFile(blob, fileName);
-        }
+        let blob = res.data;
+        let fileName = res.headers['content-disposition'].split('=')[1];
+        downFile(blob, fileName);
       }
     });
   },

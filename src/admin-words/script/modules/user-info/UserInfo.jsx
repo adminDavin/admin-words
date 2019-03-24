@@ -36,12 +36,6 @@ class UserInfo extends React.Component {
           content: <UserInfoMessage userId={this.props.userId}/>
         }, {
           class: commonClass,
-          name: "changePass",
-          href: "#passContent",
-          title: "修改密码",
-          content: <UserChangePass userId={this.props.userId} loginName={this.props.loginName}/>
-        }, {
-          class: commonClass,
           name: "exit",
           href: "#exitContent",
           title: "退出登录"

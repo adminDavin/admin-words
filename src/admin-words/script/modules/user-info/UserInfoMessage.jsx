@@ -38,9 +38,6 @@ export default class UserInfoMessage extends React.Component {
   }
   componentDidMount() {
     let me = this;
-    $("input[name='radio']")
-      .get(0)
-      .checked = true;
     request.sendRequstNew("/admin/getUserListByUserId", {
       userId: this.props.userId
     }, function(result) {
@@ -52,19 +49,9 @@ export default class UserInfoMessage extends React.Component {
         if (data.state != 1) {
           userState = false;
         }
-        if (data.sex == 1) {
-          $("input[name='radio']")
-            .get(0)
-            .checked = true;
-        } else {
-          $("input[name='radio']")
-            .get(1)
-            .checked = true;
-        }
         me.setState({
           userEmail: data.email,
           userAddress: data.address,
-          userBirthDate: data.birthDate,
           userName: data.name,
           userNamePin: data.namePin,
           userOrganize: data.organize,
@@ -79,21 +66,15 @@ export default class UserInfoMessage extends React.Component {
   }
 
   baseAction(e) {
-    let sex = 0;
-    if ($("input[name='radio']").get(0).checked) {
-      sex = 1;
-    }
-    let birthDating = this.state.userBirthDate;
-    // console.log(birthDating);
-
+    
     let params = {
       userId: this.props.userId,
       name: this.state.userName,
       namepin: this.state.userNamePin,
       organize: this.state.userOrganize,
       phone: this.state.userPhone,
-      sex: sex,
-      birthDate: birthDating,
+      sex: 1,
+      birthDate: new Date(),
       remark: this.state.userRemark,
       address: this.state.userAddress
     };
@@ -135,8 +116,12 @@ export default class UserInfoMessage extends React.Component {
               <div className="col-sm-10">
                 <input type="text" className="form-control dv-mt5" placeholder="user name" value={ this.state.userEmail || "" } onChange={ this
                                                                                                                                              .handleChange
-                                                                                                                                             .bind(this, "userEmail") } readOnly/>
+                                                                                                                                             .bind(this, "userEmail") } readOnly>
+                                                                                                                                             </input>
+                <small className="form-text text-muted">不可修改</small>
+                                                                                                                                             
               </div>
+              
             </div>
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
@@ -146,8 +131,10 @@ export default class UserInfoMessage extends React.Component {
                 <input type="text" className="form-control dv-mt5" placeholder="real name" value={ this.state.userName || "" } onChange={ this
                                                                                                                                             .handleChange
                                                                                                                                             .bind(this, "userName") } readOnly={ this.state.userState }
-                />
+                ></input>
+                <small className="form-text text-muted">必填选项</small>
               </div>
+              
             </div>
             <div className="row">
               <label className=" text-center  col-sm-2 col-form-label alert-link">
@@ -158,28 +145,7 @@ export default class UserInfoMessage extends React.Component {
                                                                                                         .handleChange
                                                                                                         .bind(this, "userNamePin") } value={ this.state.userNamePin || "" } readOnly={ this.state.userState }
                 />
-              </div>
-            </div>
-            <div className="row">
-              <label className=" text-center  col-sm-2 col-form-label alert-link">
-                { "出生日期" }
-              </label>
-              <div className="col-sm-5">
-              </div>
-              <label className=" text-center  col-sm-2 col-form-label alert-link">
-                { "性别" }
-              </label>
-              <div className="col-sm-3 dv-mt5">
-                <label className="custom-control custom-radio">
-                  <input id="radio1" name="radio" type="radio" className="custom-control-input" disabled={ this.state.userState } />
-                  <span className="custom-control-indicator" />
-                  <span className="custom-control-description">男</span>
-                </label>
-                <label className="custom-control custom-radio">
-                  <input id="radio2" name="radio" type="radio" className="custom-control-input" disabled={ this.state.userState } />
-                  <span className="custom-control-indicator" />
-                  <span className="custom-control-description">女</span>
-                </label>
+                <small className="form-text text-muted">必填选项</small>
               </div>
             </div>
           </form>
@@ -198,6 +164,7 @@ export default class UserInfoMessage extends React.Component {
                                                                                                        .handleChange
                                                                                                        .bind(this, "userOrganize") } value={ this.state.userOrganize || "" } readOnly={ this.state.userState }
                 />
+                <small className="form-text text-muted">必填选项</small>
               </div>
             </div>
             <div className="row">
@@ -209,6 +176,7 @@ export default class UserInfoMessage extends React.Component {
                                                                                                       .handleChange
                                                                                                       .bind(this, "userAddress") } value={ this.state.userAddress || "" } readOnly={ this.state.userState }
                 />
+                <small className="form-text text-muted">必填选项</small>
               </div>
             </div>
             <div className="row">
@@ -220,6 +188,7 @@ export default class UserInfoMessage extends React.Component {
                                                                                                     .handleChange
                                                                                                     .bind(this, "userPhone") } value={ this.state.userPhone || "" } readOnly={ this.state.userState }
                 />
+                <small className="form-text text-muted">必填选项</small>
               </div>
               <label className=" text-center  col-sm-2 col-form-label alert-link">
                 { "邮箱" }
@@ -227,7 +196,9 @@ export default class UserInfoMessage extends React.Component {
               <div className="col-sm-4">
                 <input type="text" className="form-control dv-mt5" placeholder="email" onChange={ this
                                                                                                     .handleChange
-                                                                                                    .bind(this, "userEmail") } value={ this.state.userEmail || "" } readOnly/>
+                                                                                                    .bind(this, "userEmail") } value={ this.state.userEmail || "" } readOnly
+                />
+                <small className="form-text text-muted">必填选项</small>
               </div>
             </div>
           </form>
@@ -244,7 +215,9 @@ export default class UserInfoMessage extends React.Component {
               <div className="col-sm-10">
                 <textarea className="form-control" rows="3" onChange={ this
                                                                          .handleChange
-                                                                         .bind(this, "userRemark") } value={ this.state.userRemark } readOnly={ this.state.userState } />
+                                                                         .bind(this, "userRemark") } value={ this.state.userRemark } readOnly={ this.state.userState } 
+                />
+                <small className="form-text text-muted">选填</small>
               </div>
             </div>
           </form>

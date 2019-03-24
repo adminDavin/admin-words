@@ -2,6 +2,20 @@ import React from "react";
 import utils from "../../utils.js";
 import request from "../../sevice/request.js";
 import crypto from "../../config/crypto.js";
+
+const deleteSpaceStr = function (str, flag) {
+  let strForm = str.replace(/\s+/g, "");
+  let valid = false;
+
+  if (strForm.length > 8 || flag) {
+    valid = true;
+  }
+  return {
+    content: strForm,
+    valid: valid
+  };
+};
+
 export default class UserChangePass extends React.Component {
   constructor(props) {
     super(props);
@@ -18,12 +32,12 @@ export default class UserChangePass extends React.Component {
     this.setState(data);
   }
   ClickAction() {
-    let oldPassword = utils.deleteSpaceStr(this.state.oldPassword);
+    let oldPassword = deleteSpaceStr(this.state.oldPassword);
     if (!oldPassword.valid) {
       alert("密码输入不合法，请确认");
       return false;
     }
-    let newPassword = utils.deleteSpaceStr(this.state.newPassword);
+    let newPassword = deleteSpaceStr(this.state.newPassword);
     if (!newPassword.valid) {
       alert("密码输入不合法，请确认");
       return false;
@@ -102,6 +116,15 @@ export default class UserChangePass extends React.Component {
                       value={this.state.newPassword}
                     />
                   </div>
+                </div>
+                
+                <div className="row justify-content-center">
+                  <label className="col-auto col-form-label col-form-label-sm">输入邮箱验证码:</label>
+                  <input type="text" className="col-5 form-control form-control-sm"
+                    placeholder="邮箱验证码"
+                    value={this.state.variCode}
+                    onChange={this.handleChange.bind(this, "variCode")}
+                  />
                 </div>
               </form>
             </div>

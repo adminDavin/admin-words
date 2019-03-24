@@ -124,8 +124,7 @@ const getUtils = {
           .val();
         console.log('current page is ' + page);
         if (isNaN(parseInt(page))) {
-          let tmpPage = content
-          .find("#numPages").innerText;
+          let tmpPage = content.find("#numPages")[0].innerText;
           console.log('current page is ' + tmpPage);
           page = tmpPage.replace('(', '').replace(')', '').split('/')[0];
           page = parseInt(page);

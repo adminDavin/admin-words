@@ -64,6 +64,7 @@ export default class WordsDoc extends React.Component {
         if (resp.code !== "200") {
           alert(resp.result);
         }
+        console.log(resp);
       }
     );
   }
