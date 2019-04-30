@@ -38,3 +38,10 @@
 
   API聚合 Seneca特性  是一项用于将不同功能（插件、方法等）组合成一个接口的高级技术。
 
+
+Seneca Express  微服务框架
+restify Express 用于构建应用
+forever nodemon 用于运行应用
+
+Chef是一款用于搭建服务器环境的配置管理软件，在它的众多特性中，最流行的是recipe，recipe可以看作是基于Chef进行软件安装，配置的脚本文件。
+
