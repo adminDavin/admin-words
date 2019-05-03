@@ -70,6 +70,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "seneca": "^3.8.4",
     "tableexport": "^4.0.11",
     "tableexport.jquery.plugin": "^1.9.5",
     "tooltip": "^1.6.1"
