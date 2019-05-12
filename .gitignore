@@ -1,4 +1,4 @@
 node_modules/*
 java-se-product-editions-397069.pdf
 words-admin/*
-dist/*
+# dist/*
