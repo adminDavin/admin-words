@@ -398,7 +398,7 @@ class LoginInfo extends React.Component {
     return (
       <div className="container">
         <div className="row justify-content-center dv-pt30">
-          <div className="col-5 jumbotron" style={{ marginTop: 20 }}>
+          <div className="col-7 jumbotron" style={{ marginTop: '5%' }}>
             <ManageLogin isManage={this.state.isManage} />
           </div>
         </div>
