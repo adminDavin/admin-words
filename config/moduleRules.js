@@ -1,7 +1,7 @@
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const moduleRules = {
-  loaders: [
+  rules: [
     {
       test: /\.jsx|js$/,
       exclude: /(node_modules|bower_components)/,

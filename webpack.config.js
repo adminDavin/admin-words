@@ -7,6 +7,7 @@ const moduleRulesLoader = require("./config/moduleRules.js");
 const purifyCSSPlugin = require("purifycss-webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
   entry: {
     common: "./src/admin-words/script/index.js",
@@ -23,7 +24,8 @@ module.exports = {
   },
   output: {
     path: __dirname + "/dist",
-    filename: "[name]-[chunkhash:6].js"
+    filename: "[name]-[chunkhash:6].js",
+    publicPath: '/'
   },
   module: moduleRulesLoader,
   resolve: {
@@ -128,16 +130,20 @@ module.exports = {
       ],
       Util: "exports-loader?Util!bootstrap/js/dist/util",
       Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new UglifyJSPlugin({
+      sourceMap: true
     })
   ],
 
-  // devtool: "cheap-module-eval-source-map",//开发模式
-  devtool: 'false',
+  devtool: 'source-map', // 开发模式
 
-  // devtool: "cheap-module-source-map", //生产模式
   devServer: {
     // 配置服务与热更新
-    contentBase: path.resolve(__dirname, "dist"), // 监听哪个目录下启动热更新
+    contentBase: './dist', // 监听哪个目录下启动热更新
+    hot: true,
     host: "localhost", // 服务地址 192.168.0.106本地
     compress: true, // 服务器端的压缩，开启
     port: "3000", // 端口号
