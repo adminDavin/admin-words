@@ -13,7 +13,7 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.(jsx|ja)?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.html?$/, loader: 'html-loader' },
       {
         test: /\.scss$/,
@@ -39,9 +39,10 @@ module.exports = {
       template: "./src/admin-words/index.html",
       chunks: ['react', 'react-dom', 'manifest', 'index']
     }),
-    new webpack.ProvidePlugin({ //它是一个插件，所以需要按插件的用法new一个
-      react: 'react',    //接收名字:模块名
-    })
+    // new webpack.ProvidePlugin({ //它是一个插件，所以需要按插件的用法new一个
+    //   react: 'react', 
+    //   reactDom: 'reactDom'   //接收名字:模块名
+    // })
   ],
   optimization: {  //优化
     runtimeChunk: {
