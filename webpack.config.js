@@ -2,18 +2,14 @@ const path = require("path");
 const glob = require("glob");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const moduleRulesLoader = require("./config/moduleRules.js");
-const purifyCSSPlugin = require("purifycss-webpack");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   // context: path.resolve(__dirname, 'src'),
   entry: {
     index: "./src/admin-words/script/index.js"
-  },
+   },
   output: {
     path: __dirname + "/dist",
     filename: "[name]-[chunkhash:6].js",
@@ -23,6 +19,14 @@ module.exports = {
     rules: [
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.html?$/, loader: 'html-loader' },
+      {
+        test: /\.scss$/,
+        use: [
+          process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
+      }
     ],
   },
   resolve: {
@@ -33,16 +37,18 @@ module.exports = {
     modules: ["node_modules", path.resolve(__dirname, 'src/admin-words/script')]
   },
   plugins: [
-    new CleanWebpackPlugin("./dist"),
     new HtmlWebpackPlugin({
       title: "words-admin",
       filename: "index.html",
       template: "./src/admin-words/index.html"
+    }),
+    new webpack.ProvidePlugin({ //它是一个插件，所以需要按插件的用法new一个
+      react: 'react',    //接收名字:模块名
     })
   ],
 
-  devtool: 'source-map', // 开发模式
-  // devtool: 'inline-source-map', //生产模式
+  // devtool: 'source-map', // 开发模式
+  devtool: 'inline-source-map', //生产模式
   devServer: {
     // 配置服务与热更新
     contentBase: './dist', // 监听哪个目录下启动热更新
@@ -65,7 +71,27 @@ module.exports = {
       }
     }
   },
-
+  optimization: {  //优化
+    splitChunks: {
+      cacheGroups: {//缓存组，一个对象。它的作用在于，可以对不同的文件做不同的处理
+        common: {
+          chunks: "initial",
+          name: "common",
+          minChunks: 2,
+          maxInitialRequests: 5,
+          minSize: 0
+        },
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: "initial",
+          minChunks: 1,
+          name: "vendor",
+          priority: 10,
+          enforce: true
+        }
+      }
+    }
+  },
   watchOptions: {
     // 实时打包更新
     poll: 1000, // 每1s时间就检测文件是否修改，修改了就自动帮我们打包
