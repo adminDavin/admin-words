@@ -9,137 +9,40 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
+  mode: 'development',
+  // context: path.resolve(__dirname, 'src'),
   entry: {
-    common: "./src/admin-words/script/index.js",
-    utils: "./src/admin-words/script/utils.js",
-    viewer: "./src/admin-words/script/viewer.js",
-    userInfo: "./src/admin-words/script/userInfo.js",
-    manager: "./src/admin-words/script/manager.js",
-    login: "./src/admin-words/script/login.js",
-    reactor: [
-      "react", "react-dom"
-    ], 
-    jquery: ["jquery"],
-    crypto: ["crypto-js"]
+    index: "./src/admin-words/script/index.js"
   },
   output: {
     path: __dirname + "/dist",
     filename: "[name]-[chunkhash:6].js",
-    publicPath: '/'
+    publicPath: '/dist'
   },
-  module: moduleRulesLoader,
+  module: {
+    rules: [
+      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.html?$/, loader: 'html-loader' },
+    ],
+  },
   resolve: {
     enforceExtension: false,
     extensions: [
       ".js", ".json", ".jsx"
     ],
-    modules: ["node_modules"]
+    modules: ["node_modules", path.resolve(__dirname, 'src/admin-words/script')]
   },
   plugins: [
     new CleanWebpackPlugin("./dist"),
     new HtmlWebpackPlugin({
-      title: "Custom template",
+      title: "words-admin",
       filename: "index.html",
-      template: "./src/admin-words/index.html",
-      chunks: ["utils", "crypto", "common", "reactor", "jquery"]
-    }),
-    new HtmlWebpackPlugin({
-      title: "Custom template",
-      filename: "manager.html",
-      template: "./src/admin-words/manager.html",
-      chunks: [
-        "utils",
-        "crypto",
-        "common",
-        "reactor",
-        "jquery",
-        "manager"
-      ]
-    }),
-    new HtmlWebpackPlugin({
-      title: "words admin worker",
-      filename: "viewer.html",
-      template: "./src/admin-words/viewer.html",
-      common: "./src/admin-words/script/index.js",
-      chunks: [ 
-        "reactor",
-        "jquery",
-        "utils",
-        "crypto",
-        "common",
-        "viewer"
-      ]
-    }),
-    new HtmlWebpackPlugin({
-      title: "words admin user manage",
-      filename: "userInfo.html",
-      template: "./src/admin-words/userInfo.html",
-      common: "./src/admin-words/script/index.js",
-      chunks: [
-        "utils",
-        "crypto",
-        "common",
-        "userInfo",
-        "reactor",
-        "jquery" 
-      ]
-    }),
-    new HtmlWebpackPlugin({
-      title: "words admin logining",
-      filename: "login.html",
-      template: "./src/admin-words/login.html",
-      common: "./src/admin-words/script/index.js",
-      chunks: [ 
-        "reactor",
-        "utils",
-        "crypto",
-        "common",
-        "login",
-        "jquery"
-      ]
-    }),
-    new webpack
-      .optimize
-      .ModuleConcatenationPlugin(),
-    new purifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: __dirname + "/pdf-viewer",
-        to: __dirname + "/dist/pdf-viewer"
-      }
-    ]),
-    new webpack
-      .optimize
-      .CommonsChunkPlugin({
-        names: [
-          "common",
-          "crypto",
-          "utils",
-          "jquery",
-          "reactor"
-        ]
-      }),
-    new ExtractTextPlugin({filename: "style/[name].css"}),
-    new webpack.ProvidePlugin({
-      jQuery: "jquery",
-      $: "jquery",
-      Popper: [
-        "popper.js", "default"
-      ],
-      Util: "exports-loader?Util!bootstrap/js/dist/util",
-      Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
-    }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new UglifyJSPlugin({
-      sourceMap: true
+      template: "./src/admin-words/index.html"
     })
   ],
 
   devtool: 'source-map', // 开发模式
-
+  // devtool: 'inline-source-map', //生产模式
   devServer: {
     // 配置服务与热更新
     contentBase: './dist', // 监听哪个目录下启动热更新
