@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import getRouter from "./routers/index";
+const ReactDOM = require("react-dom");
 
 ReactDOM.render(getRouter(), document.getElementById("content"));
