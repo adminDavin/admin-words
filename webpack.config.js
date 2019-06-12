@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   mode: 'production',
@@ -13,7 +14,7 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.(jsx|ja)?$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.(jsx|js)?$/, exclude: /node_modules/, use: ['babel-loader', 'eslint-loader'] },
       { test: /\.html?$/, loader: 'html-loader' },
       {
         test: /\.scss$/,
@@ -22,6 +23,33 @@ module.exports = {
           "css-loader",
           "sass-loader"
         ]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', {
+          loader: 'postcss-loader',
+          options: {
+            plugins() {
+              return [autoprefixer];
+            }
+          }
+        }]
+      },
+      {
+        test: /\.(ttf|otf|eot|svg|woff(2)?)$/,
+        loader: 'file-loader?name=font/[name].[ext]',
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          useRelativePath: true,
+        },
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader?classPrefix'
       }
     ],
   },
@@ -36,18 +64,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "words-admin",
       filename: "index.html",
-      template: "./src/admin-words/index.html",
-      chunks: ['react', 'react-dom', 'manifest', 'index']
+      template: "./src/admin-words/index.html"
     }),
-    // new webpack.ProvidePlugin({ //它是一个插件，所以需要按插件的用法new一个
-    //   react: 'react', 
-    //   reactDom: 'reactDom'   //接收名字:模块名
-    // })
+    new webpack.ProvidePlugin({
+      react: 'react',
+    }),
   ],
   optimization: {  //优化
-    runtimeChunk: {
-      "name": "manifest"
-    },
     splitChunks: {
       cacheGroups: {//缓存组，一个对象。它的作用在于，可以对不同的文件做不同的处理
         common: {
