@@ -1,6 +1,7 @@
-const path = require("path");
+
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -17,23 +18,29 @@ module.exports = {
       { test: /\.(jsx|js)?$/, exclude: /node_modules/, use: ['babel-loader', 'eslint-loader'] },
       { test: /\.html?$/, loader: 'html-loader' },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         use: [
-          'style-loader',
-          "css-loader",
-          "sass-loader"
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader', {
-          loader: 'postcss-loader',
-          options: {
-            plugins() {
-              return [autoprefixer];
+          MiniCssExtractPlugin.loader,
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              importLoaders: 1
             }
+          },
+          {
+            loader: require.resolve('postcss-loader'),
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                autoprefixer,
+              ]
+            }
+          },
+          {
+            loader: require.resolve('sass-loader')
           }
-        }]
+        ]
       },
       {
         test: /\.(ttf|otf|eot|svg|woff(2)?)$/,
@@ -69,6 +76,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       react: 'react',
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash:8].css'
+    })
   ],
   optimization: {  //优化
     splitChunks: {
