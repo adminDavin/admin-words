@@ -2,66 +2,55 @@ import React, {Component} from 'react';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBIcon } from 'mdbreact';
 
 class TopNavigation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapse: false
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            collapse: false
+        };
+    }
+    onClick() {
+        this.setState({
+            collapse: !this.state.collapse,
+        });
+    }
   
-
-  onClick() {
-      this.setState({
-          collapse: !this.state.collapse,
-      });
-  }
-
-  toggle() {
-      this.setState({
-          dropdownOpen: !this.state.dropdownOpen
-      });
-  }
-
-  render() {
-    return (
-      <MDBNavbar color="indigo" dark expand="md" fixed="top">
+    render() {
+        return (
+            <MDBNavbar className="flexible-navbar" color="bg-primary" dark expand="md" scrolling fixed="top">
                 <MDBNavbarBrand href="/">
-                    <strong>MDB</strong>
+                    <strong>Navbar</strong>
                 </MDBNavbarBrand>
-                <MDBNavbarToggler onClick = { this.onClick } />
-                <MDBCollapse isOpen = { this.state.collapse } navbar>
+                <MDBNavbarToggler onClick={this.onClick} />
+                <MDBCollapse isOpen={this.state.collapse} navbar>
                     <MDBNavbarNav left>
                         <MDBNavItem active>
                             <MDBNavLink to="#">Home</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <a rel="noopener noreferrer" className="nav-link Ripple-parent" href="https://mdbootstrap.com/docs/react/" target="_blank">About MDB</a>
+                            <MDBNavLink to="#">Features</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <a rel="noopener noreferrer" className="nav-link Ripple-parent" href="https://mdbootstrap.com/docs/react/getting-started/download/" target="_blank">Free download</a>
+                            <MDBNavLink to="#">Pricing</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <a rel="noopener noreferrer"  className="nav-link Ripple-parent" href="https://mdbootstrap.com/bootstrap-tutorial/" target="_blank">Free tutorials</a>
+                            <MDBNavLink to="#">Options</MDBNavLink>
                         </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
                         <MDBNavItem>
-                            <a className="nav-link navbar-link" rel="noopener noreferrer" target="_blank" href="https://pl-pl.facebook.com/mdbootstrap/"><MDBIcon fab icon="facebook" /></a>
+                            <MDBNavLink to="#"><MDBIcon fab icon="facebook-f" /></MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <a className="nav-link navbar-link" rel="noopener noreferrer" target="_blank" href="https://twitter.com/mdbootstrap"><MDBIcon fab icon="twitter" /></a>
+                            <MDBNavLink to="#"><MDBIcon fab icon="twitter" /></MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://github.com/mdbootstrap/React-Bootstrap-with-Material-Design" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>MDB GitHub</a>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://mdbootstrap.com/products/react-ui-kit/" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>Go Pro</a>
+                            <MDBNavLink to="#"><MDBIcon fab icon="instagram" /></MDBNavLink>
                         </MDBNavItem>
                     </MDBNavbarNav>
                 </MDBCollapse>
-            </MDBNavbar>
-    );
-  }
+            </MDBNavbar> 
+        );
+    }
 }
 
 export default TopNavigation;
