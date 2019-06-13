@@ -1,116 +1,138 @@
-const path = require("path");
-const glob = require("glob");
+
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const moduleRulesLoader = require("./config/moduleRules.js");
-const purifyCSSPlugin = require("purifycss-webpack");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
+
 module.exports = {
+  mode: 'production',
   entry: {
-    common: "./src/admin-words/script/index.js",
-    viewer: "./src/admin-words/script/viewer.js",
-    userInfo: "./src/admin-words/script/userInfo.js",
-    login: "./src/admin-words/script/login.js",
-    reactor: ["react", "react-dom"],
-    reactRouter: ["react-router"],
-    jquery: ["jquery"]
-  },
+    index: "./src/admin-words/script/index.js"
+   },
   output: {
     path: __dirname + "/dist",
-    filename: "[name]-[chunkhash:6].js"
+    filename: "[name].js"
   },
-  module: moduleRulesLoader,
+  module: {
+    rules: [
+      { test: /\.(jsx|js)?$/, exclude: /node_modules/, use: ['babel-loader', 'eslint-loader'] },
+      { test: /\.html?$/, loader: 'html-loader' },
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: require.resolve('postcss-loader'),
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                autoprefixer,
+              ]
+            }
+          },
+          {
+            loader: require.resolve('sass-loader')
+          }
+        ]
+      },
+      {
+        test: /\.(ttf|otf|eot|svg|woff(2)?)$/,
+        loader: 'file-loader?name=font/[name].[ext]',
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          useRelativePath: true,
+        },
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader?classPrefix'
+      }
+    ],
+  },
   resolve: {
     enforceExtension: false,
-    extensions: [".js", ".json", ".jsx"],
+    extensions: [
+      ".js", ".json", ".jsx"
+    ],
     modules: ["node_modules"]
   },
   plugins: [
-    new CleanWebpackPlugin("./dist"),
     new HtmlWebpackPlugin({
-      title: "Custom template",
+      title: "words-admin",
       filename: "index.html",
-      template: "./src/admin-words/index.html",
-      chunks: ["common", "reactor", "jquery", "reactRouter"]
-    }),
-    new HtmlWebpackPlugin({
-      title: "words admin worker",
-      filename: "viewer.html",
-      template: "./src/admin-words/viewer.html",
-      common: "./src/admin-words/script/index.js",
-      chunks: ["common", "viewer", "reactor", "jquery", "reactRouter"]
-    }),
-    new HtmlWebpackPlugin({
-      title: "words admin user manage",
-      filename: "userInfo.html",
-      template: "./src/admin-words/userInfo.html",
-      common: "./src/admin-words/script/index.js",
-      chunks: ["common", "userInfo", "reactor", "jquery", "reactRouter"]
-    }),
-    new HtmlWebpackPlugin({
-      title: "words admin logining",
-      filename: "login.html",
-      template: "./src/admin-words/login.html",
-      common: "./src/admin-words/script/index.js",
-      chunks: ["common", "login", "reactor", "jquery", "reactRouter"]
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-    new purifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname, "src/*.html")) // 去除.html文件中没有使用到的css样式
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: __dirname + "/pdf-viewer",
-        to: __dirname + "/dist/pdf-viewer"
-      }
-    ]),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ["common", "reactor", "jquery", "reactRouter"]
-    }), // 默认会把所有入口节点的公共代码提取出来,生成一个common.js
-
-    new ExtractTextPlugin("[name].css"),
-    new ExtractTextPlugin({
-      filename: "[name].css"
+      template: "./src/admin-words/index.html"
     }),
     new webpack.ProvidePlugin({
-      jQuery: "jquery",
-      $: "jquery",
-      Popper: ["popper.js", "default"],
-      Util: "exports-loader?Util!bootstrap/js/dist/util",
-      Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
+      react: 'react',
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash:8].css'
     })
   ],
-  devtool: "cheap-module-eval-source-map",
+  optimization: {  //优化
+    splitChunks: {
+      cacheGroups: {//缓存组，一个对象。它的作用在于，可以对不同的文件做不同的处理
+        common: {
+          chunks: "initial",
+          name: "common",
+          minChunks: 2,
+          maxInitialRequests: 5,
+          minSize: 0
+        },
+        react: {
+          test: /[\\/]node_modules[\\/]react[\\/]/,
+          chunks: "initial",
+          minChunks: 1,
+          name: "react",
+          priority: 10,
+          enforce: true
+        },
+        reactDom: {
+          test: /[\\/]node_modules[\\/]react-dom[\\/]/,
+          chunks: "initial",
+          minChunks: 1,
+          name: "react-dom",
+          priority: 9,
+          enforce: true
+        }
+      }
+    }
+  },
+  mode: "development",
+  devtool: "source-map",
+  watchOptions: {
+    poll: 1000,
+    ignored: /node_modules/
+  },
   devServer: {
-    // 配置服务与热更新
-    contentBase: path.resolve(__dirname, "dist"), // 监听哪个目录下启动热更新
-    host: "localhost", // 服务地址 192.168.0.106本地
-    compress: true, // 服务器端的压缩，开启
-    port: "3000", // 端口号
+    contentBase: './dist',
+    hot: true,
+    host: "localhost",
+    compress: true,
+    port: "3000",
     proxy: {
       "/admin": {
         target: "http://localhost:8080/words-admin/",
         secure: false
-        // pathRewrite: { "^/api": "" }
       },
       "/pdf-store": {
         target: "http://localhost:8080/words-admin/admin/downloadFile",
         secure: false,
-        pathRewrite: { "^/pdf-store": "" }
+        pathRewrite: {
+          "^/pdf-store": ""
+        }
       }
     }
-  },
-
-  watchOptions: {
-    // 实时打包更新
-    poll: 1000, // 每1s时间就检测文件是否修改，修改了就自动帮我们打包
-    // aggregeateTimeout: 500, // 设置的是我们连续按Ctrl+S保存时，500毫秒内只执行打包一次
-    ignored: /node_modules/ // 这个文件夹不监视
   }
 };
