@@ -8,7 +8,14 @@
     "window": true,
     "document": true,
     "module": true,
-    "require": true
+    "require": true,
+    "console": true,
+    "navigator": true,
+    "process": true,
+    "URL": true,
+    "fetch": true,
+    "__dirname": true,
+    "resolve": true
   },
   "rules": {
     "react/prop-types": "off",

@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  mode: 'production',
   entry: {
     index: "./src/admin-words/script/index.js"
    },
@@ -65,7 +64,11 @@ module.exports = {
     extensions: [
       ".js", ".json", ".jsx"
     ],
-    modules: ["node_modules"]
+    modules: ["node_modules", 'src/common', 'src/static'],
+    alias: {
+      layouts: "src/common/layouts",
+      static: "src/static"
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -75,6 +78,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       react: 'react',
+      common: 'common'
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css'

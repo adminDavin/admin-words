@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
-import { MDBContainer } from 'mdbreact';
-import TopNavigation from '../compoents/comons/topNavigation';
-import SideNavigation from '../compoents/comons/sideNavigation';
-import Footer from '../compoents/comons/footer';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';  
+import { ThemeProvider } from '@material-ui/styles';
+
+// Theme
+import theme from '../theme';
+
+// Styles
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
+// Routes
+import Routes from './Routes';
+
+// Browser history
+const browserHistory = createBrowserHistory();
 
 class Application extends Component {
   render() {
     return (
-      <MDBContainer fluid>
-        <TopNavigation></TopNavigation>
-        <SideNavigation></SideNavigation>
-        hello mdbreact
-        <main id="content" className="p-8">
-        
-        dddd
-        </main>
-        <Footer></Footer>
-      </MDBContainer>
+      <ThemeProvider theme={theme}>
+        <Router history={browserHistory}>
+          <Routes />
+        </Router>
+      </ThemeProvider>
       );
   }
 }
