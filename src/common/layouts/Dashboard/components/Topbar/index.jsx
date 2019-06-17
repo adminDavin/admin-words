@@ -27,7 +27,7 @@ import {
 } from '@material-ui/icons';
 
 // Shared services
-import { getNotifications } from 'services/notification';
+// import { getNotifications } from 'services/notification';
 
 // Custom components
 import { NotificationList } from './components';
@@ -36,61 +36,65 @@ import { NotificationList } from './components';
 import styles from './styles';
 
 class Topbar extends Component {
-  signal = true;
+  constructor(props) {
+    super(props);
+    this.signal = true;
 
-  state = {
-    notifications: [],
-    notificationsLimit: 4,
-    notificationsCount: 0,
-    notificationsEl: null
-  };
-
-  async getNotifications() {
-    try {
-      const { notificationsLimit } = this.state;
-
-      const { notifications, notificationsCount } = await getNotifications(
-        notificationsLimit
-      );
-
-      if (this.signal) {
-        this.setState({
-          notifications,
-          notificationsCount
-        });
-      }
-    } catch (error) {
-      return;
-    }
+    this.state = {
+      notifications: [],
+      notificationsLimit: 4,
+      notificationsCount: 0,
+      notificationsEl: null
+    };
   }
+  
+
+  // async getNotifications() {
+  //   try {
+  //     const { notificationsLimit } = this.state;
+
+  //     const { notifications, notificationsCount } = await getNotifications(
+  //       notificationsLimit
+  //     );
+
+  //     if (this.signal) {
+  //       this.setState({
+  //         notifications,
+  //         notificationsCount
+  //       });
+  //     }
+  //   } catch (error) {
+  //     return;
+  //   }
+  // }
 
   componentDidMount() {
     this.signal = true;
-    this.getNotifications();
+    // this.getNotifications();
   }
 
   componentWillUnmount() {
     this.signal = false;
   }
 
-  handleSignOut = () => {
+  handleSignOut() {
     const { history } = this.props;
 
     localStorage.setItem('isAuthenticated', false);
     history.push('/sign-in');
-  };
+  }
 
-  handleShowNotifications = event => {
+  handleShowNotifications(event) {
     this.setState({
       notificationsEl: event.currentTarget
     });
-  };
+  }
 
-  handleCloseNotifications = () => {
+  handleCloseNotifications() {
     this.setState({
       notificationsEl: null
     });
-  };
+  }
 
   render() {
     const {
