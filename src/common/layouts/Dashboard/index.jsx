@@ -28,15 +28,15 @@ class Dashboard extends Component {
     };
   }
 
-  handleClose = () => {
+  handleClose() {
     this.setState({ isOpen: false });
-  };
+  }
 
-  handleToggleOpen = () => {
+  handleToggleOpen() {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }));
-  };
+  }
 
   render() {
     const { classes, width, title, children } = this.props;
