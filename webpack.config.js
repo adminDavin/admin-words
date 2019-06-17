@@ -1,4 +1,5 @@
 
+const path = require('path');
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -9,7 +10,7 @@ module.exports = {
     index: "./src/admin-words/script/index.js"
    },
   output: {
-    path: __dirname + "/dist",
+    path: path.resolve(__dirname, 'dist'),
     filename: "[name].js"
   },
   module: {
@@ -64,10 +65,10 @@ module.exports = {
     extensions: [
       ".js", ".json", ".jsx"
     ],
-    modules: ["node_modules", 'src/common', 'src/static'],
+    modules: ["node_modules"],
     alias: {
-      layouts: "src/common/layouts",
-      static: "src/static"
+      common: path.join(__dirname, './src/common'),
+      static: path.join(__dirname, './src/static')
     }
   },
   plugins: [
