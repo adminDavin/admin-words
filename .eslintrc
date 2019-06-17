@@ -15,10 +15,12 @@
     "URL": true,
     "fetch": true,
     "__dirname": true,
-    "resolve": true
+    "resolve": true,
+    "localStorage": true
   },
   "rules": {
     "react/prop-types": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "react/no-unescaped-entities": "off"
   }
 }
