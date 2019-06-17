@@ -30,7 +30,7 @@ class Dashboard extends Component {
     const {classes} = this.props;
 
     return (
-      <DashboardLayout title="Dashboard">
+      <DashboardLayout title="大盘分析">
         <div className={ classes.root }>
           <Grid container spacing={ 4 }>
             <Grid item lg={ 3 } sm={ 6 } xl={ 3 } xs={ 12 }>

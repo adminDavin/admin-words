@@ -27,7 +27,7 @@ import {
 } from '@material-ui/icons';
 
 // Shared services
-// import { getNotifications } from 'services/notification';
+import { getNotifications } from 'adminWords/services/notification';
 
 // Custom components
 import { NotificationList } from './components';
@@ -46,31 +46,29 @@ class Topbar extends Component {
       notificationsCount: 0,
       notificationsEl: null
     };
+    this.signal = true;
+    this.getNotifications();
+  
   }
   
 
-  // async getNotifications() {
-  //   try {
-  //     const { notificationsLimit } = this.state;
+  async getNotifications() {
+    try {
+      const { notificationsLimit } = this.state;
 
-  //     const { notifications, notificationsCount } = await getNotifications(
-  //       notificationsLimit
-  //     );
+      const { notifications, notificationsCount } = await getNotifications(
+        notificationsLimit
+      );
 
-  //     if (this.signal) {
-  //       this.setState({
-  //         notifications,
-  //         notificationsCount
-  //       });
-  //     }
-  //   } catch (error) {
-  //     return;
-  //   }
-  // }
-
-  componentDidMount() {
-    this.signal = true;
-    // this.getNotifications();
+      if (this.signal) {
+        this.setState({
+          notifications,
+          notificationsCount
+        });
+      }
+    } catch (error) {
+      return;
+    }
   }
 
   componentWillUnmount() {
@@ -128,7 +126,7 @@ class Topbar extends Component {
             </Typography>
             <IconButton
               className={classes.notificationsButton}
-              onClick={this.handleShowNotifications}
+              onClick={this.handleShowNotifications.bind(this)}
             >
               <Badge
                 badgeContent={notificationsCount}
@@ -140,7 +138,7 @@ class Topbar extends Component {
             </IconButton>
             <IconButton
               className={classes.signOutButton}
-              onClick={this.handleSignOut}
+              onClick={this.handleSignOut.bind(this)}
             >
               <InputIcon />
             </IconButton>
@@ -152,7 +150,7 @@ class Topbar extends Component {
             vertical: 'bottom',
             horizontal: 'center'
           }}
-          onClose={this.handleCloseNotifications}
+          onClose={this.handleCloseNotifications.bind(this)}
           open={showNotifications}
           transformOrigin={{
             vertical: 'top',
@@ -161,7 +159,7 @@ class Topbar extends Component {
         >
           <NotificationList
             notifications={notifications}
-            onSelect={this.handleCloseNotifications}
+            onSelect={this.handleCloseNotifications.bind(this)}
           />
         </Popover>
       </Fragment>

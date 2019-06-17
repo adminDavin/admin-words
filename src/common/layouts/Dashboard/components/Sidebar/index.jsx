@@ -26,12 +26,11 @@ import {
   PeopleOutlined as PeopleIcon,
   ShoppingBasketOutlined as ShoppingBasketIcon,
   LockOpenOutlined as LockOpenIcon,
-  TextFields as TextFieldsIcon,
-  ImageOutlined as ImageIcon,
   InfoOutlined as InfoIcon,
   AccountBoxOutlined as AccountBoxIcon,
   SettingsOutlined as SettingsIcon
 } from '@material-ui/icons';
+import userPhoto from "static/images/empty.png";
 
 // Component styles
 import styles from './styles';
@@ -49,11 +48,14 @@ class Sidebar extends Component {
             className={classes.logoLink}
             to="/"
           >
-            <img
+            {/*<img
               alt="Brainalytica logo"
               className={classes.logoImage}
               src="/images/logos/brainalytica_logo.svg"
-            />
+            />*/}
+            <Typography color="primary" align="center" variant="h3" component="h2">
+              Admin Words
+            </Typography>
           </Link>
         </div>
         <Divider className={classes.logoDivider} />
@@ -62,7 +64,7 @@ class Sidebar extends Component {
             <Avatar
               alt="Roman Kutepov"
               className={classes.avatar}
-              src="/images/avatars/avatar_1.png"
+              src={userPhoto}
             />
           </Link>
           <Typography
@@ -94,7 +96,7 @@ class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText
               classes={{ primary: classes.listItemText }}
-              primary="Dashboard"
+              primary="大盘分析"
             />
           </ListItem>
           <ListItem
@@ -108,7 +110,7 @@ class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText
               classes={{ primary: classes.listItemText }}
-              primary="Users"
+              primary="用户列表"
             />
           </ListItem>
           <ListItem
@@ -122,49 +124,7 @@ class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText
               classes={{ primary: classes.listItemText }}
-              primary="Products"
-            />
-          </ListItem>
-          <ListItem
-            activeClassName={classes.activeListItem}
-            className={classes.listItem}
-            component={NavLink}
-            to="/sign-in"
-          >
-            <ListItemIcon className={classes.listItemIcon}>
-              <LockOpenIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.listItemText }}
-              primary="Authentication"
-            />
-          </ListItem>
-          <ListItem
-            activeClassName={classes.activeListItem}
-            className={classes.listItem}
-            component={NavLink}
-            to="/typography"
-          >
-            <ListItemIcon className={classes.listItemIcon}>
-              <TextFieldsIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.listItemText }}
-              primary="Typography"
-            />
-          </ListItem>
-          <ListItem
-            activeClassName={classes.activeListItem}
-            className={classes.listItem}
-            component={NavLink}
-            to="/icons"
-          >
-            <ListItemIcon className={classes.listItemIcon}>
-              <ImageIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.listItemText }}
-              primary="Icons and Images"
+              primary="角色管理"
             />
           </ListItem>
           <ListItem
@@ -178,7 +138,7 @@ class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText
               classes={{ primary: classes.listItemText }}
-              primary="Account"
+              primary="账号管理"
             />
           </ListItem>
           <ListItem
@@ -192,7 +152,21 @@ class Sidebar extends Component {
             </ListItemIcon>
             <ListItemText
               classes={{ primary: classes.listItemText }}
-              primary="Settings"
+              primary="用户设置"
+            />
+          </ListItem>
+          <ListItem
+            activeClassName={classes.activeListItem}
+            className={classes.listItem}
+            component={NavLink}
+            to="/sign-in"
+          >
+            <ListItemIcon className={classes.listItemIcon}>
+              <LockOpenIcon />
+            </ListItemIcon>
+            <ListItemText
+              classes={{ primary: classes.listItemText }}
+              primary="退出登录"
             />
           </ListItem>
         </List>

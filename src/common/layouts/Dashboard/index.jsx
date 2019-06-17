@@ -53,7 +53,7 @@ class Dashboard extends Component {
             [classes.topbarShift]: shiftTopbar
           })}
           isSidebarOpen={isOpen}
-          onToggleSidebar={this.handleToggleOpen}
+          onToggleSidebar={this.handleToggleOpen.bind(this)}
           title={title}
         />
         <Drawer
