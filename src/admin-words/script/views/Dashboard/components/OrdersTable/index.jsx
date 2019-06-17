@@ -23,7 +23,7 @@ import {
 } from '@material-ui/core';
 
 // Shared services
-import { getOrders } from 'services/order';
+import { getOrders } from 'adminWords/services/order';
 
 // Shared components
 import {
@@ -33,7 +33,7 @@ import {
   PortletToolbar,
   PortletContent,
   Status
-} from 'components';
+} from 'common/components';
 
 // Component styles
 import styles from './styles';
@@ -45,14 +45,18 @@ const statusColors = {
 };
 
 class OrdersTable extends Component {
-  signal = false;
+  constructor(props) { 
+    super(props);
+    
+    this.signal = false;
 
-  state = {
-    isLoading: false,
-    limit: 10,
-    orders: [],
-    ordersTotal: 0
-  };
+    this.state = {
+      isLoading: false,
+      limit: 10,
+      orders: [],
+      ordersTotal: 0
+    };
+  }
 
   async getOrders(limit) {
     try {

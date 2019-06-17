@@ -82,15 +82,19 @@
     "@material-ui/icons": "^4.2.0",
     "@material-ui/styles": "^4.1.1",
     "bootstrap-css-only": "^4.3.1",
+    "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
     "history": "^4.9.0",
     "layouts": "^3.0.2",
-    "mdbreact": "^4.16.0",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.6",
     "react-perfect-scrollbar": "^1.5.3",
-    "react-side-bar": "^0.3.5"
+    "react-side-bar": "^0.3.5",
+    "recompose": "^0.30.0",
+    "underscore": "^1.9.1",
+    "validate.js": "^0.13.1"
   },
   "browserslist": [
     "last 1 version",

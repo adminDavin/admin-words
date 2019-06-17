@@ -16,7 +16,9 @@
     "fetch": true,
     "__dirname": true,
     "resolve": true,
-    "localStorage": true
+    "Promise": true,
+    "localStorage": true,
+    "setTimeout": true
   },
   "rules": {
     "react/prop-types": "off",

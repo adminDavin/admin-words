@@ -25,7 +25,7 @@ import {
   PortletToolbar,
   PortletContent,
   PortletFooter
-} from 'components';
+} from 'common/components';
 
 // Chart configuration
 import { data, options } from './chart';

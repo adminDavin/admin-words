@@ -1,5 +1,5 @@
 // Palette
-import palette from 'theme/palette';
+import palette from 'common/theme/palette';
 
 // Chart data
 export const data = {

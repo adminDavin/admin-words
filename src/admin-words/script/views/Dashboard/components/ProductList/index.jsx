@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 // Shared services
-import { getProducts } from 'services/product';
+import { getProducts } from 'adminWords/services/product';
 
 // Material helpers
 import { withStyles } from '@material-ui/core';
@@ -32,16 +32,16 @@ import {
   PortletLabel,
   PortletContent,
   PortletFooter
-} from 'components';
+} from 'common/components';
 
 // Component styles
 import styles from './styles';
 
 class ProductList extends Component {
-
-  constructor(props) {
-    this.supper(props);
-    this. signal = true;
+  constructor(props) { 
+    super(props);
+    
+    this.signal = true;
     this.state = {
       isLoading: false,
       limit: 4,

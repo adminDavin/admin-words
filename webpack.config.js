@@ -68,6 +68,7 @@ module.exports = {
     modules: ["node_modules"],
     alias: {
       common: path.join(__dirname, './src/common'),
+      adminWords: path.join(__dirname, './src/admin-words/script'),
       static: path.join(__dirname, './src/static')
     }
   },

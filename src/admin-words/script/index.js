@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as serviceWorker from './common/serviceWorker';
+import * as serviceWorker from 'common/common/serviceWorker';
 
 import Application from './routers/index';
 

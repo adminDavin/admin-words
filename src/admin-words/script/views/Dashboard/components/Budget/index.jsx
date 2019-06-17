@@ -17,7 +17,7 @@ import {
 } from '@material-ui/icons';
 
 // Shared components
-import { Paper } from 'components';
+import { Paper } from 'common/components';
 
 // Component styles
 import styles from './styles';
