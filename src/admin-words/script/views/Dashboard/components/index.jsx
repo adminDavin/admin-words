@@ -1,8 +1,8 @@
-export { default as Budget } from './Budget';
+export { default as DocumentCount } from './DocumentCount';
 export { default as DevicesChart } from './DevicesChart';
-export { default as OrdersTable } from './OrdersTable';
-export { default as ProductList } from './ProductList';
+export { default as DocumentList } from './DocumentList';
+export { default as HighFrequencyWords } from './HighFrequencyWords';
 export { default as Profit } from './Profit';
-export { default as Progress } from './Progress';
-export { default as SalesChart } from './SalesChart';
-export { default as Users } from './Users';
+export { default as WordsCount } from './WordsCount';
+export { default as WordsChart } from './WordsChart';
+export { default as MiddleContent } from './MiddleContent';

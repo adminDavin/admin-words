@@ -37,7 +37,7 @@ import {
 // Component styles
 import styles from './styles';
 
-class ProductList extends Component {
+class HighFrequencyWords extends Component {
   constructor(props) { 
     super(props);
     
@@ -159,7 +159,7 @@ class ProductList extends Component {
         <PortletHeader noDivider>
           <PortletLabel
             subtitle={`${productsTotal} in total`}
-            title="Latest products"
+            title="高频词整理"
           />
         </PortletHeader>
         <PortletContent className={classes.portletContent}>
@@ -179,9 +179,9 @@ class ProductList extends Component {
   }
 }
 
-ProductList.propTypes = {
+HighFrequencyWords.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProductList);
+export default withStyles(styles)(HighFrequencyWords);

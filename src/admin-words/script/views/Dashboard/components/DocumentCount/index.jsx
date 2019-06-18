@@ -10,11 +10,10 @@ import { withStyles } from '@material-ui/core';
 // Material components
 import { Typography } from '@material-ui/core';
 
-// Material icons
 import {
-  ArrowDownward as ArrowDownwardIcon,
   Money as MoneyIcon
 } from '@material-ui/icons';
+
 
 // Shared components
 import { Paper } from 'common/components';
@@ -34,19 +33,19 @@ class Budget extends Component {
         className={rootClassName}
       >
         <div className={classes.content}>
-          <div className={classes.details}>
+          <div className={classes.details}>            
             <Typography
               className={classes.title}
               variant="body2"
             >
-              BUDGET
+              文档总数
             </Typography>
             <Typography
               className={classes.value}
               variant="h3"
             >
-              $24,000
-            </Typography>
+              0
+            </Typography>  
           </div>
           <div className={classes.iconWrapper}>
             <MoneyIcon className={classes.icon} />
@@ -54,17 +53,10 @@ class Budget extends Component {
         </div>
         <div className={classes.footer}>
           <Typography
-            className={classes.difference}
-            variant="body2"
-          >
-            <ArrowDownwardIcon />
-            12%
-          </Typography>
-          <Typography
             className={classes.caption}
             variant="caption"
           >
-            Since last month
+              截至昨天已处理的文档
           </Typography>
         </div>
       </Paper>

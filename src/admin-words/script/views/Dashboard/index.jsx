@@ -13,7 +13,7 @@ import { Grid } from '@material-ui/core';
 import { Dashboard as DashboardLayout } from 'common/layouts';
 
 // Custom components
-import { Budget, Users, Progress, Profit, SalesChart, DevicesChart, ProductList, OrdersTable} from './components';
+import { DocumentCount, MiddleContent, WordsCount, Profit, WordsChart, HighFrequencyWords, DocumentList} from './components';
 
 // Component styles
 const styles = theme => ({
@@ -34,28 +34,25 @@ class Dashboard extends Component {
         <div className={ classes.root }>
           <Grid container spacing={ 4 }>
             <Grid item lg={ 3 } sm={ 6 } xl={ 3 } xs={ 12 }>
-              <Budget className={ classes.item } />
+              <DocumentCount className={ classes.item } />
             </Grid>
             <Grid item lg={ 3 } sm={ 6 } xl={ 3 } xs={ 12 }>
-              <Users className={ classes.item } />
+              <MiddleContent className={ classes.item } />
             </Grid>
             <Grid item lg={ 3 } sm={ 6 } xl={ 3 } xs={ 12 }>
-              <Progress className={ classes.item } />
+              <WordsCount className={ classes.item } />
             </Grid>
             <Grid item lg={ 3 } sm={ 6 } xl={ 3 } xs={ 12 }>
               <Profit className={ classes.item } />
             </Grid>
-            <Grid item lg={ 8 } md={ 12 } xl={ 9 } xs={ 12 }>
-              <SalesChart className={ classes.item } />
+            <Grid item lg={ 12 } md={ 12 } xl={ 12 } xs={ 12 }>
+              <WordsChart className={ classes.item } />
             </Grid>
             <Grid item lg={ 4 } md={ 6 } xl={ 3 } xs={ 12 }>
-              <DevicesChart className={ classes.item } />
-            </Grid>
-            <Grid item lg={ 4 } md={ 6 } xl={ 3 } xs={ 12 }>
-              <ProductList className={ classes.item } />
+              <HighFrequencyWords className={ classes.item } />
             </Grid>
             <Grid item lg={ 8 } md={ 12 } xl={ 9 } xs={ 12 }>
-              <OrdersTable className={ classes.item } />
+              <DocumentList className={ classes.item } />
             </Grid>
           </Grid>
         </div>

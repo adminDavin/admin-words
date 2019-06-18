@@ -36,13 +36,13 @@ class Progress extends Component {
               className={classes.title}
               variant="body2"
             >
-              PROGRESS
+              词汇总数
             </Typography>
             <Typography
               className={classes.value}
               variant="h3"
             >
-              75.5%
+              0
             </Typography>
           </div>
           <div className={classes.iconWrapper}>

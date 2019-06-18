@@ -45,14 +45,14 @@ class SalesChart extends Component {
         className={rootClassName}
       >
         <PortletHeader noDivider>
-          <PortletLabel title="Latest sales" />
+          <PortletLabel title="文档录词轨迹" />
           <PortletToolbar>
             <Button
               className={classes.dropdownButton}
               size="small"
               variant="text"
             >
-              Last 7 days <ArrowDropDownIcon />
+              Last 7 <ArrowDropDownIcon />
             </Button>
           </PortletToolbar>
         </PortletHeader>
@@ -70,7 +70,7 @@ class SalesChart extends Component {
             size="small"
             variant="text"
           >
-            Overview <ArrowRightIcon />
+            查看详情 <ArrowRightIcon />
           </Button>
         </PortletFooter>
       </Portlet>

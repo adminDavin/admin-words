@@ -36,13 +36,13 @@ class Profit extends Component {
               className={classes.title}
               variant="body2"
             >
-              TOTAL PROFIT
+              用户活跃状态
             </Typography>
             <Typography
               className={classes.value}
               variant="h3"
             >
-              $23,200
+              活跃
             </Typography>
           </div>
           <div className={classes.iconWrapper}>

@@ -16,26 +16,32 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListSubheader,
+  // ListSubheader,
   Typography
 } from '@material-ui/core';
 
 // Material icons
 import {
   DashboardOutlined as DashboardIcon,
-  PeopleOutlined as PeopleIcon,
-  ShoppingBasketOutlined as ShoppingBasketIcon,
-  LockOpenOutlined as LockOpenIcon,
-  InfoOutlined as InfoIcon,
-  AccountBoxOutlined as AccountBoxIcon,
-  SettingsOutlined as SettingsIcon
+  // PeopleOutlined as PeopleIcon,
+  // ShoppingBasketOutlined as ShoppingBasketIcon,
+  // LockOpenOutlined as LockOpenIcon,
+  // InfoOutlined as InfoIcon,
+  // AccountBoxOutlined as AccountBoxIcon,
+  // SettingsOutlined as SettingsIcon
 } from '@material-ui/icons';
 import userPhoto from "static/images/empty.png";
 
 // Component styles
 import styles from './styles';
 
+
 class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.forwardRef();
+  }
+
   render() {
     const { classes, className } = this.props;
 
@@ -86,9 +92,9 @@ class Sidebar extends Component {
           disablePadding
         >
           <ListItem
-            activeClassName={classes.activeListItem}
+            activeclassname={classes.activeListItem}
             className={classes.listItem}
-            component={NavLink}
+            component={ NavLink }
             to="/dashboard"
           >
             <ListItemIcon className={classes.listItemIcon}>
@@ -99,10 +105,10 @@ class Sidebar extends Component {
               primary="大盘分析"
             />
           </ListItem>
-          <ListItem
-            activeClassName={classes.activeListItem}
+          {/*<ListItem
+            activeclassname={classes.activeListItem}
             className={classes.listItem}
-            component={NavLink}
+            ref={NavLink}
             to="/users"
           >
             <ListItemIcon className={classes.listItemIcon}>
@@ -114,9 +120,9 @@ class Sidebar extends Component {
             />
           </ListItem>
           <ListItem
-            activeClassName={classes.activeListItem}
+            activeclassname={classes.activeListItem}
             className={classes.listItem}
-            component={NavLink}
+            ref={NavLink}
             to="/products"
           >
             <ListItemIcon className={classes.listItemIcon}>
@@ -128,9 +134,9 @@ class Sidebar extends Component {
             />
           </ListItem>
           <ListItem
-            activeClassName={classes.activeListItem}
+            activeclassname={classes.activeListItem}
             className={classes.listItem}
-            component={NavLink}
+            ref={NavLink}
             to="/account"
           >
             <ListItemIcon className={classes.listItemIcon}>
@@ -142,9 +148,9 @@ class Sidebar extends Component {
             />
           </ListItem>
           <ListItem
-            activeClassName={classes.activeListItem}
+            activeclassname={classes.activeListItem}
             className={classes.listItem}
-            component={NavLink}
+            ref={NavLink}
             to="/settings"
           >
             <ListItemIcon className={classes.listItemIcon}>
@@ -156,9 +162,9 @@ class Sidebar extends Component {
             />
           </ListItem>
           <ListItem
-            activeClassName={classes.activeListItem}
+            activeclassname={classes.activeListItem}
             className={classes.listItem}
-            component={NavLink}
+            ref={NavLink}
             to="/sign-in"
           >
             <ListItemIcon className={classes.listItemIcon}>
@@ -193,7 +199,7 @@ class Sidebar extends Component {
               classes={{ primary: classes.listItemText }}
               primary="Customer support"
             />
-          </ListItem>
+            </ListItem>*/}
         </List>
       </nav>
     );

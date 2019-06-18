@@ -105,7 +105,7 @@ class OrdersTable extends Component {
         <PortletHeader noDivider>
           <PortletLabel
             subtitle={`${ordersTotal} in total`}
-            title="Latest orders"
+            title="近期录入文档列表"
           />
           <PortletToolbar>
             <Button
