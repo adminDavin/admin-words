@@ -16,19 +16,19 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  // ListSubheader,
+  ListSubheader,
   Typography
 } from '@material-ui/core';
 
 // Material icons
 import {
   DashboardOutlined as DashboardIcon,
-  // PeopleOutlined as PeopleIcon,
-  // ShoppingBasketOutlined as ShoppingBasketIcon,
-  // LockOpenOutlined as LockOpenIcon,
-  // InfoOutlined as InfoIcon,
-  // AccountBoxOutlined as AccountBoxIcon,
-  // SettingsOutlined as SettingsIcon
+  PeopleOutlined as PeopleIcon,
+  ShoppingBasketOutlined as ShoppingBasketIcon,
+  LockOpenOutlined as LockOpenIcon,
+  InfoOutlined as InfoIcon,
+  AccountBoxOutlined as AccountBoxIcon,
+  SettingsOutlined as SettingsIcon
 } from '@material-ui/icons';
 import userPhoto from "static/images/empty.png";
 
@@ -105,7 +105,7 @@ class Sidebar extends Component {
               primary="大盘分析"
             />
           </ListItem>
-          {/*<ListItem
+          <ListItem
             activeclassname={classes.activeListItem}
             className={classes.listItem}
             ref={NavLink}
@@ -199,7 +199,7 @@ class Sidebar extends Component {
               classes={{ primary: classes.listItemText }}
               primary="Customer support"
             />
-            </ListItem>*/}
+            </ListItem>
         </List>
       </nav>
     );
