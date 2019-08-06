@@ -3,6 +3,7 @@ import logo from "../../style/logo.png";
 
 import routeInfo from "../config/routerConfig.js";
 import utils from "../utils";
+import request from './../sevice/request';
 
 class TrContent extends React.Component {
   render() {
@@ -19,7 +20,7 @@ class TrContent extends React.Component {
 export default class HeadLayer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { route: routeInfo.getRouteInfo(), exitHide: false };
+    this.state = { route: routeInfo.getRouteInfo(), exitHide: false, isEnabled: false };
   }
   text = {
     left: "words-admin",
@@ -32,18 +33,32 @@ export default class HeadLayer extends React.Component {
   componentDidMount() {
     let me = this;
     let route = me.state.route;
-
+    console.log(route.params);
     let url = window.location.pathname;
 
     let projectName = "/" + url.split("/")[1];
     if (projectName === "/login.html") {
       me.setState({ exitHide: true });
     }
+    if ('userId' in route.params) {
+      request.sendRequstNew("/admin/getUserListByUserId", {
+        userId: route.params.userId
+      }, function(result) {
+        if (result.code != "200") {
+          alert(result.result);
+        } else {
+           let userInfo = result.result.data;
+           if (0 == userInfo.state) {
+            me.setState({ isEnabled: true });
+           }
+        }
+      });
+    }
   }
   getHeaderInfo() {
     let me = this;
     let route = me.state.route;
-
+    console.log(me.state);
     return (
       <div className="row justify-content-end">
         {route.title.map(function (pro, index) {
@@ -54,6 +69,7 @@ export default class HeadLayer extends React.Component {
               className="col-auto btn btn-outline-secondary dv-m5"
               style={{ marginLeft: 5 }}
               onClick={me.managelogin.bind(me, pro.url, pro.params)}
+              disabled={me.state.isEnabled}
             >
               {pro.name}
             </button>
