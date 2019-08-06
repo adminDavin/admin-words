@@ -48,7 +48,7 @@ export default class HeadLayer extends React.Component {
           alert(result.result);
         } else {
            let userInfo = result.result.data;
-           if (0 == userInfo.state) {
+           if (userInfo.state in [0, 6]) {
             me.setState({ isEnabled: true });
            }
         }
