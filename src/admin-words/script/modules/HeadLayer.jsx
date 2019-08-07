@@ -17,6 +17,7 @@ class TrContent extends React.Component {
     );
   }
 }
+const INIT_USER_STATE = [0, 6];
 export default class HeadLayer extends React.Component {
   constructor(props) {
     super(props);
@@ -48,7 +49,8 @@ export default class HeadLayer extends React.Component {
           alert(result.result);
         } else {
            let userInfo = result.result.data;
-           if (userInfo.state in [0, 6]) {
+           console.log(userInfo);
+           if (INIT_USER_STATE.indexOf(userInfo.state) != -1) {
             me.setState({ isEnabled: true });
            }
         }
