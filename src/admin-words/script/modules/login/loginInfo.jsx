@@ -250,7 +250,7 @@ class ManageLogin extends React.Component {
         <label className="col-auto col-form-label col-form-label-sm">登录密码</label>
         <div className="col-sm-9">
           <input type="password" className="form-control form-control-sm"
-            placeholder="密码长度不小于8位"
+            placeholder="密码长度至少8位"
             value={this.state.password}
             onChange={this.handleChange.bind(this, "password")}
           />
@@ -350,7 +350,7 @@ class ManageLogin extends React.Component {
               className="btn btn-info btn-sm btn-block"
               onClick={this.loginAction.bind(this)}
             >
-              登录
+              {label1}
         </button>
           </div>
         </form>
@@ -359,13 +359,13 @@ class ManageLogin extends React.Component {
             <input type="checkbox" className="form-check-input" />
             <span>记住我?</span>
           </label>
-          <div className="col-2 align-self-end">
+          <div className="col-4 align-self-end">
             <button
               type="button"
               className="btn btn-secondary btn-sm"
               onClick={this.goToLocation.bind(this, modalActionMap.magageLogin.name)}
             >
-              {label2}
+              {'切换至'+label2}
             </button>
           </div>
         </div>

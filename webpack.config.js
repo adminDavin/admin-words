@@ -138,7 +138,7 @@ module.exports = {
   devServer: {
     // 配置服务与热更新
     contentBase: path.resolve(__dirname, "dist"), // 监听哪个目录下启动热更新
-    host: "www.bookindexer.cn", // 服务地址 192.168.0.106本地
+    host: "www.cane.ac.cn", // 服务地址 192.168.0.106本地
     compress: true, // 服务器端的压缩，开启
     port: "80", // 端口号
     proxy: {
